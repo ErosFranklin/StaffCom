@@ -36,13 +36,16 @@
 <pre>
 staffcom/
 ├── frontend/            # Frontend 
-│   ├── html/
+│   ├── views/
 │   │   ├── index.html
 │   │   └── ...
-│   ├── style/
-│   │   └── ...
-│   ├── javascript/
-│   │   └── ...
+│   ├── public/
+│   │   ├── javascript/
+│   │   |  └── ...
+|   |   ├── style/
+│   │   |  └── ...
+│   ├── 
+│   │   
 │   ├── package.json
 │   └── ...
 │
