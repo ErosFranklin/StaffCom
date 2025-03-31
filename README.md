@@ -102,7 +102,8 @@ npm run start
   <li>Nome: <strong>[Francisco das Chagas Medeiros Neto]</strong></li>
   <li>Email: <strong>[]</strong></li>
   <li>Nome: <strong>[Jorge Longo da Silva Neto]</strong></li>
-  <li>Email: <strong>[]</strong></li>
+  <li>Email: <strong>[jorgelo0ngo2@gmail.com]</strong></li>
+  <li>Email: <strong>[jorge.neto@aluno.uepb.edu.br]</strong></li>
   <li>Nome: <strong>[José Guilherme Morato Bizerra de Lima]</strong></li>
   <li>Email: <strong>[]</strong></li>
   <li>Nome: <strong>[Kaio Vinícius Cordeiro Batista]</strong></li>
