@@ -11,36 +11,38 @@
     <header>
         <div class="container-header">
             <div class="logo">
-                <img src="../public/img/logo.png" alt="Logo StaffCom">
+                <img src="../image/logo.png" alt="Logo StaffCom">
             </div>
-            <span class="titulo-logo">
-                STAFFCOM
-            </span>
+            <h1 class="titulo-logo">STAFF<span class="titulo-destaque">COM</span></h1>
         </div>
     </header>
     <main>
         <div class="container-principal">
-            <div class="container-descricao">
-                <h1>Bem-Vindo de Volta</h1>
-                <p>A StaffCom é a solução que automatiza o controle de comandas e facilita o gerenciamento de funcionários no seu estabelecimento.</p>
-            </div>
-            <div class="container-login">
-                <h1>LOGIN</h1>
-                <div class="componente">
-                    <i class="icone fa-solid fa-user"></i>
-                    <input type="email" name="email" id="email" placeholder="exemplo@gmail.com" required>
+            <div class="container-grid-login">
+                <div class="container-descricao">
+                    <h1>Bem-Vindo de Volta</h1>
+                    <p>A StaffCom é a solução que automatiza o controle de comandas e facilita o gerenciamento de funcionários no seu estabelecimento.</p>
                 </div>
-                <div class="componente">
-                    <i class="icone fa-solid fa-lock"></i>
-                    <input type="password" name="senha" id="senha" placeholder="********" required>
-                </div>
-                <div class="btn-login">
-                    <a href="../public/index.html">Esqueceu a senha?</a>
-                    <button type="submit" id="btn-login">Acessar</button>
-                    <span>Ainda não possui uma conta?<a href="../public/index.html">Cadastra-se</a></span>
+                <div class="container-login">
+                    <h1>LOGIN</h1>
+                    <div class="componente">
+                        <i class="icone fa-solid fa-user"></i>
+                        <input type="email" name="email" id="email" placeholder="exemplo@gmail.com" required>
+                    </div>
+                    <div class="componente">
+                        <i class="icone fa-solid fa-lock"></i>
+                        <input type="password" name="senha" id="senha" placeholder="********" required>
+                        <i class="fa-solid fa-eye" id="eyes" onclick="mostrarSenha()"></i>
+                    </div>
+                    <div class="btn-login">
+                        <a href="../public/index.html">Esqueceu a senha?</a>
+                        <button type="submit" id="btn-login">Acessar</button>
+                        <span>Ainda não possui uma conta? <a href="../public/index.html">Cadastra-se</a></span>
+                    </div>
                 </div>
         </div>
     </main>
     <script src="../public/javascript/login.js"></script>
+    <script src="../public/javascript/eyes.js"></script>
 </body>
 </html>
