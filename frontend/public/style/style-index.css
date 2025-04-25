@@ -62,7 +62,7 @@ body{
 }
 .container-principal .container-grid-login{
     display: grid;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 50% 50%;
 }
 .container-principal .container-grid-login .container-descricao{
     position: relative;
@@ -91,6 +91,7 @@ body{
     justify-content: center;
     flex-direction: column;
     width: 80%;
+    border:1px solid var(--titulo);
     height: auto;
     background-color: var(--card-background);
     padding:20px;
@@ -188,4 +189,8 @@ body{
 .container-principal .container-grid-login .container-login .btn-login span{
     color:var(--geral);
     font-size: 0.8rem;
+}
+
+.container-principal .container-grid-login .container-login .btn-login .messagemErro{
+    color:red;
 }
