@@ -32,6 +32,13 @@
                     <div class="container-login">
                         <h1>LOGIN</h1>
                         <p>Preenchar as informações abaixo para ter acesso ao sistema.</p>
+                        <select class="componente" id="cargo" name="cargo" required>
+                            <option value="" disabled selected>Selecione seu cargo</option>
+                            <option value="gerente">Gerente</option>
+                            <option value="cozinheiro_chefe">Cozinheiro-Chefe</option>
+                            <option value="cozinheiro">Cozinheiro</option>
+                            <option value="garcom">Garçom</option>
+                        </select>
                         <div class="componente">
                             <i class="icone fa-solid fa-user"></i>
                             <input type="email" name="email" id="email" placeholder="exemplo@gmail.com" required>
