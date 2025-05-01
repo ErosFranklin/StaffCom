@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', await function() {
         const email = document.getElementById('email').value;
         const senha = document.getElementById('senha').value;
         const spinner = document.querySelector('.container-spinner');
+        const cargo = document.getElementById('cargo').value;
 
         if(email === "" || senha === ""){
             messagemErro.innerHTML = "Preencha todos os campos!";
@@ -42,7 +43,22 @@ document.addEventListener('DOMContentLoaded', await function() {
                 throw new Error("Erro ao registrar usuário.");
             }
             const data = await response.json();
-
+            if(data.status === "success"){
+                localStorage.setItem('token', data.token);
+                switch(cargo){
+                    case "gerente":
+                        window.location.href = '../public/views/homeGerente.html';
+                        break;
+                    case "chefe_cozinheiro":
+                        window.location.href = '../public/views/homeChefeCozinheiro.html';
+                        break;
+                    case "cozinheiro":
+                        window.location.href = '../public/views/homeGarcom.html';
+                        break;
+                    default:
+                        localStorage.setItem('cargo', "garcom");
+                }
+            }
         }catch(error){
             console.error("Erro ao capturar os dados do formulário:", error);
         }finally{
