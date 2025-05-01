@@ -13,8 +13,9 @@
 }
 :root{
     --geral:#ffffff;
-    --fundo:#efefef;
+    --fundo:rgba(81, 81, 81, 0.061);
     --titulo: #606060;
+    --titulo-sombra: #60606080;
     --texto: #202020;
     --card-background: #828282;
     --botoes: #ffde00;
@@ -47,7 +48,6 @@ body{
     font-style: italic;
     font-size:2rem;
     color:var(--titulo);
-
 }
 .container-header .titulo-logo .titulo-destaque{
     color:var(--texto-destaque);
@@ -77,6 +77,7 @@ body{
     font-weight: bolder;
     color:var(--titulo);
     margin-bottom: 20px;
+    text-shadow: 0px 2px var(--titulo-sombra);
 }
 .container-principal .container-grid-login .container-descricao p{
     color:var(--texto);
@@ -96,13 +97,20 @@ body{
     background-color: var(--card-background);
     padding:20px;
     border-radius:20px;
-    box-shadow: 0px 0px 10px var(--card-background);
+    box-shadow: 5px 5px 10px var(--card-background);
 }
 .container-principal .container-grid-login .container-login h1{
     font-size: 2rem;
     font-weight: bold;
+    padding: 10px;
     color:#fff;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+}
+.container-principal .container-grid-login .container-login p{
+    font-size: 0.8rem;
+    font-weight: lighter;
+    color:#fff;
+    margin-bottom: 10px;
 }
 .container-principal .container-grid-login .container-login input{
     border:none;
