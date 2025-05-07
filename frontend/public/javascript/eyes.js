@@ -12,7 +12,7 @@ function mostrarSenha(){
     }
 }
 function mostrarConfSenha(){
-    var inputC = document.getElementById('conf_password');
+    var inputC = document.getElementById('conf-senha');
     var eyesbtnC = document.getElementById('eyes2');
 
     if(inputC.type === 'password'){
