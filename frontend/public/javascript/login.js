@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', await function() {
     const btnLogin = document.getElementById('btnLogin');
     const messagemErro = document.querySelector('.messagemErro');
+    const spinner = document.querySelector('.container-spinner');
+
     btnLogin.addEventListener('click', async function(event) {
         event.preventDefault();
         const email = document.getElementById('email').value;
         const senha = document.getElementById('senha').value;
-        const spinner = document.querySelector('.container-spinner');
         const cargo = document.getElementById('cargo').value;
 
         if(email === "" || senha === ""){
@@ -45,7 +46,12 @@ document.addEventListener('DOMContentLoaded', await function() {
             const data = await response.json();
             if(data.status === "success"){
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('cargo', cargo);
+                localStorage.setItem('userId', data.userId);
                 switch(cargo){
+                    case "dono":
+                        window.location.href = '../public/views/homeDono.html';
+                        break;
                     case "gerente":
                         window.location.href = '../public/views/homeGerente.html';
                         break;
@@ -53,10 +59,11 @@ document.addEventListener('DOMContentLoaded', await function() {
                         window.location.href = '../public/views/homeChefeCozinheiro.html';
                         break;
                     case "cozinheiro":
-                        window.location.href = '../public/views/homeGarcom.html';
+                        window.location.href = '../public/views/home.html';
                         break;
-                    default:
-                        localStorage.setItem('cargo', "garcom");
+                    case "garcom":
+                        window.location.href = '../public/views/home.html';
+                        break;
                 }
             }
         }catch(error){
