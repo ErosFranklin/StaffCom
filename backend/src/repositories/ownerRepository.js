@@ -7,14 +7,15 @@ const ownerRepositories = {
 
         return new Promise((resolve, reject) => {
             db.query(
-                `INSERT INTO owners (fullName, restaurantName, cnpj, email, password)
-                 VALUES (?, ?, ?, ?, ?)`,
+                `INSERT INTO owners (fullName, restaurantName, cnpj, email, password, phoneNumber)
+                 VALUES (?, ?, ?, ?, ?, ?)`,
                 [
                     owner.fullName,
                     owner.restaurantName,
                     owner.cnpj,
                     owner.email,
-                    owner.password
+                    owner.password,
+                    owner.phoneNumber
                 ],
                 (err, results) => err ? reject(err) : resolve(results)
             );
@@ -56,12 +57,13 @@ const ownerRepositories = {
     async updateOthersFields(id, data) {
         return new Promise((resolve, reject) => {
             db.query(
-                `UPDATE owners SET fullName = ?, restaurantName = ?, cnpj = ?, email = ? WHERE id = ?`,
+                `UPDATE owners SET fullName = ?, restaurantName = ?, cnpj = ?, email = ?, phoneNumber = ? WHERE id = ?`,
                 [
                     data.fullName,
                     data.restaurantName,
                     data.cnpj,
                     data.email,
+                    data.phoneNumber,
                     id
                 ],
                 (err, results) => err ? reject(err) : resolve(results)
