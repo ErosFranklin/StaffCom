@@ -6,7 +6,9 @@ const secret = process.env.JWT_SECRET;
 const managerService = {
     async signIn(email, password){
         const manager = await managerRepository.findByEmail(email);
+
         if (!manager) throw new Error("Gerente não cadastrado!"); // In Portuguese because of the alerts
+        if (!manager.isActivated) throw new Error("Não é possível fazer login com uma conta excluída. Tente reativá-la!");
 
         const validPassword = await bcrypt.compare(password, manager.password);
         if (!validPassword) throw new Error("Credenciais inválidas!");
@@ -32,7 +34,7 @@ const managerService = {
 
     async updateOthersFields(managerId, managerData){
         await managerRepository.updateOthersFields(managerId, managerData);
-        return { message: "Gerente atualziado com sucesso!" };
+        return { message: "Gerente atualizado com sucesso!" };
     },
 
     async updatePassword(managerId, newPassword){

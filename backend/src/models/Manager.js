@@ -8,7 +8,8 @@ class Manager {
         fullName = null,
         birthdate = null,
         phoneNumber = null,
-        department = null
+        department = null,
+        isActivated
     }){
         this.id = id;
         this.email = email;
@@ -19,6 +20,7 @@ class Manager {
         this.birthdate = birthdate;
         this.phoneNumber = phoneNumber;
         this.department = department;
+        this.isActivated = isActivated;
     }
 }
 

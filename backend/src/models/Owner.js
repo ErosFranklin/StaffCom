@@ -6,7 +6,8 @@ class Owner {
         fullName = null,
         restaurantName = null,
         cnpj = null,
-        phoneNumber = null
+        phoneNumber = null,
+        isActivated
     }){
         this.id = id;
         this.email = email;
@@ -15,6 +16,7 @@ class Owner {
         this.restaurantName = restaurantName;
         this.cnpj = cnpj;
         this.phoneNumber = phoneNumber;
+        this.isActivated = isActivated;
     }
 }
 

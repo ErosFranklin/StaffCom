@@ -1,9 +1,10 @@
 const db = require("../config/dbConnection");
 const Owner = require("../models/Owner");
+const Manager = require("../models/Manager");
 
 const ownerRepositories = {
-    async create(data) {
-        const owner = new Owner(data);
+    async create(ownerData) {
+        const owner = new Owner(ownerData);
 
         return new Promise((resolve, reject) => {
             db.query(
@@ -22,11 +23,11 @@ const ownerRepositories = {
         });
     },
 
-    async findById(id) {
+    async findById(ownerId) {
         return new Promise((resolve, reject) => {
             db.query(
                 `SELECT * FROM owners WHERE id = ?`,
-                [id],
+                [ownerId],
                 (err, results) => {
                     if (err) {
                         reject(err);
@@ -38,11 +39,11 @@ const ownerRepositories = {
         });
     },
 
-    async findByEmail(email) {
+    async findByEmail(ownerEmail) {
         return new Promise((resolve, reject) => {
             db.query(
                 `SELECT * FROM owners WHERE email = ?`,
-                [email],
+                [ownerEmail],
                 (err, results) => {
                     if (err) {
                         reject(err);
@@ -54,52 +55,121 @@ const ownerRepositories = {
         });
     },
 
-    async updateOthersFields(id, data) {
+    async updateOthersFields(ownerId, ownerData) {
         return new Promise((resolve, reject) => {
             db.query(
                 `UPDATE owners SET fullName = ?, restaurantName = ?, cnpj = ?, email = ?, phoneNumber = ? WHERE id = ?`,
                 [
-                    data.fullName,
-                    data.restaurantName,
-                    data.cnpj,
-                    data.email,
-                    data.phoneNumber,
-                    id
+                    ownerData.fullName,
+                    ownerData.restaurantName,
+                    ownerData.cnpj,
+                    ownerData.email,
+                    ownerData.phoneNumber,
+                    ownerId
                 ],
                 (err, results) => err ? reject(err) : resolve(results)
             );
         });
     },
 
-    async updatePassword(id, newPassword) {
+    async updatePassword(ownerId, newPassword) {
         return new Promise((resolve, reject) => {
             db.query(
                 `UPDATE owners SET password = ? WHERE id = ?`,
                 [
                     newPassword,
-                    id
+                    ownerId
                 ],
                 (err, results) => err ? reject(err) : resolve(results)
             );
         });
     },
 
-    async activate(id) {
+    async activate(ownerId) {
         return new Promise((resolve, reject) => {
             db.query(
                 `UPDATE owners SET isActivated = TRUE WHERE id = ?`,
-                [id],
+                [ownerId],
                 (err, results) => err ? reject(err) : resolve(results)
             );
         });
     },
 
     // soft delete
-    async deactivate(id) {
+    async deactivate(ownerId) {
         return new Promise((resolve, reject) => {
             db.query(
                 `UPDATE owners SET isActivated = FALSE WHERE id = ?`,
-                [id],
+                [ownerId],
+                (err, results) => err ? reject(err) : resolve(results)
+            );
+        });
+    },
+
+    // manager's functions in owner
+    async createManager(managerData){
+        return new Promise((resolve, reject) => {
+            const manager = new Manager(managerData);
+
+            db.query(
+                `INSERT INTO managers (fullName, birthdate, cpf, phoneNumber, department, email, password, ownerId)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                [
+                    manager.fullName,
+                    manager.birthdate,
+                    manager.cpf,
+                    manager.phoneNumber,
+                    manager.department,
+                    manager.email,
+                    manager.password,
+                    manager.ownerId
+                ],
+                (err, results) => err ? reject(err) : resolve(results)
+            );
+        });
+    },
+
+    async getManagerByEmail (managerEmail){
+        return new Promise((resolve, reject) => {
+            db.query(
+                `SELECT * FROM managers WHERE email = ?`,
+                [managerEmail],
+                (err, results) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(results.length ? new Manager(results[0]) : null)
+                    }
+                }
+            );
+        });
+    },
+
+    async getAllManagers(ownerId){
+        return new Promise((resolve, reject) => {
+            db.query(
+                `SELECT * FROM managers WHERE ownerId = ?`,
+                [ownerId],
+                (err, results) => err ? reject(err) : resolve(results)
+            );
+        });
+    },
+
+    async activateManager(managerId){
+        return new Promise((resolve, reject) => {
+            db.query(
+                `UPDATE managers SET isActivated = TRUE WHERE id = ?`,
+                [managerId],
+                (err, results) => err ? reject(err) : resolve(results)
+            );
+        });
+    },
+
+    async deactivateManager(managerId){
+        return new Promise((resolve, reject) => {
+            db.query(
+                `UPDATE managers SET isActivated = FALSE WHERE id = ?`,
+                [managerId],
                 (err, results) => err ? reject(err) : resolve(results)
             );
         });
