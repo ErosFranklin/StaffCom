@@ -1,17 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const btnCadastrar = document.getElementById('btnCadastrar');
+    const btnCadastrar = document.getElementById('btn-cadastro');
     const messagemErro = document.querySelector('.messagemErro');
     const spinner = document.querySelector('.container-spinner');
 
     btnCadastrar.addEventListener('click', async function(event){
         event.preventDefault();
-        const restaurante_nome = document.getElementById('restaurante-nome').value;
-        const restaurante_cnpj = document.getElementById('restaurante-cnpj').value;
+        const restaurante_nome = document.getElementById('nome-restaurante').value;
+        const restaurante_cnpj = document.getElementById('cnpj-restaurante').value;
         const nome = document.getElementById('nome-dono').value;
         const email = document.getElementById('email-dono').value;
         const confirmaEmail = document.getElementById('conf-email-dono').value;
         const senha = document.getElementById('senha').value;
         const confSenha = document.getElementById('conf-senha').value;
+        const number = document.querySelector('#numero-dono').value;
 
         if(nome === "" || email === "" || senha === "" || confSenha === ""){
             messagemErro.innerHTML = "Preencha todos os campos!";
@@ -46,13 +47,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try{
             const dados = {
-                fullnome: nome,
                 email: email,
                 password: senha,
+                fullName: nome,
                 restaurantName: restaurante_nome,
-                cpnj: restaurante_cnpj
+                cnpj: restaurante_cnpj,
+                phoneNumber: number,
             }
-            const response = await fetch('http://127.0.0.1:5500/api/owners/signUp', {
+            const response = await fetch('http://127.0.0.1:8000/api/owners/signUp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

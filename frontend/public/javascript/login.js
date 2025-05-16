@@ -1,9 +1,9 @@
-document.addEventListener('DOMContentLoaded', await function() {
-    const btnLogin = document.getElementById('btnLogin');
+document.addEventListener('DOMContentLoaded', async function() {
+    const btnLogin = document.getElementById('btn-login');
     const messagemErro = document.querySelector('.messagemErro');
     const spinner = document.querySelector('.container-spinner');
 
-    btnLogin.addEventListener('click', async function(event) {
+    btnLogin.addEventListener('click', async function(event){
         event.preventDefault();
         const email = document.getElementById('email').value;
         const senha = document.getElementById('senha').value;
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', await function() {
             spinner.style.display = "none";
             return;
         }
-        if(!validandoSenha(password)){
+        if(!validandoSenha(senha)){
             messagemErro.textContent = "A senha deve conter entre 6 e 20 caracteres, pelo menos um número e uma letra.";
             messagemErro.style.display = "block";
             spinner.style.display = "none";
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', await function() {
                 email:email,
                 password:senha
             }
-            const response = await fetch(`http://127.0.0.1:5500/api/${tipo_user}/signIn`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/${tipo_user}/signIn`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -45,27 +45,30 @@ document.addEventListener('DOMContentLoaded', await function() {
                 throw new Error("Erro ao registrar usuário.");
             }
             const data = await response.json();
-            if(data.status === "success"){
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('cargo', cargo);
-                localStorage.setItem('userId', data.userId);
-                switch(cargo){
-                    case "proprietario":
-                        window.location.href = '../public/views/homeDono.html';
-                        break;
-                    case "gerente":
-                        window.location.href = '../public/views/homeGerente.html';
-                        break;
-                    case "chefe_cozinheiro":
-                        window.location.href = '../public/views/homeChefeCozinheiro.html';
-                        break;
-                    case "cozinheiro":
-                        window.location.href = '../public/views/home.html';
-                        break;
-                    case "garcom":
-                        window.location.href = '../public/views/home.html';
-                        break;
-                }
+            console.log(data);
+            localStorage.setItem('token', data.token);
+            const decode = jwt_decode(data.token);
+            console.log(decode);
+            switch(cargo){
+                case "proprietario":
+                    localStorage.setItem('userId', decode.ownerId);
+                    localStorage.setItem('cargo', decode.userType);
+                    window.location.href = '../public/views/homeDono.html';
+                    break;
+                case "gerente":
+                    localStorage.setItem('userId', decode.managerId);
+                    localStorage.setItem('cargo', decode.userType);
+                    window.location.href = '../public/views/homeGerente.html';
+                    break;
+                case "chefe_cozinheiro":
+                    window.location.href = '../public/views/homeChefeCozinheiro.html';
+                    break;
+                case "cozinheiro":
+                    window.location.href = '../public/views/home.html';
+                    break;
+                case "garcom":
+                    window.location.href = '../public/views/home.html';
+                    break;
             }
         }catch(error){
             console.error("Erro ao capturar os dados do formulário:", error);
@@ -75,7 +78,7 @@ document.addEventListener('DOMContentLoaded', await function() {
         }
     });
     function validandoSenha(password) {
-        var passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{8,20}$/;
+        var passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,20}$/;
         return passwordRegex.test(password);
     }
     function validandoEmail(email) {
