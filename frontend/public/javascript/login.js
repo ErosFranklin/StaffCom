@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', await function() {
                 email:email,
                 password:senha
             }
-            const response = await fetch(`api/${tipo_user}/signIn`, {
+            const response = await fetch(`http://127.0.0.1:5500/api/${tipo_user}/signIn`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 restaurantName: restaurante_nome,
                 cpnj: restaurante_cnpj
             }
-            const response = await fetch('api/owners/signUp', {
+            const response = await fetch('http://127.0.0.1:5500/api/owners/signUp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
