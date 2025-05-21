@@ -3,9 +3,9 @@ const db = require('../config/dbConnection');
 class DrinkRepository {
     async create(drink) {
         const [result] = await db.query(
-            `INSERT INTO drinks (drinkName, size, unitValue, drinkImg, quantity)
-             VALUES (?, ?, ?, ?, ?)`,
-            [drink.drinkName, drink.size, drink.unitValue, drink.drinkImg, drink.quantity]
+            `INSERT INTO drinks (drinkName, size, unitValue, drinkImg, imagePublicId, quantity)
+             VALUES (?, ?, ?, ?, ?, ?)`,
+            [drink.drinkName, drink.size, drink.unitValue, drink.drinkImg, drink.imagePublicId, drink.quantity]
         );
         return { id: result.insertId, ...drink };
     }
@@ -27,9 +27,9 @@ class DrinkRepository {
 
     async update(id, drink) {
         await db.query(
-            `UPDATE drinks SET drinkName = ?, size = ?, unitValue = ?, drinkImg = ?, quantity = ?
+            `UPDATE drinks SET drinkName = ?, size = ?, unitValue = ?,  drinkImg = ?, imagePublicId = ?, quantity = ?
              WHERE id = ?`,
-            [drink.drinkName, drink.size, drink.unitValue, drink.drinkImg, drink.quantity, id]
+            [drink.drinkName, drink.size, drink.unitValue, drink.drinkImg, drink.imagePublicId, drink.quantity, id]
         );
     }
 
