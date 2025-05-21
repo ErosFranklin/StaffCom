@@ -100,7 +100,7 @@ npm run start
   <li>Email: <strong>[erosfranklinfelix2016@gmail.com]</strong></li>
   <h3>Back-End</h3>
   <li>Nome: <strong>[Francisco das Chagas Medeiros Neto]</strong></li>
-  <li>Email: <strong>[]</strong></li>
+  <li>Email: <strong>[medeirosfrancisco0407@gmail.com]</strong></li>
   <li>Nome: <strong>[Jorge Longo da Silva Neto]</strong></li>
   <li>Email: <strong>[jorgelo0ngo2@gmail.com]</strong></li>
   <li>Email: <strong>[jorge.neto@aluno.uepb.edu.br]</strong></li>
