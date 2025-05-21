@@ -58,10 +58,12 @@ body{
     color:var(--titulo);
     text-align: center;
 }
-.modal-entrada{
+.modal-entrada,
+.modal-principal,
+.modal-sobremesa{
     width: 100%;
     height: 100%;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     position: fixed;
@@ -70,7 +72,9 @@ body{
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
 }
-.modal-entrada .modal-content-cardapio{
+.modal-entrada .modal-content-cardapio, 
+.modal-principal .modal-content-cardapio,
+.modal-sobremesa .modal-content-cardapio{
     width: 50%;
     height: auto;
     max-height: 90vh;
@@ -82,18 +86,24 @@ body{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     overflow-y: auto;
 }
-.modal-entrada .modal-content-cardapio .modal-header-cardapio{
+.modal-entrada .modal-content-cardapio .modal-header-cardapio,
+.modal-principal .modal-content-cardapio .modal-header-cardapio,
+.modal-sobremesa .modal-content-cardapio .modal-header-cardapio{
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
-.modal-entrada .modal-content-cardapio .modal-header-cardapio h2{
+.modal-entrada .modal-content-cardapio .modal-header-cardapio h2,
+.modal-principal .modal-content-cardapio .modal-header-cardapio h2,
+.modal-sobremesa .modal-content-cardapio .modal-header-cardapio h2{
     font-size:1.5rem;
     color:var(--texto-destaque);
     text-shadow: 1px 1px var(--titulo-sombra);
 }
-.modal-entrada .modal-content-cardapio .modal-header-cardapio #btn-fechar{
+.modal-entrada .modal-content-cardapio .modal-header-cardapio .btn-fechar-entrada,
+.modal-principal .modal-content-cardapio .modal-header-cardapio .btn-fechar-principal,
+.modal-sobremesa .modal-content-cardapio .modal-header-cardapio .btn-fechar-sobremesa{
     background-color: var(--card-background);
     color:var(--geral);
     border: none;
@@ -107,7 +117,13 @@ body{
     cursor: pointer;
     transition: .2s ease-in-out;
 }
-.modal-entrada .modal-content-cardapio #add-entrada{
+.modal-entrada .modal-content-cardapio .modal-header-cardapio .btn-fechar-entrada:hover,
+.modal-principal .modal-content-cardapio .modal-header-cardapio .btn-fechar-principal:hover,
+.modal-sobremesa .modal-content-cardapio .modal-header-cardapio .btn-fechar-sobremesa:hover{
+    background-color: var(--titulo-sombra);
+}
+.modal-entrada .modal-content-cardapio #add-entrada,
+.modal-principal .modal-content-cardapio #add-principal{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,19 +131,25 @@ body{
     width: 100%;
     height: auto;
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid,
+.modal-principal .modal-content-cardapio #add-principal .container-grid,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid{
     display:flex;
     justify-content: center;
     align-items: center;
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente{
     width: 100%;
     position:relative;
     margin:5px;
     padding:10px;
     transition: all 0.2s ease-in-out;
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -139,19 +161,25 @@ body{
     border-radius:10px;
     background-color: var(--texto-destaque);
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida img{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida img,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida img,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida img{
     max-width: 100%;
     width: 100%;
     height: auto;
     border-radius: 10px;
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida p{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida p,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida p,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida p{
     color:var(--texto);
     font-size:0.7rem;
     text-align: center;
     margin-bottom:10px;
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida button{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida button,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida button,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida button{
     background-color: var(--geral);
     color: var(--texto-botoes);
     width: 50%;
@@ -161,12 +189,16 @@ body{
     cursor: pointer;
     transition: .2s ease-in-out;
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida button:hover{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida button:hover,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida button:hover,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida button:hover{
     background-color: #dfdfdf;
     color: var(--texto);
 }
 
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .componente-input,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .componente-input{
     display: flex;
     justify-content: left;
     flex-direction: column;
@@ -177,16 +209,22 @@ body{
     border-radius:10px;
     margin-bottom:10px;
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input input{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input input,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .componente-input input,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .componente-input input{
     border:none;
     background-color: transparent;
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input input:focus, .componente-input textarea{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input input:focus, .componente-input textarea,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .componente-input input:focus, .componente-input textarea,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .componente-input input:focus, .componente-input textarea{
     outline: none;
     border:none;
     color:var(--texto);
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input textarea{
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input textarea, 
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .componente-input textarea,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .componente-input textarea{
     border:none;
     background-color: transparent;
     resize: none;           
@@ -203,14 +241,18 @@ body{
     -webkit-appearance: none;
     -moz-appearance: none;
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-btn-comida{
+.modal-entrada .modal-content-cardapio #add-entrada .container-btn-comida,
+.modal-principal .modal-content-cardapio #add-principal .container-btn-comida,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-btn-comida{
     position:relative;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.modal-entrada .modal-content-cardapio #add-entrada .container-btn-comida button{
+.modal-entrada .modal-content-cardapio #add-entrada .container-btn-comida button,
+.modal-principal .modal-content-cardapio #add-principal .container-btn-comida button,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-btn-comida button{
     background-color: var(--botoes);
     color: var(--texto);
     border:1px solid var(--card-background);
@@ -227,9 +269,7 @@ body{
 .modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente select:focus {
     outline: none;
 }
-.modal-entrada .modal-content-cardapio .modal-header-cardapio #btn-fechar:hover{
-    background-color: var(--titulo-sombra);
-}
+
 .container-cardapio{
     display:flex;
     flex-direction:column;
@@ -259,7 +299,7 @@ body{
     flex-direction: column;
     width: 100%;
 }
-.container-cardapio .container-entradas .container-mais-comida .btn-mais-comida, .container-prato-principal .container-mais-comida .btn-mais-comida, .container-sobremesas .container-mais-comida .btn-mais-comida{
+.container-cardapio .container-entradas .container-mais-comida .btn-mais-entrada, .container-prato-principal .container-mais-comida .btn-mais-principal, .container-sobremesas .container-mais-comida .btn-mais-sobremesa{
     background-color: var(--botoes);
     color: var(--geral);
     border:none;

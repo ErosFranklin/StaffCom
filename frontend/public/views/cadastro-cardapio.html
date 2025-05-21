@@ -12,7 +12,7 @@
         <div class="modal-content-cardapio">
           <div class="modal-header-cardapio">
             <h2>Cadastro de Entrada e Petiscos</h2>
-            <button id="btn-fechar"><i class="fa-solid fa-xmark"></i></button>
+            <button class="btn-fechar-entrada"><i class="fa-solid fa-xmark"></i></button>
           </div>
           <form id="add-entrada" class="add-entrada">
             <div class="container-grid">
@@ -25,10 +25,10 @@
                 </div>
                 <div class="componente">
                     <div class="componente-input">
-                        <input type="text" name="nome-entrada" id="nome-comida" placeholder="Nome da Comida" required>
+                        <input type="text" name="nome-entrada" id="nome-entrada" placeholder="Nome da Comida" required>
                     </div>
                     <div class="componente-input">
-                        <textarea name="descricao-entrada" id="descricao-comida" placeholder="Descricao da Comida" rows="2" cols="2" maxlength="200"></textarea>
+                        <textarea name="descricao-entrada" id="descricao-entrada" placeholder="Descricao da Comida" rows="2" cols="2" maxlength="200"></textarea>
                     </div>
                    
                         <select name="tamanho-entrada" id="tamanho-entrada">
@@ -45,7 +45,79 @@
             </div>
             <div class="container-btn-comida">
               <span class="error_message_modal"></span>
-              <button type="submit" id="btn-adicionar-comida">Adicionar</button>
+              <button type="submit" id="btn-adicionar-entrada">Adicionar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!--Modal Prato Principal-->
+      <div class="modal-principal">
+        <div class="modal-content-cardapio">
+          <div class="modal-header-cardapio">
+            <h2>Cadastro de Prato Principal</h2>
+            <button class="btn-fechar-principal"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <form id="add-principal" class="add-principal">
+            <div class="container-grid">
+                <div class="componente">
+                    <div class="img-comida">
+                    <img src="../image/logo.png" alt="comida">
+                    <p>Faça o upload de uma imagem 'jpg', 'jpeg', 'png' ou 'webp</p>
+                    <button type="button" class="btn-img">Upload</button>
+                    </div>
+                </div>
+                <div class="componente">
+                    <div class="componente-input">
+                        <input type="text" name="nome-principal" id="nome-principal" placeholder="Nome da Comida" required>
+                    </div>
+                    <div class="componente-input">
+                        <textarea name="descricao-principal" id="descricao-principal" placeholder="Descricao da Comida" rows="2" cols="2" maxlength="200"></textarea>
+                    </div>
+                    <div class="componente-input">
+                        <input type="number" name="valor-principal" id="valor-principal" placeholder="Valor" required>
+                    </div>
+                </div>
+            </div>
+            <div class="container-btn-comida">
+              <span class="error_message_modal"></span>
+              <button type="submit" id="btn-adicionar-principal">Adicionar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!--Modal Sobremesa-->
+      <div class="modal-sobremesa">
+        <div class="modal-content-cardapio">
+          <div class="modal-header-cardapio">
+            <h2>Cadastro de Sobremesas</h2>
+            <button class="btn-fechar-sobremesa"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <form id="add-sobremesa" class="add-sobremesa">
+            <div class="container-grid">
+                <div class="componente">
+                    <div class="img-comida">
+                    <img src="../image/logo.png" alt="comida">
+                    <p>Faça o upload de uma imagem 'jpg', 'jpeg', 'png' ou 'webp</p>
+                    <button type="button" class="btn-img">Upload</button>
+                    </div>
+                </div>
+                <div class="componente">
+                    <div class="componente-input">
+                        <input type="text" name="nome-sobremesa" id="nome-sobremesa" placeholder="Nome da Sobremesa" required>
+                    </div>
+                    <div class="componente-input">
+                        <textarea name="descricao-sobremesa" id="descricao-sobremesa" placeholder="Descricao da Sobremesa" rows="2" cols="2" maxlength="200"></textarea>
+                    </div>
+                    <div class="componente-input">
+                        <input type="number" name="valor-sobremesa" id="valor-sobremesa" placeholder="Valor" required>
+                    </div>
+                </div>
+            </div>
+            <div class="container-btn-comida">
+              <span class="error_message_modal"></span>
+              <button type="submit" id="btn-adicionar-principal">Adicionar</button>
             </div>
           </form>
         </div>
@@ -67,7 +139,7 @@
                     </div>
                 </div>
                 <div class="container-mais-comida">
-                    <button type="button" class="btn-mais-comida">+</button>
+                    <button type="button" class="btn-mais-entrada">+</button>
                 </div>
             </div>
             <div class="container-prato-principal">
@@ -77,7 +149,7 @@
                     </div>
                 </div>
                 <div class="container-mais-comida">
-                    <button type="button" class="btn-mais-comida">+</button>
+                    <button type="button" class="btn-mais-principal">+</button>
                 </div>
             </div>
             <div class="container-sobremesas">
@@ -87,10 +159,12 @@
                     </div>
                 </div>
                 <div class="container-mais-comida">
-                    <button type="button" class="btn-mais-comida">+</button>
+                    <button type="button" class="btn-mais-sobremesa">+</button>
                 </div>
             </div>
+        </div>
     </main>
+    <script src="../javascript/add-cardapio.js"></script>
     
 </body>
 </html>
