@@ -5,6 +5,7 @@ class Drink{
         size,
         unitValue,
         drinkImg,
+        imagePublicId,
         quantity
     }){
         this.id=id,
@@ -12,6 +13,7 @@ class Drink{
         this.size=size,
         this.unitValue=unitValue,
         this.drinkImg=drinkImg,
+        this.imagePublicId=imagePublicId,
         this.quantity=quantity
     }
 }
