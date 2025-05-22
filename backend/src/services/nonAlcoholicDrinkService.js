@@ -27,7 +27,8 @@ class NonAlcoholicDrinkService {
   }
 
   async update(id, data) {
-    await this.findById(id); // Validação
+    const drink = await nonAlcoholicDrinkRepository.findById(id);
+if (!drink) throw new Error('Bebida não alcoólica não encontrada.'); // Validação
     const updated = await nonAlcoholicDrinkRepository.update(id, data);
     return {
       mensagem: 'Bebida não alcoólica atualizada com sucesso!',

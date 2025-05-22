@@ -1,50 +1,77 @@
-const nonAlcoholicDrinkService = require('../services/NonAlcoholicDrinkService');
+const NonAlcoholicDrinkService = require('../services/NonAlcoholicDrinkService');
+const cloudinary = require('../config/cloudinaryConnection');
 
-class NonAlcoholicDrinkController {
+const NonAlcoholicDrinkController = {
   async create(req, res) {
     try {
-      const drink = await nonAlcoholicDrinkService.create(req.body);
-      res.status(201).json(drink);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
+      if (!req.file) throw new Error('Imagem é obrigatória');
+      const newDrink = await NonAlcoholicDrinkService.create({
+        ...req.body,
+        drinkImg: req.file.path || req.file.secure_url || req.file.location,
+        imagePublicId: req.file.filename || req.file.public_id
+      });
+      res.status(201).json(newDrink);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
     }
-  }
+  },
 
   async findAll(req, res) {
     try {
-      const drinks = await nonAlcoholicDrinkService.findAll();
+      const drinks = await NonAlcoholicDrinkService.getAll();
       res.json(drinks);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
-  }
+  },
 
   async findById(req, res) {
     try {
-      const drink = await nonAlcoholicDrinkService.findById(req.params.id);
+      const drink = await NonAlcoholicDrinkService.findById(req.params.id);
       res.json(drink);
-    } catch (err) {
-      res.status(404).json({ error: err.message });
+    } catch (error) {
+      res.status(404).json({ error: error.message });
     }
-  }
+  },
 
   async update(req, res) {
     try {
-      const drink = await nonAlcoholicDrinkService.update(req.params.id, req.body);
-      res.json(drink);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
+      if (req.file) {
+        const oldDrinkData = await NonAlcoholicDrinkService.findById(req.params.id);
+        const oldDrink = oldDrinkData.bebida;
+  
+        if (oldDrink?.imagePublicId) {
+          await cloudinary.uploader.destroy(oldDrink.imagePublicId);
+        }
+  
+        req.body.drinkImg = req.file.path || req.file.secure_url || req.file.location || '';
+        req.body.imagePublicId = req.file.filename || req.file.public_id || '';
+      }
+  
+      const updated = await NonAlcoholicDrinkService.update(req.params.id, req.body);
+      res.json(updated);
+  
+    } catch (error) {
+      res.status(400).json({ error: error.message });
     }
-  }
-
+  },
+  
   async delete(req, res) {
     try {
-      await nonAlcoholicDrinkService.delete(req.params.id);
-      res.status(204).send();
-    } catch (err) {
-      res.status(404).json({ error: err.message });
+      const drinkData = await NonAlcoholicDrinkService.findById(req.params.id);
+      const drink = drinkData.bebida;
+  
+      if (drink?.imagePublicId) {
+        await cloudinary.uploader.destroy(drink.imagePublicId);
+      }
+  
+      await NonAlcoholicDrinkService.delete(req.params.id);
+      res.json({ message: 'Bebida não alcoólica removida com sucesso.' });
+  
+    } catch (error) {
+      res.status(404).json({ error: error.message });
     }
   }
-}
+};
 
-module.exports = new NonAlcoholicDrinkController();
+module.exports = NonAlcoholicDrinkController;

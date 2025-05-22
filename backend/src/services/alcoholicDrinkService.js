@@ -36,7 +36,8 @@ class AlcoholicDrinkService {
   }
 
   async delete(id) {
-    await this.findById(id); // Validação
+    const drink = await nonAlcoholicDrinkRepository.findById(id);
+    if (!drink) throw new Error('Bebida alcoólica não encontrada.'); // Validação
     await alcoholicDrinkRepository.delete(id);
     return { mensagem: 'Bebida alcoólica excluída com sucesso!' };
   }
