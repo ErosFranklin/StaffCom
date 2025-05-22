@@ -1,39 +1,45 @@
-const nonAlcoholicDrinkRepository = require("../repositories/nonAlcoholicDrinkRepository");
-const drinkRepository = require("../repositories/drinkRepository");
+const nonAlcoholicDrinkRepository = require('../repositories/NonAlcoholicDrinkRepository');
 
-const nonAlcoholicDrinkService = {
-    async getNonAlcoholicByDrinkId(id) {
-        const drink = await drinkRepository.findById(id);
-        if (!drink) throw new Error("Bebida Não Encontrada");
+class NonAlcoholicDrinkService {
+  async create(data) {
+    const drink = await nonAlcoholicDrinkRepository.create(data);
+    return {
+      mensagem: 'Bebida não alcoólica cadastrada com sucesso!',
+      bebida: drink
+    };
+  }
 
-        const details = await nonAlcoholicDrinkRepository.findByDrinkId(id);
-        if (!details) throw new Error("Detalhes da bebida não alcoólica não encontrada");
+  async findAll() {
+    const drinks = await nonAlcoholicDrinkRepository.findAll();
+    return {
+      mensagem: 'Lista de bebidas não alcoólicas encontrada com sucesso!',
+      bebidas: drinks
+    };
+  }
 
-        return { ...drink, ...details };
-    },
+  async findById(id) {
+    const drink = await nonAlcoholicDrinkRepository.findById(id);
+    if (!drink) throw new Error('Bebida não alcoólica não encontrada.');
+    return {
+      mensagem: 'Bebida não alcoólica encontrada com sucesso!',
+      bebida: drink
+    };
+  }
 
-    async createNonAlcoholicDrink(data) {
-        const drink = await drinkRepository.findById(data.id);
-        if (!drink) throw new Error("Bebida Não Encontrada");
+  async update(id, data) {
+    await this.findById(id); // Validação
+    const updated = await nonAlcoholicDrinkRepository.update(id, data);
+    return {
+      mensagem: 'Bebida não alcoólica atualizada com sucesso!',
+      bebida: updated
+    };
+  }
 
-        return await nonAlcoholicDrinkRepository.create(data);
-    },
+  async delete(id) {
+    await this.findById(id); // Validação
+    await nonAlcoholicDrinkRepository.delete(id);
+    return { mensagem: 'Bebida não alcoólica excluída com sucesso!' };
+  }
+}
 
-    async updateNonAlcoholicDrink(id, data) {
-        const drink = await drinkRepository.findById(id);
-        if (!drink) throw new Error("Bebida Não Encontrada");
-
-        await nonAlcoholicDrinkRepository.update(id, data);
-        return { id, ...data };
-    },
-
-    async deleteNonAlcoholicDrink(id) {
-        const drink = await drinkRepository.findById(id);
-        if (!drink) throw new Error("Bebida Não Encontrada");
-
-        await nonAlcoholicDrinkRepository.delete(id);
-        return { message: "Bebida não alcoólica deletada com sucesso" };
-    }
-};
-
-module.exports = nonAlcoholicDrinkService;
+module.exports = new NonAlcoholicDrinkService();
