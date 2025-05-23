@@ -1,39 +1,46 @@
-const alcoholicDrinkRepository = require("../repositories/alcoholicDrinkRepository");
-const drinkRepository = require("../repositories/drinkRepository");
+const alcoholicDrinkRepository = require('../repositories/AlcoholicDrinkRepository');
 
-const alcoholicDrinkService = {
-    async getAlcoholicByDrinkId(id) {
-        const drink = await drinkRepository.findById(id);
-        if (!drink) throw new Error("Bebida Não Encontrada");
+class AlcoholicDrinkService {
+  async create(data) {
+    const drink = await alcoholicDrinkRepository.create(data);
+    return {
+      mensagem: 'Bebida alcoólica cadastrada com sucesso!',
+      bebida: drink
+    };
+  }
 
-        const details = await alcoholicDrinkRepository.findByDrinkId(id);
-        if (!details) throw new Error("Detalhes da bebida alcoólica não encontrada");
+  async findAll() {
+    const drinks = await alcoholicDrinkRepository.findAll();
+    return {
+      mensagem: 'Lista de bebidas alcoólicas encontrada com sucesso!',
+      bebidas: drinks
+    };
+  }
 
-        return { ...drink, ...details };
-    },
+  async findById(id) {
+    const drink = await alcoholicDrinkRepository.findById(id);
+    if (!drink) throw new Error('Bebida alcoólica não encontrada.');
+    return {
+      mensagem: 'Bebida alcoólica encontrada com sucesso!',
+      bebida: drink
+    };
+  }
 
-    async createAlcoholicDrink(data) {
-        const drink = await drinkRepository.findById(data.id);
-        if (!drink) throw new Error("Bebida Não Encontrada");
+  async update(id, data) {
+    await this.findById(id); // Validação
+    const updated = await alcoholicDrinkRepository.update(id, data);
+    return {
+      mensagem: 'Bebida alcoólica atualizada com sucesso!',
+      bebida: updated
+    };
+  }
 
-        return await alcoholicDrinkRepository.create(data);
-    },
+  async delete(id) {
+    const drink = await nonAlcoholicDrinkRepository.findById(id);
+    if (!drink) throw new Error('Bebida alcoólica não encontrada.'); // Validação
+    await alcoholicDrinkRepository.delete(id);
+    return { mensagem: 'Bebida alcoólica excluída com sucesso!' };
+  }
+}
 
-    async updateAlcoholicDrink(id, data) {
-        const drink = await drinkRepository.findById(id);
-        if (!drink) throw new Error("Bebida Não Encontrada");
-
-        await alcoholicDrinkRepository.update(id, data);
-        return { id, ...data };
-    },
-
-    async deleteAlcoholicDrink(id) {
-        const drink = await drinkRepository.findById(id);
-        if (!drink) throw new Error("Bebida Não Encontrada");
-
-        await alcoholicDrinkRepository.delete(id);
-        return { message: "Bebida alcoólica deletada com sucesso" };
-    }
-};
-
-module.exports = alcoholicDrinkService;
+module.exports = new AlcoholicDrinkService();
