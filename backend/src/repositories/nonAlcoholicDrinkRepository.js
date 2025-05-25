@@ -1,44 +1,43 @@
 const db = require("../config/dbConnection");
-const NonAlcoholicDrink = require("../models/NonAlcoholicDrink");
+const NonAlcoholicDrink = require('../models/NonAlcoholicDrink');
 
-const nonAlcoholicDrinkRepository = {
-    async findByDrinkId(id) {
-        return new Promise((resolve, reject) => {
-            db.query(`SELECT * FROM non_alcoholic_drinks WHERE id = ?`, [id], (err, results) => {
-                if (err) return reject(err);
-                resolve(results.length ? new NonAlcoholicDrink(results[0]) : null);
-            });
-        });
-    },
+class NonAlcoholicDrinkRepository {
+  async create(data) {
+    const { drinkName, size, unitValue, drinkImg, imagePublicId, quantity, packagingType } = data;
+    const [result] = await db.query(
+      `INSERT INTO non_alcoholic_drinks 
+       (drinkName, size, unitValue, drinkImg, imagePublicId, quantity, packagingType)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [drinkName, size, unitValue, drinkImg, imagePublicId, quantity, packagingType]
+    );
+    return new NonAlcoholicDrink({ id: result.insertId, ...data });
+  }
 
-    async create(data) {
-        return new Promise((resolve, reject) => {
-            const { id, packagingType } = data;
-            db.query(
-                `INSERT INTO non_alcoholic_drinks (id, packagingType) VALUES (?, ?)`,
-                [id, packagingType],
-                (err, result) => err ? reject(err) : resolve({ id: result.insertId, ...data })
-            );
-        });
-    },
+  async findAll() {
+    const [rows] = await db.query('SELECT * FROM non_alcoholic_drinks');
+    return rows.map(row => new NonAlcoholicDrink(row));
+  }
 
-    async update(id, data) {
-        return new Promise((resolve, reject) => {
-            db.query(
-                `UPDATE non_alcoholic_drinks SET packagingType = ? WHERE id = ?`,
-                [data.packagingType, id],
-                (err, result) => err ? reject(err) : resolve(result)
-            );
-        });
-    },
+  async findById(id) {
+    const [rows] = await db.query('SELECT * FROM non_alcoholic_drinks WHERE id = ?', [id]);
+    if (rows.length === 0) return null;
+    return new NonAlcoholicDrink(rows[0]);
+  }
 
-    async delete(id) {
-        return new Promise((resolve, reject) => {
-            db.query(`DELETE FROM non_alcoholic_drinks WHERE id = ?`, [id], (err, result) => {
-                err ? reject(err) : resolve(result);
-            });
-        });
-    }
-};
+  async update(id, data) {
+    const { drinkName, size, unitValue, drinkImg, imagePublicId, quantity, packagingType } = data;
+    await db.query(
+      `UPDATE non_alcoholic_drinks 
+       SET drinkName = ?, size = ?, unitValue = ?, drinkImg = ?, imagePublicId = ?, quantity = ?, packagingType = ? 
+       WHERE id = ?`,
+      [drinkName, size, unitValue, drinkImg, imagePublicId, quantity, packagingType, id]
+    );
+    return new NonAlcoholicDrink({ id, ...data });
+  }
 
-module.exports = nonAlcoholicDrinkRepository;
+  async delete(id) {
+    await db.query('DELETE FROM non_alcoholic_drinks WHERE id = ?', [id]);
+  }
+}
+
+module.exports = new NonAlcoholicDrinkRepository();
