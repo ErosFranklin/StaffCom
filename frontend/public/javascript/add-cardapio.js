@@ -36,6 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputUploadBebida = document.querySelector("#upload-img-bebida");
     const imgPreviewBebida = document.querySelector("#add-bebida .img-comida img");
 
+    getDadosBebidasCardapio();
+
     function setupImageUpload(btnUpload, inputUpload, imgPreview) {
         btnUpload.addEventListener("click", function () {
             inputUpload.click();
@@ -219,4 +221,22 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
+
+    async function getDadosBebidasCardapio() {
+        try {
+            const response = await fetch('http://localhost:8000/api/alcoholic/get-all', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error("Erro ao buscar bebidas do cardápio.");
+            }
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error("Erro ao obter dados do cardápio:", error);
+        }
+    }
 });

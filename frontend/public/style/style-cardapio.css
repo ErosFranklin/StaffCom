@@ -187,9 +187,8 @@ body{
 .modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida img,
 .modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida img,
 .modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .img-comida img {
-    max-width: 100%;
-    width: 100%;
-    height: auto;
+    width: 200px;
+    height: 200px;
     border-radius: 10px;
 }
 
@@ -410,4 +409,42 @@ body{
 
 .componente-input:not(.hidden-field) {
     display: flex;
+}
+
+.container-btn-comida{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.container-btn-comida .error_message_modal{
+    font-size:0.8rem;
+    color:red;
+    margin-bottom: 10px;
+}
+.container-btn-comida #btn-adicionar-bebida, #btn-adicionar-entrada, #btn-adicionar-principal, #btn-adicionar-sobremesa {
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+.container-btn-comida #btn-adicionar-bebida:hover, #btn-adicionar-entrada:hover, #btn-adicionar-principal:hover, #btn-adicionar-sobremesa:hover{
+    background-color: var(--botoes-hover);
+}
+
+.container-bebidas-grid .container-sub-comidas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    padding: 10px;
 }
