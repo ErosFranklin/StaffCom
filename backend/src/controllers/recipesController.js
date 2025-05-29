@@ -1,4 +1,5 @@
 const recipesService = require("../services/recipesService");
+const cloudinary = require("../config/cloudinaryConnection");
 
 const recipesController = {
     async getAllRecipes(req, res) {
@@ -20,32 +21,61 @@ const recipesController = {
         }
     },
 
-    async createRecipe(req, res) {
+    async create(req, res) {
         try {
-            const result = await recipesService.createRecipe(req.body);
+            const file = req.file || {};
+            const newRecipe = {
+                ...req.body,
+                foodImg: file.path || file.secure_url || file.location || '',
+                imagePublicId: file.filename || file.public_id || ''
+            };
+            const result = await recipesService.create(newRecipe);
             return res.status(201).json(result);
         } catch (error) {
-            return res.status(400).json({ message: error.message });
+            return res.status(400).json({ error: error.message });
         }
     },
 
-    async updateRecipe(req, res) {
+    async update(req, res) {
         try {
-            const recipeId = parseInt(req.params.id);
-            const result = await recipesService.updateRecipe(recipeId, req.body);
+            const oldRecipe = await recipesService.getRecipeById(req.params.id);
+            if (!oldRecipe) {
+                return res.status(404).json({ error: "Item não encontrado" });
+            }
+
+            if (req.file) {
+                if (oldRecipe.imagePublicId) {
+                    await cloudinary.uploader.destroy(oldRecipe.imagePublicId);
+                }
+                req.body.foodImg = req.file.path || req.file.secure_url || req.file.location || '';
+                req.body.imagePublicId = req.file.filename || req.file.public_id || '';
+            } else {
+                req.body.foodImg = oldRecipe.foodImg;
+                req.body.imagePublicId = oldRecipe.imagePublicId;
+            }
+
+            const result = await recipesService.update(req.params.id, req.body);
             return res.status(200).json(result);
         } catch (error) {
-            return res.status(400).json({ message: error.message });
+            return res.status(400).json({ error: error.message });
         }
     },
 
-    async deleteRecipe(req, res) {
+    async delete(req, res) {
         try {
-            const recipeId = parseInt(req.params.id);
-            const result = await recipesService.deleteRecipe(recipeId);
+            const recipe = await recipesService.getRecipeById(req.params.id);
+
+            if (!recipe) {
+                return res.status(404).json({ error: "Item não encontrado" });
+            }
+            if (recipe.imagePublicId) {
+                await cloudinary.uploader.destroy(recipe.imagePublicId);
+            }
+
+            const result = await recipesService.delete(req.params.id);
             return res.status(200).json(result);
         } catch (error) {
-            return res.status(404).json({ message: error.message });
+            return res.status(400).json({ error: error.message });
         }
     }
 };
