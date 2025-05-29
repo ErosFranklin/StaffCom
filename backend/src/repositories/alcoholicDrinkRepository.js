@@ -39,5 +39,4 @@ class AlcoholicDrinkRepository {
     await db.query('DELETE FROM alcoholic_drinks WHERE id = ?', [id]);
   }
 }
-
 module.exports = new AlcoholicDrinkRepository();

@@ -1,0 +1,450 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,800;0,900;1,500&display=swap');
+@font-face {
+    font-family: 'Bukhari Script';
+    src: url('../fonts/BukhariScript.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --geral:#ffffff;
+    --fundo:rgba(81, 81, 81, 0.061);
+    --titulo: #606060;
+    --titulo-sombra: #60606080;
+    --texto: #202020;
+    --card-background: #828282;
+    --botoes: #ffde00;
+    --botoes-hover:#ffdd00a2;
+    --texto-destaque:#ffde00;
+    --texto-botoes:#202020;
+    --transition-speed: 0.3s;
+}
+body{
+    background-color:var(--fundo);
+    min-height: 100vh;
+    width: 100vw;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.container-header{
+    display: flex;
+    flex-direction:row;
+    width: 100%;
+    height: 20vh;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.container-header .logo{
+    position: absolute;
+    left: 0;
+}
+.container-header .logo img{
+    max-width: 150px;
+    width: 100%;
+}
+.container-header .titulo-logo{
+    display: flex;
+    justify-content: center;
+    font-family: 'Bukhari Script', cursive;
+    font-style: italic;
+    font-size:2rem;
+    color:var(--titulo);
+    text-align: center;
+}
+
+.modal-entrada,
+.modal-principal,
+.modal-sobremesa,
+.modal-bebida {
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.modal-entrada .modal-content-cardapio, 
+.modal-principal .modal-content-cardapio,
+.modal-sobremesa .modal-content-cardapio,
+.modal-bebida .modal-content-cardapio {
+    width: 50%;
+    height: auto;
+    max-height: 90vh;
+    background-color: var(--geral);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.modal-entrada .modal-content-cardapio .modal-header-cardapio,
+.modal-principal .modal-content-cardapio .modal-header-cardapio,
+.modal-sobremesa .modal-content-cardapio .modal-header-cardapio,
+.modal-bebida .modal-content-cardapio .modal-header-cardapio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.modal-entrada .modal-content-cardapio .modal-header-cardapio h2,
+.modal-principal .modal-content-cardapio .modal-header-cardapio h2,
+.modal-sobremesa .modal-content-cardapio .modal-header-cardapio h2,
+.modal-bebida .modal-content-cardapio .modal-header-cardapio h2 {
+    font-size:1.5rem;
+    color:var(--texto-destaque);
+    text-shadow: 1px 1px var(--titulo-sombra);
+}
+
+.modal-entrada .modal-content-cardapio .modal-header-cardapio .btn-fechar-entrada,
+.modal-principal .modal-content-cardapio .modal-header-cardapio .btn-fechar-principal,
+.modal-sobremesa .modal-content-cardapio .modal-header-cardapio .btn-fechar-sobremesa,
+.modal-bebida .modal-content-cardapio .modal-header-cardapio .btn-fechar-bebida {
+    background-color: var(--card-background);
+    color:var(--geral);
+    border: none;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.modal-entrada .modal-content-cardapio .modal-header-cardapio .btn-fechar-entrada:hover,
+.modal-principal .modal-content-cardapio .modal-header-cardapio .btn-fechar-principal:hover,
+.modal-sobremesa .modal-content-cardapio .modal-header-cardapio .btn-fechar-sobremesa:hover,
+.modal-bebida .modal-content-cardapio .modal-header-cardapio .btn-fechar-bebida:hover {
+    background-color: var(--titulo-sombra);
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada,
+.modal-principal .modal-content-cardapio #add-principal,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa,
+.modal-bebida .modal-content-cardapio #add-bebida {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid,
+.modal-principal .modal-content-cardapio #add-principal .container-grid,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente {
+    width: 100%;
+    position:relative;
+    margin:5px;
+    padding:10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .img-comida {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    border: 1px solid var(--card-background);
+    border-radius:10px;
+    background-color: var(--texto-destaque);
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida img,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida img,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida img,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .img-comida img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida p,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida p,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida p,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .img-comida p {
+    color:var(--texto);
+    font-size:0.7rem;
+    text-align: center;
+    margin-bottom:10px;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida button,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida button,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida button,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .img-comida button {
+    background-color: var(--geral);
+    color: var(--texto-botoes);
+    width: 50%;
+    border:1px solid var(--card-background);
+    border-radius:10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .img-comida button:hover,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .img-comida button:hover,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .img-comida button:hover,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .img-comida button:hover {
+    background-color: #dfdfdf;
+    color: var(--texto);
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .componente-input,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .componente-input,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .componente-input {
+    justify-content: left;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 10px 5px;
+    border: 1px solid var(--card-background);
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input input,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .componente-input input,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .componente-input input,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .componente-input input {
+    border:none;
+    background-color: transparent;
+    color:var(--texto);
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input textarea,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .componente-input textarea,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .componente-input textarea,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .componente-input textarea {
+    border:none;
+    background-color: transparent;
+    resize: none;
+    color:var(--texto);
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.componente-input input::placeholder,
+.componente-input textarea::placeholder {
+    color: var(--card-background);
+    opacity: 1;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input input:focus,
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente .componente-input textarea:focus,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .componente-input input:focus,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente .componente-input textarea:focus,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .componente-input input:focus,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente .componente-input textarea:focus,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .componente-input input:focus,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .componente-input textarea:focus {
+    outline: none;
+    border: none;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente select,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente select,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px 5px;
+    color: var(--texto);
+    background-color: var(--geral);
+    border: 1px solid var(--card-background);
+    border-radius: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23202020"%3E%3Cpath d="M7 10l5 5 5-5H7z"/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .componente-input select {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 0;
+    color: var(--texto);
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23202020"%3E%3Cpath d="M7 10l5 5 5-5H7z"/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente select option,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente select option,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente select option,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .componente-input select option {
+    background-color: var(--geral);
+    color: var(--texto);
+}
+
+.modal-entrada .modal-content-cardapio #add-entrada .container-grid .componente select:focus,
+.modal-principal .modal-content-cardapio #add-principal .container-grid .componente select:focus,
+.modal-sobremesa .modal-content-cardapio #add-sobremesa .container-grid .componente select:focus,
+.modal-bebida .modal-content-cardapio #add-bebida .container-grid .componente .componente-input select:focus {
+    outline: none;
+}
+
+.container-cardapio{
+    display:flex;
+    flex-direction:column;
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.container-cardapio .container-entradas,
+.container-cardapio .container-prato-principal,
+.container-cardapio .container-sobremesas,
+.container-cardapio .container-bebidas {
+    border:1px solid var(--card-background);
+    border-radius:10px;
+    padding:10px;
+    margin-bottom: 10px;
+}
+
+.container-cardapio .container-entradas h1,
+.container-cardapio .container-prato-principal h1,
+.container-cardapio .container-sobremesas h1,
+.container-cardapio .container-bebidas h1 {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color:var(--titulo);
+    margin-bottom: 20px;
+    text-decoration: underline;
+}
+
+.container-cardapio .container-entradas .container-mais-comida,
+.container-cardapio .container-prato-principal .container-mais-comida,
+.container-cardapio .container-sobremesas .container-mais-comida,
+.container-cardapio .container-bebidas .container-mais-comida {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.container-cardapio .container-entradas .container-mais-comida .btn-mais-entrada,
+.container-cardapio .container-prato-principal .container-mais-comida .btn-mais-principal,
+.container-cardapio .container-sobremesas .container-mais-comida .btn-mais-sobremesa,
+.container-cardapio .container-bebidas .container-mais-comida .btn-mais-bebida {
+    background-color: var(--botoes);
+    color: var(--geral);
+    border:none;
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+    font-size:1.5rem;
+    font-weight: bolder;
+    cursor:pointer;
+    transition: .2s ease-in-out;
+}
+
+.container-cardapio .container-entradas .container-mais-comida .btn-mais-entrada:hover,
+.container-cardapio .container-prato-principal .container-mais-comida .btn-mais-principal:hover,
+.container-cardapio .container-sobremesas .container-mais-comida .btn-mais-sobremesa:hover,
+.container-cardapio .container-bebidas .container-mais-comida .btn-mais-bebida:hover {
+    background-color: var(--botoes-hover);
+}
+
+.hidden-field {
+    display: none;
+}
+
+.componente-input:not(.hidden-field) {
+    display: flex;
+}
+
+.container-btn-comida{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.container-btn-comida .error_message_modal{
+    font-size:0.8rem;
+    color:red;
+    margin-bottom: 10px;
+}
+.container-btn-comida #btn-adicionar-bebida, #btn-adicionar-entrada, #btn-adicionar-principal, #btn-adicionar-sobremesa {
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+.container-btn-comida #btn-adicionar-bebida:hover, #btn-adicionar-entrada:hover, #btn-adicionar-principal:hover, #btn-adicionar-sobremesa:hover{
+    background-color: var(--botoes-hover);
+}
+
+.container-bebidas-grid .container-sub-comidas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+}

@@ -34,7 +34,7 @@ body{
 .container-header{
    display: flex;
    flex-direction:row;
-   width: 30%;
+   width: 100%;
    height: 20vh;
    align-items: center;
 }
