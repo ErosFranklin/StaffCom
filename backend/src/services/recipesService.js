@@ -13,9 +13,8 @@ const recipesService = {
         return recipe;
     },
 
-    async createRecipe(newRecipeData) {
-        // Obrigatóooorio
-        if (!newRecipeData.nameFood) {
+    async create(newRecipeData) {
+        if (!newRecipeData.foodName) {
             throw new Error("O nome da receita é obrigatório!");
         }
         if (!newRecipeData.value) {
@@ -32,7 +31,7 @@ const recipesService = {
         };
     },
 
-    async updateRecipe(id, updatedData) {
+    async update(id, updatedData) {
         const existingRecipe = await recipesRepository.findById(id);
         if (!existingRecipe) throw new Error("Receita não encontrada para atualização!");
 
@@ -40,7 +39,7 @@ const recipesService = {
         return { message: "Receita atualizada com sucesso!" };
     },
 
-    async deleteRecipe(id) {
+    async delete(id) {
         const existingRecipe = await recipesRepository.findById(id);
         if (!existingRecipe) throw new Error("Receita não encontrada para exclusão!");
 

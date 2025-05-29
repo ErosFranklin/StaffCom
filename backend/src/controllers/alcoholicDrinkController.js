@@ -10,16 +10,16 @@ const AlcoholicDrinkController = {
         drinkImg: req.file.path || req.file.secure_url || req.file.location,
         imagePublicId: req.file.filename || req.file.public_id
       });
-      res.status(201).json(newDrink);
+      return res.status(201).json(newDrink);
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      return res.status(400).json({ error: error.message });
     }
   },
 
   async findAll(req, res) {
     try {
       const drinks = await AlcoholicDrinkService.getAll();
-      res.json(drinks);
+      return res.status(200).json(drinks);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -27,40 +27,53 @@ const AlcoholicDrinkController = {
 
   async findById(req, res) {
     try {
-      const drink = await AlcoholicDrinkService.findById(req.params.id);
-      res.json(drink);
+      const drink = await AlcoholicDrinkService.getById(req.params.id);
+      return res.status(200).json(drink);
     } catch (error) {
-      res.status(404).json({ error: error.message });
+      return res.status(404).json({ error: error.message });
     }
   },
 
   async update(req, res) {
     try {
+      const oldAlcoholic = await AlcoholicDrinkService.getById(req.params.id);
+      if (!oldAlcoholic) {
+        return res.status(404).json({ error: "Item não encontrado" });
+      }
+
       if (req.file) {
-        const oldDrink = await AlcoholicDrinkService.findById(req.params.id);
-        if (oldDrink.imagePublicId) {
-          await cloudinary.uploader.destroy(oldDrink.imagePublicId);
+        if (oldAlcoholic.imagePublicId) {
+          await cloudinary.uploader.destroy(oldAlcoholic.imagePublicId);
         }
         req.body.drinkImg = req.file.path || req.file.secure_url || req.file.location || '';
         req.body.imagePublicId = req.file.filename || req.file.public_id || '';
+      } else {
+        req.body.drinkImg = oldAlcoholic.drinkImg;
+        req.body.imagePublicId = oldAlcoholic.imagePublicId;
       }
-      const updated = await AlcoholicDrinkService.update(req.params.id, req.body);
-      res.json(updated);
+
+      const result = await AlcoholicDrinkService.update(req.params.id, req.body);
+      return res.status(200).json(result);
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      return res.status(400).json({ error: error.message });
     }
   },
 
   async delete(req, res) {
     try {
-      const drink = await AlcoholicDrinkService.findById(req.params.id);
-      if (drink.imagePublicId) {
-        await cloudinary.uploader.destroy(drink.imagePublicId);
+      const alcoholic = await AlcoholicDrinkService.getById(req.params.id);
+
+      if (!alcoholic) {
+        return res.status(404).json({ error: "Item não encontrado" });
       }
-      await AlcoholicDrinkService.delete(req.params.id);
-      res.json({ message: 'Bebida alcoólica removida com sucesso.' });
+      if (alcoholic.imagePublicId) {
+        await cloudinary.uploader.destroy(alcoholic.imagePublicId);
+      }
+
+      const result = await AlcoholicDrinkService.delete(req.params.id);
+      return res.status(200).json(result);
     } catch (error) {
-      res.status(404).json({ error: error.message });
+      return res.status(400).json({ error: error.message });
     }
   }
 };

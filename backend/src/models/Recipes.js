@@ -1,16 +1,18 @@
 class Recipes{
     constructor({
         id,
-        nameFood,
-        foodDescripcion,
+        foodName,
+        foodDescription,
         value,
-        foodImg
+        foodImg,
+        imagePublicId
     }){
         this.id=id,
-        this.nameFood=nameFood,
-        this.foodDescripcion=foodDescripcion,
+        this.foodName=foodName,
+        this.foodDescription=foodDescription,
         this.value=value,
         this.foodImg=foodImg
+        this.imagePublicId = imagePublicId;
     }
 }
 

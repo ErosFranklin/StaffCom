@@ -6,10 +6,10 @@ const secret = process.env.JWT_SECRET;
 const ownerService = {
     async signUp(newOwner) {
         // only what is can not null
-        if (!newOwner.email){
+        if (!newOwner.email) {
             throw new Error("O email do novo dono é obrigatório!");
         }
-        if (!newOwner.password){
+        if (!newOwner.password) {
             throw new Error("A senha do novo dono é obrigatória!");
         }
 
@@ -74,7 +74,7 @@ const ownerService = {
         if (!owner) throw new Error("Dono não encontrado com esse email!");
 
         await ownerRepository.activate(owner.id);
-        
+
         return { message: "Conta reativada com sucesso!" };
     },
 
@@ -84,12 +84,12 @@ const ownerService = {
     },
 
     // manager's functions in owner
-    async addManager(ownerId, managerData){
+    async addManager(ownerId, managerData) {
         // only what is can not null
-        if (!managerData.email){
+        if (!managerData.email) {
             throw new Error("O email do novo gerente é obrigatório!");
         }
-        if (!managerData.cpf){
+        if (!managerData.cpf) {
             throw new Error("O CPF do novo gerente é obrigatório!");
         }
 
@@ -106,10 +106,10 @@ const ownerService = {
         const creationResult = await ownerRepository.createManager(managerToCreate);
         const managerId = creationResult.insertId;
 
-        const allManagers =  await ownerRepository.getAllManagers(ownerId);
+        const allManagers = await ownerRepository.getAllManagers(ownerId);
         const newManager = allManagers.find(m => m.id === managerId);
 
-        if (!newManager){
+        if (!newManager) {
             throw new Error("Erro ao recuperar o gerente criado!");
         }
 
@@ -122,7 +122,7 @@ const ownerService = {
         }
     },
 
-    async showAllManagers(ownerId){
+    async showAllManagers(ownerId) {
         const managers = await ownerRepository.getAllManagers(ownerId);
 
         // command to filter managers without their passwords
@@ -134,16 +134,16 @@ const ownerService = {
         return protectedManagers;
     },
 
-    async excludeManager(managerId){
+    async excludeManager(managerId) {
         await ownerRepository.deactivateManager(managerId);
         return { message: "Gerente excluído com sucesso!" };
     },
 
-    async reactivateManager(ownerId, managerEmail){
+    async reactivateManager(ownerId, managerEmail) {
         const manager = await ownerRepository.getManagerByEmail(managerEmail);
 
-        if(!manager) throw new Error("Gerente não encontrado com esse email!");
-        if(manager.ownerId !== ownerId) throw new Error("Permissão negada: gerente não pertencia a este dono!");
+        if (!manager) throw new Error("Gerente não encontrado com esse email!");
+        if (manager.ownerId !== ownerId) throw new Error("Permissão negada: gerente não pertencia a este dono!");
 
         await ownerRepository.activateManager(manager.id);
         return { message: "Conta de gerente reativada com sucesso!" };

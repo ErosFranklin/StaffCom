@@ -3,49 +3,38 @@ const Recipe = require("../models/Recipes");
 
 const recipesRepository = {
     async findById(id) {
-        return new Promise((resolve, reject) => {
-            db.query(`SELECT * FROM recipes WHERE id = ?`, [id], (err, results) => {
-                if (err) return reject(err);
-                resolve(results.length ? new Recipe(results[0]) : null);
-            });
-        });
+        const [results] = await db.execute(`SELECT * FROM recipes WHERE id = ?`, [id]);
+        return results.length ? new Recipe(results[0]) : null;
+    },
+
+    async findAll() {
+        const [results] = await db.execute(`SELECT * FROM recipes`);
+        return results;
     },
 
     async create(data) {
-        return new Promise((resolve, reject) => {
-            const { nameFood, foodDescripcion, value, foodImg } = data;
-            db.query(
-                `INSERT INTO recipes (nameFood, foodDescripcion, value, foodImg) VALUES (?, ?, ?, ?)`,
-                [nameFood, foodDescripcion, value, foodImg],
-                (err, result) => {
-                    if (err) return reject(err);
-                    resolve({ id: result.insertId, ...data });
-                }
-            );
-        });
+        const { foodName, foodDescription, value, foodImg, imagePublicId } = data;
+        const sql = `INSERT INTO recipes (foodName, foodDescription, value, foodImg, imagePublicId) VALUES (?, ?, ?, ?, ?)`;
+        const params = [foodName, foodDescription, value, foodImg, imagePublicId];
+        const [result] = await db.execute(sql, params);
+        return result;
     },
 
     async update(id, data) {
-        return new Promise((resolve, reject) => {
-            const { nameFood, foodDescripcion, value, foodImg } = data;
-            db.query(
-                `UPDATE recipes SET nameFood = ?, foodDescripcion = ?, value = ?, foodImg = ? WHERE id = ?`,
-                [nameFood, foodDescripcion, value, foodImg, id],
-                (err, result) => {
-                    if (err) return reject(err);
-                    resolve(result);
-                }
-            );
-        });
+        const { foodName, foodDescription, value, foodImg, imagePublicId } = data;
+        const sql = `
+            UPDATE recipes 
+            SET foodName = ?, foodDescription = ?, value = ?, foodImg = ?, imagePublicId = ?
+            WHERE id = ?
+        `;
+        const params = [foodName, foodDescription, value, foodImg, imagePublicId, id];
+        const [result] = await db.execute(sql, params);
+        return result;
     },
 
     async delete(id) {
-        return new Promise((resolve, reject) => {
-            db.query(`DELETE FROM recipes WHERE id = ?`, [id], (err, result) => {
-                if (err) return reject(err);
-                resolve(result);
-            });
-        });
+        const [result] = await db.execute(`DELETE FROM recipes WHERE id = ?`, [id]);
+        return result;
     }
 };
 
