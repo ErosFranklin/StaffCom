@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem('token');
-    // Verifica se o token existe
     if (!token) {
         console.error("Token não encontrado. Redirecionando para a página de login.");
-        window.location.href = "../public/views/login.html"; // Redireciona para a página de login
+        window.location.href = "../public/views/login.html"; 
     }
     const modalEntradas = document.querySelector(".modal-entrada");
     const btnEntradas = document.querySelector(".btn-mais-entrada");
@@ -33,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnUploadPrincipal = document.querySelector("#add-principal .btn-img");
     const inputUploadPrincipal = document.querySelector("#upload-img-principal");
     const imgPreviewPrincipal = document.querySelector("#add-principal .img-comida img");
+    const formAddPrincipal = document.querySelector("#add-principal");
 
     const btnUploadSobremesa = document.querySelector("#add-sobremesa .btn-img");
     const inputUploadSobremesa = document.querySelector("#upload-img-sobremesa");
@@ -145,7 +145,60 @@ document.addEventListener("DOMContentLoaded", function () {
         imgPreviewBebida.src = "../image/logo.png";
     });
 
-    // Envio do formulário de bebida
+     
+    formAddPrincipal.addEventListener("submit", async function(event) {
+        console.log("Enviando formulário de prato principal...");
+        event.preventDefault();
+        const imageFile = inputUploadBebida.files[0];
+        if (!imageFile) {
+            alert("Por favor, selecione uma imagem para a bebida.");
+            return;
+        }
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        formData.append('dishName', document.querySelector("#nome-principal").value);
+        formData.append('description', document.querySelector("#descricao-principal").value);
+        formData.append('unitValue', parseFloat(document.querySelector("#valor-principal").value));
+
+        try{
+            const response = await fetch('http://localhost:8000/api/recipes/', {
+                method: 'POST',
+                headers: {  
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+
+            })
+            if (!response.ok) {
+                    
+                    const errorText = await response.text(); 
+                    let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
+                    try {
+                        const errorData = JSON.parse(errorText); 
+                        errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
+                    } catch (jsonError) {
+                        
+                        errorMessage = `Erro HTTP! Status: ${response.status}, Resposta: ${errorText}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                const result = await response.json();
+                alert("Bebida adicionada com sucesso!");
+                formAddPrincipal.reset();
+                modalPrincipal.style.display = "none";
+                
+                imgPreviewPrincipal.src = "../image/logo.png"; 
+
+                console.log('Prato salvo com sucesso:', result);
+                adicionarMenu(result,'receita');
+            } catch (error) {
+                console.error('Erro ao salvar receita:', error);
+                alert("Erro ao adicionar receita: " + error.message);
+            }
+    })
+
+    
     formAddBebida.addEventListener("submit", async function(event) {
         event.preventDefault();
 
@@ -194,20 +247,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     method: 'POST',
                      headers: {
                         'Authorization': `Bearer ${token}`
-                        // ❗ NÃO adicione 'Content-Type' aqui — o navegador faz isso automaticamente com FormData
+    
                     },
                     body: formData
                 });
 
                 if (!response.ok) {
-                    // Tentar ler a resposta como texto se não for JSON, para depuração
+                    
                     const errorText = await response.text(); 
                     let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
                     try {
-                        const errorData = JSON.parse(errorText); // Tenta parsear como JSON para obter a mensagem de erro
+                        const errorData = JSON.parse(errorText); 
                         errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
                     } catch (jsonError) {
-                        // Se não for JSON, usa o texto puro para depuração
+                        
                         errorMessage = `Erro HTTP! Status: ${response.status}, Resposta: ${errorText}`;
                     }
                     throw new Error(errorMessage);
@@ -222,8 +275,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 campoTipoBebidaAlcoolica.classList.add("hidden-field");
                 document.querySelector("#tipo-embalagem").removeAttribute("required");
                 document.querySelector("#tipo-bebida-alcoolica").removeAttribute("required");
-                selectTipoGeralBebida.value = ""; // Limpa a seleção do dropdown para a opção inicial
-                imgPreviewBebida.src = "../image/logo.png"; // Resetar a imagem de pré-visualização
+                selectTipoGeralBebida.value = ""; 
+                imgPreviewBebida.src = "../image/logo.png"; 
 
                 console.log('Bebida salva com sucesso:', result);
                 adicionarMenu(result,tipoBebida);
