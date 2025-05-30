@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/style-cadastro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Cadastro - STAFFCOM</title>
+</head>
+<body>
+    <div class="container-spinner">
+        <div class="overlay-spinner" >
+            <div class="spinner"></div>
+        </div>
+    </div>
+    <header>
+        <div class="container-header">
+            <div class="logo">
+                <img src="../image/logo.png" alt="Logo StaffCom">
+            </div>
+            <h1 class="titulo-logo">STAFF<span class="titulo-destaque">COM</span></h1>
+        </div>
+    </header>
+    <main>
+        <div class="container-principal">
+            <form  id="form-cadastro"> 
+                <div class="container-grid-cadastro">
+                    <div class="container-descricao">
+                        <h1>Seja Bem-Vindo</h1>
+                        <p>A StaffCom é um site para que seu estabelecimento tenha controle automatizado de comandas e gerenciamento de funcionários.</p>
+                    </div>
+                    <div class="container-cadastro">
+                        <h1>Cadastra-se</h1>
+                        <p>Preenchar as informações abaixo para ter acesso ao sistema.</p>
+                        <h3>Dados Estabelecimento <i class="fa-solid fa-building-columns"></i></h3>
+                        <div class="grid-componente-estabelecimento">
+                            
+                            <div class="componente">
+                                <i class="icone fa-solid fa-building"></i>
+                                <input type="text" name="nome-restaurante" id="nome-restaurante" placeholder="Nome do Estabelecimento" required>
+                            </div>
+                            <div class="componente">
+                                <i class="icone fa-solid fa-building-user"></i>
+                                <input type="text" name="cnpj-restaurante" id="cnpj-restaurante" placeholder="CNPJ" required>
+                            </div>
+                        </div>
+                        <h3>Dados do Usuario <i class="fa-solid fa-id-card"></i> </h3>
+                        <div class="grid-componente-user">
+                            
+                            <div class="componente">
+                                <i class="icone fa-solid fa-user"></i>
+                                <input type="text" name="nome-dono" id="nome-dono" placeholder="Nome Completo" required>
+                            </div>
+                            <div class="componente">
+                                <i class="icone fa-solid fa-phone"></i>
+                                <input type="text" name="numero-dono" id="numero-dono" placeholder="83999999999" required>
+                            </div>
+                            <div class="componente">
+                                <i class="icone fa-solid fa-envelope"></i>
+                                <input type="email" name="email-dono" id="email-dono" placeholder="exemplo@gmail.com" required>
+                            </div>
+                            <div class="componente">
+                                <i class="icone fa-solid fa-envelope"></i>
+                                <input type="email" name="conf-email-dono" id="conf-email-dono" placeholder="exemplo@gmail.com" required>
+                            </div>
+                            <div class="componente-senha">
+                                <i class="icone fa-solid fa-lock"></i>
+                                <input type="password" name="senha" id="senha" placeholder="********" required>
+                                <i class="fa-solid fa-eye" id="eyes" onclick="mostrarSenha()"></i>
+                            </div>
+                            <div class="componente-senha">
+                                <i class="icone fa-solid fa-lock"></i>
+                                <input type="password" name="conf-senha" id="conf-senha" placeholder="********" required>
+                                <i class="fa-solid fa-eye" id="eyes2" onclick="mostrarConfSenha()"></i>
+                            </div>
+                            
+                        </div>
+                        <div class="btn-cadastro">
+                            <p class="messagemErro"></p>
+                            <a href="../public/index.html">Esqueceu a senha?</a>
+                            <button type="submit" id="btn-cadastro">Cadastrar</button>
+                            <span>Já possui uma conta? <a href="../index.html">Faça o Login</a></span>
+                        </div>
+                    </div>
+            </div>
+            </form>
+            
+    </main>
+    <script src="../javascript/cadastro.js"></script>
+    <script src="../javascript/eyes.js"></script>
+</body>
+</html>
