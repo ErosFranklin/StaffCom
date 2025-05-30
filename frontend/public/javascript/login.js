@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const cargo = document.getElementById('cargo').value;
         const tipo_user = tipoUsuario(cargo);
 
+        console.log(email, senha);
+
         if(email === "" || senha === ""){
             messagemErro.innerHTML = "Preencha todos os campos!";
             messagemErro.style.display = "block";
@@ -34,6 +36,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 email:email,
                 password:senha
             }
+            console.log(tipo_user)
             const response = await fetch(`http://127.0.0.1:8000/api/${tipo_user}/signIn`, {
                 method: 'POST',
                 headers: {
@@ -47,8 +50,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             const data = await response.json();
             console.log(data);
             localStorage.setItem('token', data.token);
+            console.log("Token armazenado no localStorage:", data.token);
             const decode = jwt_decode(data.token);
             console.log(decode);
+            window.location.href = '../public/views/cadastro-cardapio.html';
+            /*
             switch(cargo){
                 case "proprietario":
                     localStorage.setItem('userId', decode.ownerId);
@@ -70,11 +76,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                     window.location.href = '../public/views/home.html';
                     break;
             }
+                */
         }catch(error){
             console.error("Erro ao capturar os dados do formulário:", error);
+            messagemErro.style.display = "block";
+            messagemErro.textContent = "Erro ao fazer login. Verifique suas credenciais.";
+            
         }finally{
             spinner.style.display = "none";
-            messagemErro.style.display = "none";
+            
         }
     });
     function validandoSenha(password) {

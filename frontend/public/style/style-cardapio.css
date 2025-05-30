@@ -439,6 +439,12 @@ body{
     background-color: var(--botoes-hover);
 }
 
+.container-bebidas-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap:10px;
+    margin-bottom: 10px;
+}
 .container-bebidas-grid .container-sub-comidas{
     display: flex;
     flex-direction: column;
@@ -447,4 +453,81 @@ body{
     width: 100%;
     height: auto;
     padding: 10px;
+    box-shadow: inset 0 0 10px 0 var(--card-background);
+    border: 1px solid var(--card-background);
+    border-radius: 10px;
+    margin: 5px;
+    background-color: var(--geral);
+}
+.container-bebidas-grid .container-sub-comidas .bebida-item{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    width: 100%;
+    
+}
+.container-bebidas-grid .container-sub-comidas .bebida-item img{
+    width: 100%;
+    height: 100%;
+    max-width: 150px;
+    max-height:150px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-top: 10px;
+}
+.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info{
+    display:flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    margin-top:20px;
+}
+.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info h3{
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: bold;
+    color: var(--texto-destaque);
+    text-shadow: 1px 1px var(--titulo-sombra);
+    
+    margin: 10px 0;
+}
+.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info p{
+    font-size: 0.9rem;
+    color: var(--texto);
+    margin-bottom: 10px;
+    text-shadow: 1px 1px var(--titulo-sombra);
+}
+
+.container-btn{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin:20px 0;
+}
+.container-btn .btn-salvar-cardapio, .btn-voltar-cardapio {
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+.container-btn .btn-salvar-cardapio a,
+.container-btn .btn-voltar-cardapio a {
+    text-decoration: none;
+    color: var(--texto-botoes);
+}
+
+.container-btn .btn-salvar-cardapio:hover, 
+.container-btn .btn-voltar-cardapio:hover {
+    background-color: var(--botoes-hover);
 }

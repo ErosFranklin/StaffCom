@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error("Token não encontrado. Redirecionando para a página de login.");
+        window.location.href = "../public/views/login.html"; 
+    }
     const modalEntradas = document.querySelector(".modal-entrada");
     const btnEntradas = document.querySelector(".btn-mais-entrada");
     const btnFecharModalEntrada = document.querySelector(".btn-fechar-entrada");
@@ -27,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnUploadPrincipal = document.querySelector("#add-principal .btn-img");
     const inputUploadPrincipal = document.querySelector("#upload-img-principal");
     const imgPreviewPrincipal = document.querySelector("#add-principal .img-comida img");
+    const formAddPrincipal = document.querySelector("#add-principal");
 
     const btnUploadSobremesa = document.querySelector("#add-sobremesa .btn-img");
     const inputUploadSobremesa = document.querySelector("#upload-img-sobremesa");
@@ -139,7 +145,60 @@ document.addEventListener("DOMContentLoaded", function () {
         imgPreviewBebida.src = "../image/logo.png";
     });
 
-    // Envio do formulário de bebida
+     
+    formAddPrincipal.addEventListener("submit", async function(event) {
+        console.log("Enviando formulário de prato principal...");
+        event.preventDefault();
+        const imageFile = inputUploadBebida.files[0];
+        if (!imageFile) {
+            alert("Por favor, selecione uma imagem para a bebida.");
+            return;
+        }
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        formData.append('dishName', document.querySelector("#nome-principal").value);
+        formData.append('description', document.querySelector("#descricao-principal").value);
+        formData.append('unitValue', parseFloat(document.querySelector("#valor-principal").value));
+
+        try{
+            const response = await fetch('http://localhost:8000/api/recipes/', {
+                method: 'POST',
+                headers: {  
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+
+            })
+            if (!response.ok) {
+                    
+                    const errorText = await response.text(); 
+                    let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
+                    try {
+                        const errorData = JSON.parse(errorText); 
+                        errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
+                    } catch (jsonError) {
+                        
+                        errorMessage = `Erro HTTP! Status: ${response.status}, Resposta: ${errorText}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                const result = await response.json();
+                alert("Bebida adicionada com sucesso!");
+                formAddPrincipal.reset();
+                modalPrincipal.style.display = "none";
+                
+                imgPreviewPrincipal.src = "../image/logo.png"; 
+
+                console.log('Prato salvo com sucesso:', result);
+                adicionarMenu(result,'receita');
+            } catch (error) {
+                console.error('Erro ao salvar receita:', error);
+                alert("Erro ao adicionar receita: " + error.message);
+            }
+    })
+
+    
     formAddBebida.addEventListener("submit", async function(event) {
         event.preventDefault();
 
@@ -157,23 +216,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const tipoGeralBebida = selectTipoGeralBebida.value;
         let endpoint = '';
+        let tipoBebida = '';
         
         if (tipoGeralBebida === "nao-alcoolica") {
+            tipoBebida = 'bebida_nao_alcoolica';
             const packagingType = document.querySelector("#tipo-embalagem").value;
             if (!packagingType) { 
                  alert("Por favor, preencha o Tipo de Embalagem.");
                  return;
             }
             formData.append('packagingType', packagingType);
-            endpoint = 'http://localhost:8000/api/nonAlcoholic/create';
+            endpoint = 'http://localhost:8000/api/nonAlcoholic/';
         } else if (tipoGeralBebida === "alcoolica") {
+            tipoBebida = 'bebida_alcoolica';
             const drinkType = document.querySelector("#tipo-bebida-alcoolica").value;
             if (!drinkType) { 
                  alert("Por favor, preencha o Tipo de Bebida.");
                  return;
             }
             formData.append('drinkType', drinkType);
-            endpoint = 'http://localhost:8000/api/alcoholic/create';
+            endpoint = 'http://localhost:8000/api/alcoholic/';
         } else {
             alert("Por favor, selecione o tipo de bebida (Alcoólica/Não Alcoólica).");
             return;
@@ -183,20 +245,22 @@ document.addEventListener("DOMContentLoaded", function () {
             try {
                 const response = await fetch(endpoint, {
                     method: 'POST',
-                    //O backend espera um formdata,nao um json, entao nao é necessário definir o tipo de conteúdo
-                    //O navegador define o Content-Type correto (multipart/form-data) automaticamente para FormData
+                     headers: {
+                        'Authorization': `Bearer ${token}`
+    
+                    },
                     body: formData
                 });
 
                 if (!response.ok) {
-                    // Tentar ler a resposta como texto se não for JSON, para depuração
+                    
                     const errorText = await response.text(); 
                     let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
                     try {
-                        const errorData = JSON.parse(errorText); // Tenta parsear como JSON para obter a mensagem de erro
+                        const errorData = JSON.parse(errorText); 
                         errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
                     } catch (jsonError) {
-                        // Se não for JSON, usa o texto puro para depuração
+                        
                         errorMessage = `Erro HTTP! Status: ${response.status}, Resposta: ${errorText}`;
                     }
                     throw new Error(errorMessage);
@@ -211,10 +275,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 campoTipoBebidaAlcoolica.classList.add("hidden-field");
                 document.querySelector("#tipo-embalagem").removeAttribute("required");
                 document.querySelector("#tipo-bebida-alcoolica").removeAttribute("required");
-                selectTipoGeralBebida.value = ""; // Limpa a seleção do dropdown para a opção inicial
-                imgPreviewBebida.src = "../image/logo.png"; // Resetar a imagem de pré-visualização
+                selectTipoGeralBebida.value = ""; 
+                imgPreviewBebida.src = "../image/logo.png"; 
 
                 console.log('Bebida salva com sucesso:', result);
+                adicionarMenu(result,tipoBebida);
             } catch (error) {
                 console.error('Erro ao salvar bebida:', error);
                 alert("Erro ao adicionar bebida: " + error.message);
@@ -224,19 +289,87 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function getDadosBebidasCardapio() {
         try {
-            const response = await fetch('http://localhost:8000/api/alcoholic/get-all', {
+            const response = await fetch('http://localhost:8000/api/menu/my-menu', {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                     'Authorization': `Bearer ${token}` 
                 }
             });
             if (!response.ok) {
                 throw new Error("Erro ao buscar bebidas do cardápio.");
             }
             const data = await response.json();
-            console.log(data);
+            console.log("RETORNANDO: ",data);
+
+            data.forEach(item => {
+                if(item.itemType === 'entrada'){
+
+                }
+                else if(item.itemType === 'receita'){
+
+                }
+                else if(item.itemType === 'sobremesa'){
+
+                }
+                else if (item.itemType === 'bebida_alcoolica') {
+                    const containerBebidas = document.querySelector(".container-bebidas-grid");  
+                    const containerSubBebidas = document.querySelector(".container-sub-comidas");
+
+                    const bebidaDiv = document.createElement("div");
+                    bebidaDiv.classList.add("bebida-item");
+
+                    bebidaDiv.innerHTML = `
+                        <img src="${item.item.drinkImg}" alt="${item.item.drinkName}">
+                        <div class="bebida-info">
+                            <h3>${item.item.drinkName}</h3>
+                            <p>${item.item.drinkType}</p>
+                            <p>Tamanho: ${item.item.size}</p>
+                            <p>Valor: R$ ${item.item.unitValue}</p>
+                            <p>Quantidade: ${item.item.quantity}</p>
+                        </div>
+                        
+                    `;
+
+                    containerSubBebidas.appendChild(bebidaDiv);
+                    containerBebidas.appendChild(containerSubBebidas);
+            }
+                else if(item.itemType === 'bebida_nao_alcoolica'){
+                    console.log("Bebida Não Alcoólica:", item);
+                }
+                else{
+                    console.error("Tipo de item desconhecido:", item.itemType);
+                }
+
+
+            })
         } catch (error) {
             console.error("Erro ao obter dados do cardápio:", error);
+        }
+    }
+
+    async function adicionarMenu(dados, tipo) {
+        console.log("Adicionando item ao cardápio:", dados);
+        const dadosMenu = {
+            ownerId: localStorage.getItem('userId'),
+            itemType: tipo,
+        }
+        try {
+            const response = await fetch(`http://localhost:8000/api/menu/new-item/${dados.drink.id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                },
+                body: JSON.stringify(dadosMenu)
+            });
+            if (!response.ok) {
+                throw new Error("Erro ao adicionar item ao cardápio.");
+            }
+            const data = await response.json();
+            console.log("Item adicionado ao cardápio:", data);
+        } catch (error) {
+            console.error("Erro ao adicionar item ao cardápio:", error);
         }
     }
 });
