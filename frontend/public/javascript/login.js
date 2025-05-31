@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const senha = document.getElementById('senha').value;
         const cargo = document.getElementById('cargo').value;
         const tipo_user = tipoUsuario(cargo);
-
+        spinner.style.display = "block";
         console.log(email, senha);
 
         if(email === "" || senha === ""){
@@ -107,7 +107,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             
         }finally{
             spinner.style.display = "none";
-            
         }
     });
     function validandoSenha(password) {

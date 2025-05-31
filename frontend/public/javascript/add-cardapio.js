@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem('token');
+    const spinner = document.querySelector(".container-spinner");
     if (!token) {
         console.error("Token não encontrado. Redirecionando para a página de login.");
         window.location.href = "../public/views/login.html"; 
@@ -141,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formAddPrincipal.addEventListener("submit", async function(event) {
         console.log("Enviando formulário de prato principal...");
         event.preventDefault();
+        spinner.style.display = "block"; 
         const imageFile = inputUploadPrincipal.files[0];
         if (!imageFile) {
             alert("Por favor, selecione uma imagem para o prato principal.");
@@ -165,11 +167,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     
                     const errorText = await response.text(); 
                     let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
+                    spinner.style.display = "none";
                     try {
                         const errorData = JSON.parse(errorText); 
                         errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
                     } catch (jsonError) {
-                        
                         errorMessage = `Erro HTTP! Status: ${response.status}, Resposta: ${errorText}`;
                     }
                     throw new Error(errorMessage);
@@ -185,6 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log('Prato salvo com sucesso:', result);
                 adicionarMenu(result,'receita', result.recipe.id);
             } catch (error) {
+                spinner.style.display = "none";
                 console.error('Erro ao salvar receita:', error);
                 alert("Erro ao adicionar receita: " + error.message);
             }
@@ -192,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     formAddEntrada.addEventListener("submit", async function(event) {
         event.preventDefault();
-
+        spinner.style.display = "block";
         const imageFile = inputUploadEntrada.files[0];
 
         if(!imageFile){
@@ -219,6 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     
                     const errorText = await response.text(); 
                     let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
+                    spinner.style.display = "none";
                     try {
                         const errorData = JSON.parse(errorText); 
                         errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
@@ -239,6 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log('Entrada salva com sucesso:', result);
                 adicionarMenu(result,'entrada', result.appetizer.id);
             } catch (error) {
+                spinner.style.display = "none";
                 console.error('Erro ao salvar receita:', error);
                 alert("Erro ao adicionar receita: " + error.message);
             }
@@ -249,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     formAddBebida.addEventListener("submit", async function(event) {
         event.preventDefault();
-
+        spinner.style.display = "block";
         const imageFile = inputUploadBebida.files[0];
         if (!imageFile) {
             alert("Por favor, selecione uma imagem para a bebida.");
@@ -304,6 +309,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     
                     const errorText = await response.text(); 
                     let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
+                    spinner.style.display = "none";
                     try {
                         const errorData = JSON.parse(errorText); 
                         errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
@@ -329,6 +335,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log('Bebida salva com sucesso:', result);
                 adicionarMenu(result,tipoBebida, result.drink.id);
             } catch (error) {
+                spinner.style.display = "none";
                 console.error('Erro ao salvar bebida:', error);
                 alert("Erro ao adicionar bebida: " + error.message);
             }
@@ -336,6 +343,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     async function getDadosCardapio() {
+        spinner.style.display = "block";
         try {
             const response = await fetch('http://localhost:8000/api/menu/my-menu', {
                 method: 'GET',
@@ -349,7 +357,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             const data = await response.json();
             console.log("RETORNANDO: ",data);
-
+            spinner.style.display = "none";
             data.forEach(item => {
                 if(item.itemType === 'entrada'){
                      const containerEntrada = document.querySelector(".container-entradas-grid");
@@ -431,12 +439,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             })
         } catch (error) {
+            spinner.style.display = "none";
             console.error("Erro ao obter dados do cardápio:", error);
         }
     }
 
     async function adicionarMenu(dados, tipo, id) {
         console.log("Adicionando item ao cardápio:", dados);
+        spinner.style.display = "block";
         const dadosMenu = {
             ownerId: localStorage.getItem('userId'),
             itemType: tipo,
@@ -453,9 +463,11 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!response.ok) {
                 throw new Error("Erro ao adicionar item ao cardápio.");
             }
+            spinner.style.display = "none";
             const data = await response.json();
             console.log("Item adicionado ao cardápio:", data);
         } catch (error) {
+            spinner.style.display = "none";
             console.error("Erro ao adicionar item ao cardápio:", error);
         }
     }

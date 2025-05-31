@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const confSenha = document.getElementById('conf-senha').value;
         const number = document.querySelector('#numero-dono').value;
 
+        spinner.style.display = "block";
+
         if(nome === "" || email === "" || senha === "" || confSenha === ""){
             messagemErro.innerHTML = "Preencha todos os campos!";
             messagemErro.style.display = "block";
@@ -64,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if(!response.ok){
                 throw new Error("Erro ao registrar usuário.");
             }
-            const data = await response.json();
            
             window.location.href = "../index.html";
         }catch(error){
