@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnUploadEntrada = document.querySelector("#add-entrada .btn-img");
     const inputUploadEntrada = document.querySelector("#upload-img-entrada");
     const imgPreviewEntrada = document.querySelector("#add-entrada .img-comida img");
+    const formAddEntrada = document.querySelector("#add-entrada");
 
     const btnUploadPrincipal = document.querySelector("#add-principal .btn-img");
     const inputUploadPrincipal = document.querySelector("#upload-img-principal");
@@ -68,11 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btnEntradas.addEventListener("click", function () {
         modalEntradas.style.display = "flex";
-        const nomeEntrada = document.querySelector("#nome-entrada").value;
-        const descricaoEntrada = document.querySelector("#descricao-entrada").value;
-        const tamanhoEntrada = document.querySelector("#tamanho-entrada").value;
-        const valorEntrada = document.querySelector("#valor-entrada").value;
-        const btnAdicionarEntrada = document.querySelector("#btn-adicionar-entrada").value;
     });
 
     btnPrincipal.addEventListener("click", function () {
@@ -194,6 +190,62 @@ document.addEventListener("DOMContentLoaded", function () {
             }
     })
 
+    formAddEntrada.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const imageFile = inputUploadEntrada.files[0];
+
+        if(!imageFile){
+            alert("Por favor, selecione uma imagem para a entrada.");
+            return;
+        }
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        formData.append('foodName', document.querySelector("#nome-entrada").value);
+        formData.append('foodDescription', document.querySelector("#descricao-entrada").value);
+        formData.append('size', document.querySelector("#tamanho-entrada").value);
+        formData.append('value', parseFloat(document.querySelector("#valor-entrada").value));
+
+        try{
+            const response = await fetch('http://localhost:8000/api/appetizers', {
+                method: 'POST',
+                headers: {  
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+
+            })
+            if (!response.ok) {
+                    
+                    const errorText = await response.text(); 
+                    let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
+                    try {
+                        const errorData = JSON.parse(errorText); 
+                        errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
+                    } catch (jsonError) {
+                        
+                        errorMessage = `Erro HTTP! Status: ${response.status}, Resposta: ${errorText}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                const result = await response.json();
+                alert("Entrada adicionada com sucesso!");
+                formAddEntrada.reset();
+                modalEntradas.style.display = "none";
+                
+                imgPreviewEntrada.src = "../image/logo.png"; 
+
+                console.log('Entrada salva com sucesso:', result);
+                adicionarMenu(result,'entrada', result.appetizer.id);
+            } catch (error) {
+                console.error('Erro ao salvar receita:', error);
+                alert("Erro ao adicionar receita: " + error.message);
+            }
+
+    })
+
+
     
     formAddBebida.addEventListener("submit", async function(event) {
         event.preventDefault();
@@ -300,7 +352,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             data.forEach(item => {
                 if(item.itemType === 'entrada'){
+                     const containerEntrada = document.querySelector(".container-entradas-grid");
 
+                    const containerSubEntrada = document.createElement("div");
+                    containerSubEntrada.classList.add("container-sub-comidas");
+
+                    const entradaDiv = document.createElement("div");
+                    entradaDiv.classList.add("entrada-item");
+
+                    entradaDiv.innerHTML = `
+                        <img src="${item.item.foodImg}" alt="${item.item.foodName}">
+                        <div class="entrada-info">
+                            <h3>${item.item.foodName}</h3>
+                            <p>${item.item.description}</p>
+                            <p>Valor: R$ ${item.item.value}</p>
+                        </div>
+                    `;
+
+                    containerSubEntrada.appendChild(entradaDiv);
+                    containerEntrada.appendChild(containerSubEntrada);
                 }
                 else if(item.itemType === 'receita'){
                     const containerPrincipal = document.querySelector(".container-principal-grid");
@@ -330,7 +400,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 else if (item.itemType === 'bebida_alcoolica') {
                     const containerBebidas = document.querySelector(".container-bebidas-grid");
 
-                    
                     const containerSubBebidas = document.createElement("div");
                     containerSubBebidas.classList.add("container-sub-comidas");
 

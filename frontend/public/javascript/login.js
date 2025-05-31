@@ -53,28 +53,51 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.log("Token armazenado no localStorage:", data.token);
             const decode = jwt_decode(data.token);
             console.log(decode);
+
             window.location.href = '../public/views/cadastro-cardapio.html';
             /*
-            switch(cargo){
-                case "proprietario":
-                    localStorage.setItem('userId', decode.ownerId);
-                    localStorage.setItem('cargo', decode.userType);
-                    window.location.href = '../public/views/homeDono.html';
-                    break;
-                case "gerente":
-                    localStorage.setItem('userId', decode.managerId);
-                    localStorage.setItem('cargo', decode.userType);
-                    window.location.href = '../public/views/homeGerente.html';
-                    break;
-                case "chefe_cozinheiro":
-                    window.location.href = '../public/views/homeChefeCozinheiro.html';
-                    break;
-                case "cozinheiro":
-                    window.location.href = '../public/views/home.html';
-                    break;
-                case "garcom":
-                    window.location.href = '../public/views/home.html';
-                    break;
+            try{
+                const response = await fetch('http://localhost:8000/api/menu/my-menu', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}` 
+            }
+            });
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar bebidas do cardápio.");
+                }
+                const data = await response.json();
+                if(data.length === 0)   {
+                    window.location.href = '../public/views/cadastro-cardapio.html';
+                }else{
+                
+                    switch(cargo){
+                        case "proprietario":
+                            localStorage.setItem('userId', decode.ownerId);
+                            localStorage.setItem('cargo', decode.userType);
+                            window.location.href = '../public/views/homeDono.html';
+                            break;
+                        case "gerente":
+                            localStorage.setItem('userId', decode.managerId);
+                            localStorage.setItem('cargo', decode.userType);
+                            window.location.href = '../public/views/homeGerente.html';
+                            break;
+                        case "chefe_cozinheiro":
+                            window.location.href = '../public/views/homeChefeCozinheiro.html';
+                            break;
+                        case "cozinheiro":
+                            window.location.href = '../public/views/home.html';
+                            break;
+                        case "garcom":
+                            window.location.href = '../public/views/home.html';
+                            break;
+                    }
+                
+                }
+            }
+            catch(error){
+                console.error("Algo deu errado:", error);
             }
                 */
         }catch(error){
