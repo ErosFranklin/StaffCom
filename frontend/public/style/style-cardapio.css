@@ -439,15 +439,15 @@ body{
     background-color: var(--botoes-hover);
 }
 
-.container-bebidas-grid {
+.container-bebidas-grid, .container-principal-grid {
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap:10px;
     margin-bottom: 10px;
 }
-.container-bebidas-grid .container-sub-comidas{
+.container-bebidas-grid .container-sub-comidas, .container-principal-grid .container-sub-comidas{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -459,7 +459,8 @@ body{
     margin: 5px;
     background-color: var(--geral);
 }
-.container-bebidas-grid .container-sub-comidas .bebida-item{
+.container-bebidas-grid .container-sub-comidas .bebida-item,
+ .container-principal-grid .container-sub-comidas .principal-item{
     display:flex;
     flex-direction: column;
     align-items:center;
@@ -467,7 +468,8 @@ body{
     width: 100%;
     
 }
-.container-bebidas-grid .container-sub-comidas .bebida-item img{
+.container-bebidas-grid .container-sub-comidas .bebida-item img,
+.container-principal-grid .container-sub-comidas .principal-item img {
     width: 100%;
     height: 100%;
     max-width: 150px;
@@ -476,7 +478,8 @@ body{
     object-fit: cover;
     margin-top: 10px;
 }
-.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info{
+.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info,
+.container-principal-grid .container-sub-comidas .principal-item .principal-info {
     display:flex;
     flex-direction: column;
     align-items: left;
@@ -485,7 +488,8 @@ body{
     padding: 10px;
     margin-top:20px;
 }
-.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info h3{
+.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info h3,
+.container-principal-grid .container-sub-comidas .principal-item .principal-info h3 {
     font-size: 1.5rem;
     font-style: italic;
     font-weight: bold;
@@ -494,7 +498,8 @@ body{
     
     margin: 10px 0;
 }
-.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info p{
+.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info p,
+.container-principal-grid .container-sub-comidas .principal-item .principal-info p {
     font-size: 0.9rem;
     color: var(--texto);
     margin-bottom: 10px;

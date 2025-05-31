@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputUploadBebida = document.querySelector("#upload-img-bebida");
     const imgPreviewBebida = document.querySelector("#add-bebida .img-comida img");
 
-    getDadosBebidasCardapio();
+    getDadosCardapio();
 
     function setupImageUpload(btnUpload, inputUpload, imgPreview) {
         btnUpload.addEventListener("click", function () {
@@ -77,10 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btnPrincipal.addEventListener("click", function () {
         modalPrincipal.style.display = "flex";
-        const nomePrincipal = document.querySelector("#nome-principal").value;
-        const descricaoPincipal = document.querySelector("#descricao-principal").value;
-        const valorPrincipal = document.querySelector("#valor-principal").value;
-        const btnAdicionarPrincipal = document.querySelector("#btn-adicionar-principal").value;
     });
 
     btnSobremesa.addEventListener("click", function () { 
@@ -149,16 +145,16 @@ document.addEventListener("DOMContentLoaded", function () {
     formAddPrincipal.addEventListener("submit", async function(event) {
         console.log("Enviando formulário de prato principal...");
         event.preventDefault();
-        const imageFile = inputUploadBebida.files[0];
+        const imageFile = inputUploadPrincipal.files[0];
         if (!imageFile) {
-            alert("Por favor, selecione uma imagem para a bebida.");
+            alert("Por favor, selecione uma imagem para o prato principal.");
             return;
         }
         const formData = new FormData();
         formData.append('image', imageFile);
-        formData.append('dishName', document.querySelector("#nome-principal").value);
-        formData.append('description', document.querySelector("#descricao-principal").value);
-        formData.append('unitValue', parseFloat(document.querySelector("#valor-principal").value));
+        formData.append('foodName', document.querySelector("#nome-principal").value);
+        formData.append('foodDescription', document.querySelector("#descricao-principal").value);
+        formData.append('value', parseFloat(document.querySelector("#valor-principal").value));
 
         try{
             const response = await fetch('http://localhost:8000/api/recipes/', {
@@ -184,14 +180,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 const result = await response.json();
-                alert("Bebida adicionada com sucesso!");
+                alert("Prato Principal adicionada com sucesso!");
                 formAddPrincipal.reset();
                 modalPrincipal.style.display = "none";
                 
                 imgPreviewPrincipal.src = "../image/logo.png"; 
 
                 console.log('Prato salvo com sucesso:', result);
-                adicionarMenu(result,'receita');
+                adicionarMenu(result,'receita', result.recipe.id);
             } catch (error) {
                 console.error('Erro ao salvar receita:', error);
                 alert("Erro ao adicionar receita: " + error.message);
@@ -279,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 imgPreviewBebida.src = "../image/logo.png"; 
 
                 console.log('Bebida salva com sucesso:', result);
-                adicionarMenu(result,tipoBebida);
+                adicionarMenu(result,tipoBebida, result.drink.id);
             } catch (error) {
                 console.error('Erro ao salvar bebida:', error);
                 alert("Erro ao adicionar bebida: " + error.message);
@@ -287,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    async function getDadosBebidasCardapio() {
+    async function getDadosCardapio() {
         try {
             const response = await fetch('http://localhost:8000/api/menu/my-menu', {
                 method: 'GET',
@@ -307,14 +303,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
                 else if(item.itemType === 'receita'){
+                    const containerPrincipal = document.querySelector(".container-principal-grid");
 
+                    const containerSubPrincipal = document.createElement("div");
+                    containerSubPrincipal.classList.add("container-sub-comidas");
+
+                    const principalDiv = document.createElement("div");
+                    principalDiv.classList.add("principal-item");
+
+                    principalDiv.innerHTML = `
+                        <img src="${item.item.foodImg}" alt="${item.item.foodName}">
+                        <div class="principal-info">
+                            <h3>${item.item.foodName}</h3>
+                            <p>${item.item.description}</p>
+                            <p>Valor: R$ ${item.item.value}</p>
+                        </div>
+                    `;
+
+                    containerSubPrincipal.appendChild(principalDiv);
+                    containerPrincipal.appendChild(containerSubPrincipal);
+                    
                 }
                 else if(item.itemType === 'sobremesa'){
 
                 }
                 else if (item.itemType === 'bebida_alcoolica') {
-                    const containerBebidas = document.querySelector(".container-bebidas-grid");  
-                    const containerSubBebidas = document.querySelector(".container-sub-comidas");
+                    const containerBebidas = document.querySelector(".container-bebidas-grid");
+
+                    
+                    const containerSubBebidas = document.createElement("div");
+                    containerSubBebidas.classList.add("container-sub-comidas");
 
                     const bebidaDiv = document.createElement("div");
                     bebidaDiv.classList.add("bebida-item");
@@ -328,11 +346,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p>Valor: R$ ${item.item.unitValue}</p>
                             <p>Quantidade: ${item.item.quantity}</p>
                         </div>
-                        
                     `;
 
                     containerSubBebidas.appendChild(bebidaDiv);
                     containerBebidas.appendChild(containerSubBebidas);
+                    
             }
                 else if(item.itemType === 'bebida_nao_alcoolica'){
                     console.log("Bebida Não Alcoólica:", item);
@@ -348,14 +366,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    async function adicionarMenu(dados, tipo) {
+    async function adicionarMenu(dados, tipo, id) {
         console.log("Adicionando item ao cardápio:", dados);
         const dadosMenu = {
             ownerId: localStorage.getItem('userId'),
             itemType: tipo,
         }
         try {
-            const response = await fetch(`http://localhost:8000/api/menu/new-item/${dados.drink.id}`, {
+            const response = await fetch(`http://localhost:8000/api/menu/new-item/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
