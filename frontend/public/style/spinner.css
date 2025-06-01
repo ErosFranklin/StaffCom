@@ -1,0 +1,53 @@
+:root{
+    --geral:#ffffff;
+    --fundo:rgba(81, 81, 81, 0.061);
+    --titulo: #606060;
+    --titulo-sombra: #60606080;
+    --texto: #202020;
+    --card-background: #828282;
+    --botoes: #ffde00;
+    --botoes-hover:#ffdd00c6;
+    --texto-destaque:#ffde00;
+    --texto-botoes:#202020;
+    --transition-speed: 0.3s;
+}
+
+.container-spinner{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}  
+.overlay-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid var(--texto-destaque); 
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
