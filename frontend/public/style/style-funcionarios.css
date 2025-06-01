@@ -139,3 +139,118 @@ body{
     cursor: pointer;
     margin-right:10px;
 }
+
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal{
+    display: none;
+    background-color: var(--geral);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px var(--titulo-sombra);
+    width: 60%;
+    position: relative;
+}
+.modal .modal-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal .modal-header h2{
+    color: var(--texto-destaque);
+    text-shadow: 1px 1px 2px var(--titulo-sombra);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.modal .modal-header .close-modal{
+    background-color: var(--titulo-sombra);
+    border-radius:100%;
+    width: 40px;
+    height: 40px;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--geral);
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.modal .modal-header .close-modal:hover{
+    background-color: var(--titulo);
+    box-shadow: inset 0px -2px 4px var(--card-background);
+}
+
+#form-add-funcionario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    margin-top:10px;
+}
+#form-add-funcionario .grid-componentes{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+#form-add-funcionario .grid-componentes .componente-modal{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+#form-add-funcionario .grid-componentes .componente-modal label{
+    color: var(--titulo);
+    text-shadow: 1px 1px 2px var(--titulo-sombra);
+    font-weight: lighter;
+    font-size:0.9rem;
+    margin-bottom: 5px;
+}
+#form-add-funcionario .grid-componentes .componente-modal input,
+#form-add-funcionario .grid-componentes .componente-modal select{
+    border:1px solid var(--titulo-sombra);
+    background-color: #f7f7f7;
+    padding:5px;
+    border-radius:5px;
+    color:var(--titulo);
+}
+#form-add-funcionario .grid-componentes .componente-modal input:focus,
+#form-add-funcionario .grid-componentes .componente-modal select:focus{
+    outline: none;
+    border:1px solid var(--texto-destaque);
+    color: var(--texto-destaque);
+}
+
+#form-add-funcionario .componente-botton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+}
+#form-add-funcionario .componente-botton button{
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    margin-top:10px;
+}
+#form-add-funcionario .componente-botton button:hover{
+    background-color: var(--botoes-hover);
+    box-shadow: inset 0px -2px 4px var(--card-background);
+}
