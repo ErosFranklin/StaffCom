@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         spinner.style.display = "block";
         console.log(email, senha);
 
+        console.log(email, senha);
+
         if(email === "" || senha === ""){
             messagemErro.innerHTML = "Preencha todos os campos!";
             messagemErro.style.display = "block";

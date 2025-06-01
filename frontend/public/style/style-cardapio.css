@@ -445,9 +445,10 @@ body{
     gap:10px;
     margin-bottom: 10px;
 }
+
 .container-bebidas-grid .container-sub-comidas,
- .container-principal-grid .container-sub-comidas,
- .container-entradas-grid .container-sub-comidas{
+.container-principal-grid .container-sub-comidas,
+.container-entradas-grid .container-sub-comidas{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -462,8 +463,8 @@ body{
     background-color: var(--geral);
 }
 .container-bebidas-grid .container-sub-comidas .bebida-item,
- .container-principal-grid .container-sub-comidas .principal-item,
- .container-entradas-grid .container-sub-comidas .entrada-item{
+.container-principal-grid .container-sub-comidas .principal-item,
+.container-entradas-grid .container-sub-comidas .entrada-item{
     display:flex;
     flex-direction: column;
     align-items:center;
@@ -471,6 +472,7 @@ body{
     width: 100%;
     
 }
+
 .container-bebidas-grid .container-sub-comidas .bebida-item img,
 .container-principal-grid .container-sub-comidas .principal-item img,
 .container-entradas-grid .container-sub-comidas .entrada-item img {
@@ -482,9 +484,11 @@ body{
     object-fit: cover;
     margin-top: 10px;
 }
+
 .container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info,
 .container-principal-grid .container-sub-comidas .principal-item .principal-info,
 .container-entradas-grid .container-sub-comidas .entrada-item .entrada-info {
+
     display:flex;
     flex-direction: column;
     align-items: left;

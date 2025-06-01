@@ -399,8 +399,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     `;
 
                     containerSubPrincipal.appendChild(principalDiv);
-                    containerPrincipal.appendChild(containerSubPrincipal);
-                    
+                    containerPrincipal.appendChild(containerSubPrincipal);           
                 }
                 else if(item.itemType === 'sobremesa'){
 
@@ -427,7 +426,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     containerSubBebidas.appendChild(bebidaDiv);
                     containerBebidas.appendChild(containerSubBebidas);
-                    
             }
                 else if(item.itemType === 'bebida_nao_alcoolica'){
                     console.log("Bebida Não Alcoólica:", item);
@@ -443,7 +441,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Erro ao obter dados do cardápio:", error);
         }
     }
-
     async function adicionarMenu(dados, tipo, id) {
         console.log("Adicionando item ao cardápio:", dados);
         spinner.style.display = "block";
