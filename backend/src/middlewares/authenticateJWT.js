@@ -19,6 +19,13 @@ function authenticateJWT(req, res, next) {
                 case "manager": // managers token
                     req.managerId = decoded.managerId;
                     break;
+                case "waiter":
+                    req.waiterId = decoded.waiterId;
+                    break;
+                case "cook":
+                    req.cookId = decoded.cookId;
+                    req.cookRole = decoded.cookRole;
+                    break;
                 default:
                     return res.status(400).json({ message: "Unknown user type" });
             }
