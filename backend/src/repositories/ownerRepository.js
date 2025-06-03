@@ -103,7 +103,7 @@ const ownerRepositories = {
 
     async getAllManagers(ownerId) {
         const [results] = await db.execute(
-            `SELECT * FROM managers WHERE ownerId = ?`,
+            `SELECT * FROM managers WHERE ownerId = ? AND isActivated = TRUE`,
             [ownerId]
         );
         return results;
