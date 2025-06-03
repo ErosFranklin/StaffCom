@@ -9,8 +9,6 @@ const menuRepository = {
             itemType,
             itemId
         ];
-        console.log("PARAMS:", params, Array.isArray(params));
-        console.log('Tipo do execute:', typeof db.execute);
         const [results] = await db.execute(sql, params);
         return results;
     },
@@ -79,7 +77,6 @@ const menuRepository = {
             WHERE m.ownerId = ?`,
             [ownerId]
         );
-        console.log('Resultado da consulta:', rows);
         return rows;
     },
 
