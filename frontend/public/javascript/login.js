@@ -51,9 +51,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             const data = await response.json();
             console.log(data);
-            localStorage.setItem('token', data.token);
-            console.log("Token armazenado no localStorage:", data.token);
             const decode = jwt_decode(data.token);
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userId', decode.ownerId || decode.managerId || decode.kitchenChefId || decode.cookId || decode.waiterId);
+            console.log("Token armazenado no localStorage:", data.token);
+            
             console.log(decode);
 
             window.location.href = '../public/views/cadastro-cardapio.html';

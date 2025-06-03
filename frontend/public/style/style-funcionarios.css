@@ -90,7 +90,7 @@ body{
     margin-bottom: 10px;
 }
 .container-principal #tabela-funcionarios{
-    width: 60%;
+    width: 80%;
     min-height: 80vh;
     overflow-y: auto;
     border-radius: 10px;
@@ -140,7 +140,7 @@ body{
     margin-right:10px;
 }
 
-.overlay{
+.overlay, .overlay-excluir{
     position: fixed;
     top: 0;
     left: 0;
@@ -152,8 +152,9 @@ body{
     align-items: center;
     z-index: 1000;
 }
-.modal{
+.modal, .modal-excluir{
     display: none;
+    flex-direction: column;
     background-color: var(--geral);
     padding: 20px;
     border-radius: 10px;
@@ -161,18 +162,42 @@ body{
     width: 60%;
     position: relative;
 }
-.modal .modal-header{
+.modal-excluir .componente-botton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.modal-excluir .componente-botton button{
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    margin-top:10px;
+}
+.modal-excluir .componente-botton button:hover{
+    background-color: var(--botoes-hover);
+    box-shadow: inset 0px -2px 4px var(--card-background);
+}
+.modal .modal-header, .modal-excluir .modal-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.modal .modal-header h2{
+.modal .modal-header h2, .modal-excluir .modal-header h2{
     color: var(--texto-destaque);
     text-shadow: 1px 1px 2px var(--titulo-sombra);
     font-size: 1.5rem;
     font-weight: bold;
 }
-.modal .modal-header .close-modal{
+.modal .modal-header .close-modal, .modal-excluir .modal-header .close-modal-excluir{
     background-color: var(--titulo-sombra);
     border-radius:100%;
     width: 40px;
@@ -184,7 +209,7 @@ body{
     transition: .2s ease-in-out;
 }
 
-.modal .modal-header .close-modal:hover{
+.modal .modal-header .close-modal:hover, .modal-excluir .modal-header .close-modal-excluir:hover{
     background-color: var(--titulo);
     box-shadow: inset 0px -2px 4px var(--card-background);
 }
