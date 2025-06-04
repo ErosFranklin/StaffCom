@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style-menu.css">
-    <link rel="stylesheet" href="../style/style-spinner.css">
+    <link rel="stylesheet" href="../style/spinner.css">
     <link rel="stylesheet" href="../style/style-funcionarios.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <title>Funcionarios</title>
@@ -55,11 +55,24 @@
                 <div class="spinner"></div>
             </div>
         </div>
+        <div class="overlay-excluir">
+          <div class="modal-excluir">
+            <div class="modal-header">
+                <h2>Excluir Gerente</h2>
+                <button class="close-modal-excluir"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p>Tem certeza que deseja excluir este gerente?</p>
+            <div class="componente-botton">
+                <p class="mensagem-erro-excluir"></p>
+                <button type="button" class="btn-excluir">Excluir</button>
+            </div>
+          </div>
+        </div>
         <div class="overlay">
           <div class="modal">
             <div class="modal-header">
-                <h2>Adicionar Funcionário</h2>
-                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                <h2>Adicionar Gerente</h2>
+                <button type="button" class="close-modal"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form id="form-add-funcionario">
               <div class="grid-componentes">
@@ -73,9 +86,10 @@
                 </div>
                 <div class="componente-modal">
                   <label for="cargo">CPF:</label>
-                  <input type="text" name="cpf-funcionario" id="cpf-funcionario" required placeholder="ex: 12345678900">
+                  <input type="text" name="cpf-funcionario" id="cpf-funcionario" required placeholder="ex: 123.456.789-00">
                 </div>
-                <div class="componente-modal">
+                <!--
+                  <div class="componente-modal">
                   <label for="cargo">Cargo:</label>
                   <select name="cargo-funcionario" id="cargo-funcionario">
                     <option value="" disabled selected>Selecione o cargo</option>
@@ -86,23 +100,31 @@
 
                   </select>
                 </div>
-                <div class="componente-modal">
+                -->
+                <!--
+                  <div class="componente-modal">
                   <label for="salario">Salário:</label>
                   <input type="number" id="salario-funcionario" name="salario-funcionario" required placeholder="ex: 3000.00">
                 </div>
+                -->
+                
                 <div class="componente-modal">
                   <label for="email">Email:</label>
-                  <input type="email" id="email" name="email-funcionario" required placeholder="ex: exemplo@gmail.com">
+                  <input type="email" id="email-funcionario" name="email-funcionario" required placeholder="ex: exemplo@gmail.com">
                 </div>
                 <div class="componente-modal">
                   <label for="numero">Número de Telefone:</label>
-                  <input type="number" id="numero-funcionario" name="numero-funcionario" required placeholder="ex: 83987654321">
+                  <input type="text" id="numero-funcionario" name="numero-funcionario" required placeholder="ex: (83) 9 87654321">
+                </div>
+                <div class="componente-modal">
+                  <label for="departamento">Departamento:</label>
+                  <input type="text" id="departamento-funcionario" name="departamento" required placeholder="ex: Financeiro, Cozinha, Atendimento...">
                 </div>
               </div>
               
               <div class="componente-botton">
-                <button type="submit">Adicionar Funcionário</button>
-                <button type="button" class="btn-cancelar">Cancelar</button>
+                <p class="mensaggem-erro"></p>
+                <button type="submit">Adicionar</button>
               </div>
             </form>
           </div>
@@ -114,37 +136,27 @@
             </div>
         </div>
         <div class="container-principal">
-            <h1>Funcionários</h1>
-            <p>Lista de funcionários cadastrados no sistema.</p>
+            <h1>Gerentes</h1>
+            <p>Lista de gerentes cadastrados no sistema.</p>
+            <p class="mensagem-erro"></p>
             <table id="tabela-funcionarios">
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Cargo</th>
-                        <th>Salario</th>
+                        <th>Nascimento</th>
                         <th>CPF</th>
-                        <th>Numero</th>
+                        <th>Telefone</th>
+                        <th>Departamento</th>
+                        <th>Email</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-funcionarios">
-                    <!-- Os dados dos funcionários serão inseridos aqui dinamicamente -->
-                    <tr>
-                        <td>João Silva</td>
-                        <td>Gerente</td>
-                        <td>R$ 3000,00</td>
-                        <td>123.456.789-00</td>
-                        <td>(11) 98765-4321</td>
-                        <td>
-                            <button class="btn-edit-funcionario"><i class="fa-solid fa-pencil"></i></button>
-                            <button class="btn-delete-funcionario"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </main>
-    <script src="../javascript/add-funcionarios"></script>
+    <script src="../javascript/add-gerentes.js"></script>
     
 </body>
 </html>
