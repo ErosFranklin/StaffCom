@@ -450,7 +450,7 @@ body{
     color:red;
     margin-bottom: 10px;
 }
-.container-btn-comida #btn-adicionar-bebida, #btn-adicionar-entrada, #btn-adicionar-principal, #btn-adicionar-sobremesa {
+.container-btn-comida #btn-adicionar-bebida, #btn-adicionar-entrada, #btn-adicionar-principal, #btn-adicionar-sobremesa, #btn-editar-entrada {
     background-color: var(--botoes);
     color: var(--texto-botoes);
     border: none;
@@ -461,7 +461,7 @@ body{
     cursor: pointer;
     transition: .2s ease-in-out;
 }
-.container-btn-comida #btn-adicionar-bebida:hover, #btn-adicionar-entrada:hover, #btn-adicionar-principal:hover, #btn-adicionar-sobremesa:hover{
+.container-btn-comida #btn-adicionar-bebida:hover, #btn-adicionar-entrada:hover, #btn-adicionar-principal:hover, #btn-adicionar-sobremesa:hover, #btn-editar-entrada:hover{
     background-color: var(--botoes-hover);
 }
 

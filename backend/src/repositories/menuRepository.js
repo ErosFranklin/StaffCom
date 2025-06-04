@@ -13,7 +13,7 @@ const menuRepository = {
         return results;
     },
 
-    async findItemById(menuId) {
+    async findDetailsItemById(menuId) {
         const [rows] = await db.execute(
             `SELECT 
                 m.id AS menuId,
@@ -69,12 +69,12 @@ const menuRepository = {
 
         return rows[0];
     },
-    /*
-    async findItemById(id) {
+    
+    async findById(id) {
         const [results] = await db.execute(`SELECT * FROM menu WHERE id = ?`, [id]);
         return results.length ? new Menu(results[0]) : null;
     },
-    */
+    
 
     async findAll() {
         const [results] = await db.execute(`SELECT * FROM menu`);
