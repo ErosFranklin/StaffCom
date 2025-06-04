@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function(){
             modalEditContent.style.display = "flex";
             
             try {
-                const response = await fetch(`http://localhost:8000/api/menu/${id}`, {
+                const response = await fetch(`http://localhost:8000/api/menu/item/${id}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
