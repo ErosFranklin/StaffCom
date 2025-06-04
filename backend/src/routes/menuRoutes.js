@@ -6,7 +6,7 @@ const authenticateJWT = require("../middlewares/authenticateJWT");
 router.post("/new-item/:itemId", authenticateJWT, menuController.addItemToMenu);
 router.get("/my-menu", authenticateJWT, menuController.getFullMenu);
 router.get("/:menuId", menuController.getById);
-router.get("/item/:itemId", menuController.getItemById);
+router.get("/item/:itemId", menuController.getDetailsItemById);
 router.get("/", menuController.getAll);
 router.put("/:menuId/item/:itemId", authenticateJWT, menuController.update);
 router.delete("/:menuId", authenticateJWT, menuController.removeItemFromMenu);
