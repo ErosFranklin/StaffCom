@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded',async function() {
     });
     btnRemoverGerente.addEventListener('click', async function () {
         if (idParaExcluir) {
+            console.log("ID do gerente a ser excluído:", idParaExcluir);
             await removerGerente(idParaExcluir);
             idParaExcluir = null; // Limpa após excluir
             modalExcluirGerente.style.display = 'none';

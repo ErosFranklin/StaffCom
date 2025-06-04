@@ -20,12 +20,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             spinner.style.display = "none";
             return;
         }
+        /*
         if(!validandoSenha(senha)){
             messagemErro.textContent = "A senha deve conter entre 6 e 20 caracteres, pelo menos um número e uma letra.";
             messagemErro.style.display = "block";
             spinner.style.display = "none";
             return;
-        }  
+        }  */
         if(!validandoEmail(email)){
             messagemErro.textContent = "Email inválido!";
             messagemErro.style.display = "block";
