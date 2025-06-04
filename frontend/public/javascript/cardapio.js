@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const userId = localStorage.getItem('userId');
     const modalEditEntrada = document.querySelector('.modal-entrada');
     const modalEditContent = document.querySelector('.modal-content-cardapio');
-    //const spinner = document.querySelector('container-spinner')
+    const spinner = document.querySelector('.container-spinner')
     const btnEditar = document.querySelector('#btn-editar-entrada');
 
     //const selectTipoGeralBebida = document.querySelector("#tipo-de-bebida-geral");
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function(){
             console.log('id do item:', id)
             modalEditEntrada.style.display = "flex";
             modalEditContent.style.display = "flex";
-            
+            spinner.style.display = "block";
             try {
                 const response = await fetch(`http://localhost:8000/api/menu/item/${id}`, {
                     method: "GET",
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     throw new Error("Erro ao buscar treino para edição.");
                 }
                 const data = await response.json();
-                
+                spinner.style.display = "none";
                 modalEditContent.querySelectorAll('input, select').forEach(el => {
                     if (el.tagName === 'SELECT') {
                         el.selectedIndex = 0;
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function(){
     //Funcao para editar dados de uma entrada
     formAddEntrada.addEventListener("submit", async function(event) {
         event.preventDefault();
-        //spinner.style.display = "block";
+        spinner.style.display = "block";
         const imageFile = inputUploadEntrada.files[0];
 
         if(!imageFile){
@@ -197,10 +197,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
             })
             if (!response.ok) {
-                    
                     const errorText = await response.text(); 
                     let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
-                    //spinner.style.display = "none";
+                    spinner.style.display = "none";
                     try {
                         const errorData = JSON.parse(errorText); 
                         errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
@@ -212,22 +211,22 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
 
                 const result = await response.json();
-                alert("Entrada adicionada com sucesso!");
                 formAddEntrada.reset();
                 modalEditEntrada.style.display = "none";
-                
+                spinner.style.display = "none";
                 imgPreviewEntrada.src = "../image/logo.png"; 
+                location.reload(); 
                 console.log('Entrada salva com sucesso:', result);
                 
             } catch (error) {
-                //spinner.style.display = "none";
+                spinner.style.display = "none";
                 console.error('Erro ao salvar receita:', error);
                 alert("Erro ao adicionar receita: " + error.message);
             }
 
     })
     async function getDadosCardapio(token, userId) {
-        //spinner.style.display = "block";
+        spinner.style.display = "block";
         try {
             const response = await fetch('http://localhost:8000/api/menu/my-menu', {
                 method: 'GET',
@@ -242,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function(){
             const data = await response.json();
             console.log("RETORNANDO: ",data);
             
-            //spinner.style.display = "none";
+            spinner.style.display = "none";
             data.forEach(item => {
                 if(item.itemType === 'entrada'){
                      const containerEntrada = document.querySelector(".container-entradas-grid");
@@ -335,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
             })
         } catch (error) {
-            //spinner.style.display = "none";
+            spinner.style.display = "none";
             console.error("Erro ao obter dados do cardápio:", error);
         }
     }
