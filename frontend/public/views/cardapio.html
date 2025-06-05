@@ -62,6 +62,42 @@
             </form>
         </div>
     </div>
+
+    <div class="modal-principal">
+        <div class="modal-content-cardapio">
+            <div class="modal-header-cardapio">
+                <h2>Editar Prato Principal</h2>
+                <button class="btn-fechar-principal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="add-principal" class="add-principal">
+                <div class="container-grid">
+                    <div class="componente">
+                        <div class="img-comida">
+                            <img id="image-produto-principal" src="../image/logo.png" alt="comida">
+                            <p>Faça o upload de uma imagem 'jpg', 'jpeg', 'png' ou 'webp</p>
+                            <button type="button" class="btn-img">Upload</button>
+                            <input type="file" id="upload-img-principal" accept="image/jpeg, image/png, image/webp, image/jpg" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="componente">
+                        <div class="componente-input">
+                            <input type="text" name="nome-principal" id="nome-principal" placeholder="Nome da Comida" required>
+                        </div>
+                        <div class="componente-input">
+                            <textarea name="descricao-principal" id="descricao-principal" placeholder="Descricao da Comida" rows="2" cols="2" maxlength="200"></textarea>
+                        </div>
+                        <div class="componente-input">
+                            <input type="number" name="valor-principal" id="valor-principal" placeholder="Valor" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-btn-comida">
+                    <span class="error_message_modal"></span>
+                    <button type="submit" id="btn-editar-principal">Editar</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <main>
         <div class="container-cardapio">
             <div class="container-entradas">
