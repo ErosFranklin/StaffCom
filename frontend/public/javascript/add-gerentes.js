@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded',async function() {
             overlay.style.display = 'none';
             modal.style.display = 'none';
             messagemErro.style.display = "none";
+            location.reload(); 
         }catch(error){
             console.error("Erro ao adicionar gerente:", error);
             messagemErro = document.getElementById('mensagem-erro');
@@ -94,13 +95,14 @@ document.addEventListener('DOMContentLoaded',async function() {
                 throw new Error("Erro ao buscar gerentes.");
             }
             const data = await response.json();
+            const funcionariosAtivos = data.filter(funcionario => funcionario.isActivated === 1);
 
-            if (data.length === 0) {
-                messagemErro.textContent = "Nenhum gerente cadastrado.";
+            if (funcionariosAtivos.length === 0) {
+                messagemErro.textContent = "Nenhum cozinheiro ativo encontrado.";
                 messagemErro.style.display = "block";
                 tabela.style.display = "none";
             } else {
-                data.forEach(gerente => {
+                funcionariosAtivos.forEach(gerente => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${gerente.fullName || 'Nao informado'}</td>
@@ -116,6 +118,12 @@ document.addEventListener('DOMContentLoaded',async function() {
                     tabelaGerentes.appendChild(tr);
                 });
             }
+
+            if (data.length === 0) {
+                messagemErro.textContent = "Nenhum gerente cadastrado.";
+                messagemErro.style.display = "block";
+                tabela.style.display = "none";
+            } 
         } catch (error) {
             console.error("Erro ao carregar gerentes:", error);
             messagemErro.textContent = "Erro ao carregar gerentes.";
