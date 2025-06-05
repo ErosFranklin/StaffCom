@@ -12,10 +12,33 @@ const managerController = {
 
     async getProfile(req, res) {
         try {
-            const manager = await managerService.getProfile(req.managerId); // only need to pass the token
+            const manager = await managerService.getById(req.managerId); // only need to pass the token
             return res.status(200).json(manager);
         } catch (error) {
             return res.status(404).json({ message: error.message });
+        }
+    },
+
+    async getById(req, res) {
+        try {
+            const manager = await managerService.getById(req.params.managerId);
+            delete manager.cpf;
+            return res.status(200).json(manager);
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
+        }
+    },
+
+    async getAll(req, res) {
+        try {
+            const managers = await managerService.getAll();
+            const managersWithoutCpf = managers.map(manager => {
+                const { cpf, ...rest } = manager;
+                return rest;
+            });
+            return res.status(200).json(managersWithoutCpf);
+        } catch(error) {
+            return res.status(400).json({ message: error.message });
         }
     },
 
@@ -50,7 +73,11 @@ const managerController = {
     async getAllWaitersByManagerId(req, res) {
         try {
             const waiters = await managerService.showAllWaiters(req.params.managerId);
-            return res.status(200).json(waiters);
+            const waitersWithoutCpf = waiters.map(waiter => {
+                const { cpf, ...rest } = waiter;
+                return rest;
+            });
+            return res.status(200).json(waitersWithoutCpf);
         } catch (error) {
             return res.status(400).json({ message: error.message });
         }
@@ -107,7 +134,11 @@ const managerController = {
     async getAllCooksByManagerId(req, res) {
         try {
             const cooks = await managerService.showAllCooks(req.params.managerId);
-            return res.status(200).json(cooks);
+            const cooksWithoutCpf = cooks.map(cook => {
+                const { cpf, ...rest } = cook;
+                return rest;
+            });
+            return res.status(200).json(cooksWithoutCpf);
         } catch (error) {
             return res.status(400).json({ message: error.message });
         }

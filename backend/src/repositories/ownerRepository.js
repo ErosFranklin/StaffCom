@@ -31,6 +31,11 @@ const ownerRepositories = {
         return results.length ? new Owner(results[0]) : null;
     },
 
+    async findAll() {
+        const [results] = await db.execute(`SELECT * FROM owners`);
+        return results.map(row => new Owner(row));
+    },
+
     async updateOthersFields(ownerId, ownerData) {
         const sql = `
             UPDATE owners 
@@ -73,6 +78,7 @@ const ownerRepositories = {
         return results;
     },
 
+    // manager functions in owner 
     async createManager(managerData) {
         const manager = new Manager(managerData);
         const sql = `

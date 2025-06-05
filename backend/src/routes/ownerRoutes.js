@@ -7,6 +7,8 @@ const router = express.Router();
 // Owner routes
 router.post("/signUp", ownerController.signUp);
 router.post("/signIn", ownerController.signIn);
+router.get("/", ownerController.getAll);
+router.get("/:ownerId", ownerController.getById);
 router.get("/profile", authenticateJWT, ownerController.getProfile);
 router.put("/profile", authenticateJWT, ownerController.updateOtherFields);
 router.put("/redefinePassword", authenticateJWT, ownerController.updatePassword);
