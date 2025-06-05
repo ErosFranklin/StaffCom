@@ -1,0 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,800;0,900;1,500&display=swap');
+@font-face {
+    font-family: 'Bukhari Script';
+    src: url('../fonts/BukhariScript.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --geral:#ffffff;
+    --fundo:rgba(81, 81, 81, 0.061);
+    --titulo: #606060;
+    --titulo-sombra: #60606080;
+    --texto: #202020;
+    --card-background: #828282;
+    --botoes: #ffde00;
+    --botoes-hover:#ffdd00c6;
+    --texto-destaque:#ffde00;
+    --texto-botoes:#202020;
+    --transition-speed: 0.3s;
+}
+body{
+    background-color:var(--fundo);
+    min-height: 100vh;
+    width: 100vw;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: var(--geral);
+    border-bottom: 1px solid var(--card-background);
+    box-shadow: 0px 2px 4px var(--titulo-sombra);
+    margin-bottom:10px;
+    padding:0px 30px;
+    height: 15vh;
+    align-items: center;
+}
+header h1{
+    font-family: 'Bukhari Script', cursive;
+    font-style: italic;
+    font-size:2rem;
+    color:var(--titulo);
+    text-align: center;
+    text-shadow: 2px 2px 1px var(--titulo-sombra);
+    font-weight: lighter;
+}
+header button{
+    background-color: var(--botoes);
+    padding:10px;
+    border:1px solid var(--titulo);
+    border-radius:10px;
+    font-weight: bolder;
+    color: var(--texto-botoes);
+    width: 10rem;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+header button:hover{
+    background-color: var(--botoes-hover);
+}
+
+.container-infos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+.container-infos .total-mesa, .total-comandas-abertas, .faturamento{
+    background-color: var(--geral);
+    border: 1px solid var(--card-background);
+    box-shadow: 0px 2px 4px var(--titulo-sombra);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    width: 30%;
+    text-align: center;
+    color: var(--texto);
+    transition: .2s ease-in-out;
+}
+.container-infos .total-mesa:hover, .total-comandas-abertas:hover, .faturamento:hover{
+    box-shadow: inset 0px 2px 4px var(--titulo-sombra);
+}
+.container-infos .total-mesa span, .total-comandas-abertas span, .faturamento span{
+    font-size: 0.8rem;
+    font-weight: lighter;
+}
+.container-infos .total-mesa span p, .total-comandas-abertas span p, .faturamento span p{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.container-infos .total-mesa i, .total-comandas-abertas i, .faturamento i{
+    color: var(--texto-destaque);
+}
+
+.overlay-modal-comanda{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+}
+
+.modal-comanda{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--geral);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px var(--titulo-sombra);
+    width: 40%;
+    min-height: auto;
+    position: relative;
+}
+
+.modal-comanda .modal-header-comanda{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal-comanda .modal-header-comanda h2{
+    color: var(--texto-destaque);
+    text-shadow: 1px 1px 2px var(--titulo-sombra);
+    font-size: 1.5rem;
+}
+.modal-comanda .modal-header-comanda button{
+    background-color: var(--card-background);
+    color:var(--geral);
+    border: none;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+.modal-comanda .modal-header-comanda button:hover{
+    background-color: var(--titulo-sombra);
+}
+
+.modal-comanda #add-comanda{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 100%;
+}
+.modal-comanda #add-comanda .componente-input{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.modal-comanda #add-comanda input{
+    background-color: #fdfdfd;
+    padding: 10px;
+    border: 1px solid var(--card-background);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: var(--texto);
+    transition: .2s ease-in-out;
+}
+.modal-comanda #add-comanda input:focus{
+    outline: none;
+    color:var(--texto-destaque);
+    border-color: var(--texto-destaque);
+}
+
+.modal-comanda #add-comanda .componente-btns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.modal-comanda #add-comanda .componente-btns #btn-add-comanda{
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    width: 100%;
+}
+.modal-comanda #add-comanda .componente-btns #btn-add-comanda:hover{
+    background-color: var(--botoes-hover);
+}
+
+.container-principal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.container-principal .container-grid-comandas{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+.container-principal .container-grid-comandas .comanda{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--geral);
+    border: 1px solid var(--card-background);
+    box-shadow: 0px 2px 4px var(--titulo-sombra);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    width: 90%;
+}
+.container-principal .container-grid-comandas .comanda .comanda-header,
+.container-principal .container-grid-comandas .comanda .comanda-total-mesa {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom:20px;
+}
+.container-principal .container-grid-comandas .comanda .comanda-header .info-tabela{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container-principal .container-grid-comandas .comanda .comanda-header .info-tabela h2,
+.container-principal .container-grid-comandas .comanda .comanda-header .info-tabela p{
+    color: var(--texto-botoes);
+    text-shadow: 1px 1px 2px var(--titulo-sombra);
+    font-size: 1.2rem;
+    margin-right:10px;
+    font-weight: bold;
+}
+.container-principal .container-grid-comandas .comanda .comanda-header .info-tabela #status-comanda{
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: .2s ease-in-out;
+}
+
+.container-principal .container-grid-comandas .comanda .comanda-total-mesa{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom:1px solid var(--card-background);
+}
+.container-principal .container-grid-comandas .comanda .comanda-total-mesa .info-garcom{
+    text-align: left;
+}
+.container-principal .container-grid-comandas .comanda .comanda-total-mesa .info-valores{
+    text-align: right;
+}
+.container-principal .container-grid-comandas .comanda .comanda-total-mesa .info-garcom h3,
+.container-principal .container-grid-comandas .comanda .comanda-total-mesa .info-valores h3{
+    font-weight: lighter;
+    font-size:0.9rem;
+    color:var(--titulo);
+}
+.container-principal .container-grid-comandas .comanda .comanda-total-mesa .info-garcom #garcom-nome,
+.container-principal .container-grid-comandas .comanda .comanda-total-mesa .info-valores #valor-total{
+    font-size:1.2rem;
+    color: var(--texto);
+}
+
+.container-principal .container-grid-comandas .comanda .comanda-body{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.container-principal .container-grid-comandas .comanda .comanda-body .quantidade-itens{
+    display:flex;
+    font-weight: lighter;
+    font-size:0.9rem;
+    color:var(--titulo);
+}
+.container-principal .container-grid-comandas .comanda .comanda-body .container-itens{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: var(--texto);
+    transition: .2s ease-in-out;
+}
+
+.container-principal .container-grid-comandas .comanda .comanda-body .container-itens .item-comanda{
+    font-size:0.9rem;
+    font-weight: lighter;
+    color:var(--titulo);
+}
+
+

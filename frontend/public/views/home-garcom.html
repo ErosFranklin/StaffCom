@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="../style/spinner.css">
+    <link rel="stylesheet" href="../style/style-comandas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Home</title>
+</head>
+<body>
+    <header>
+        <h1>Controle de Comandas</h1>
+        <div class="container-btn">
+            <button  id="btn-comanda"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </header>
+    <main>
+        <div class="container-infos">
+            <div class="total-mesa">
+                <h2><i class="fa-solid fa-users-between-lines"></i></h2>
+                <span>Total<p id="total-comandas">1</p></span>
+
+            </div>
+            <div class="total-comandas-abertas">
+                <h2><i class="fa-solid fa-clock"></i></h2>
+                <span>Total <p id="total-comandas-abertas">1</p></span>
+            </div>
+            <div class="faturamento">
+                <h2><i class="fa-solid fa-dollar-sign"></i></h2>
+                <span>Total<p id="faturamento">25,00</p></span>
+            </div>
+        </div>
+        <div class="overlay-modal-comanda">
+            <div class="modal-comanda">
+                <div class="modal-header-comanda">
+                    <h2>Nova Comanda</h2>
+                    <button class="btn-fechar-comanda"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <form id="add-comanda" class="add-comanda">
+                    <div class="componente-input">
+                        <input type="text" name="mesa-comanda" id="mesa-comanda" placeholder="Número da Mesa" required>
+                    </div>
+                    <div class="componente-btns">
+                        <button id="btn-add-comanda">Criar Comanda</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="container-principal">
+            <div class="container-grid-comandas">
+                <div class="comanda">
+                    <div class="comanda-header">
+                        <div class="info-tabela">
+                            <h2>Mesa</h2>
+                            <p id="num-mes"> 1</p>
+                        </div>
+                        <div class="info-tabela">
+                            <span id="status-comanda">Aberta</span>
+                        </div>
+                    </div>
+                    <div class="comanda-total-mesa">
+                        <span class="info-garcom">
+                            <h3>Garcom</h3>
+                            <p id="garcom-nome">João</p>
+                        </span>
+                        <span class="info-valores">
+                            <h3>Total</h3>
+                            <p id="valor-total">R$ 25,00</p>
+                        </span>
+                    </div>
+                    
+                    <div class="comanda-body">
+                        <div class="quantidade-itens">
+                            <span>Itens:</span> <p id="quant-itens">1</p>
+                        </div>
+                        
+                        <div class="container-itens">
+                            <div class="item-comanda">
+                                <span class="nome-item">Pizza Margherita</span>
+                                <span class="quantidade-item">x2</span>
+                            </div>
+                            <div class="valor-itens">
+                                <span class="valor-item">R$ 25,00</span>
+                            </div>
+                        </div>
+                    </div>
+                <!-- Mais comandas podem ser adicionadas aqui -->
+            </div>
+        </div>
+    </main>
+    <script src="../javascript/busca-chefe.js"></script>
+</body>
+</html>

@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             window.location.href = '#';
                             break;
                         case "garcom":
-                            window.location.href = '#';
+                            window.location.href = '../public/views/home-garcom.html';
                             break;
                     }
         }catch(error){
