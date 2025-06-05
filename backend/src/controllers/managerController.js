@@ -47,6 +47,15 @@ const managerController = {
         }
     },
 
+    async getAllWaitersByManagerId(req, res) {
+        try {
+            const waiters = await managerService.showAllWaiters(req.params.managerId);
+            return res.status(200).json(waiters);
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
+        }
+    },
+
     async showAllWaiters(req, res) {
         try {
             const waiters = await managerService.showAllWaiters(req.managerId);
@@ -90,6 +99,15 @@ const managerController = {
         try {
             const result = await managerService.addCook(req.managerId, req.body);
             return res.status(201).json(result);
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
+        }
+    },
+
+    async getAllCooksByManagerId(req, res) {
+        try {
+            const cooks = await managerService.showAllCooks(req.params.managerId);
+            return res.status(200).json(cooks);
         } catch (error) {
             return res.status(400).json({ message: error.message });
         }
