@@ -19,7 +19,7 @@
     padding:30px 0 30px 1%;
     background-color: var(--card-background);
     box-shadow: 5px 0 0 var(--titulo-sombra);
-    border-radius: 0px 10px 0px 10px;
+    border-radius: 0px 10px 10px 0px;
     position:fixed;
     top:0;
     left:0;
