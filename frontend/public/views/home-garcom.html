@@ -39,10 +39,39 @@
                 </div>
                 <form id="add-comanda" class="add-comanda">
                     <div class="componente-input">
-                        <input type="text" name="mesa-comanda" id="mesa-comanda" placeholder="Número da Mesa" required>
+                        <input type="number" name="numero-mesa" id="numero-mesa" placeholder="Número da Mesa" required>
                     </div>
                     <div class="componente-btns">
-                        <button id="btn-add-comanda">Criar Comanda</button>
+                        <p class="mensagem-erro"></p>
+                        <button type="submit" id="btn-add-comanda">Criar Comanda</button>
+                    </div>
+                </form>
+                <form id="add-item-comanda" class="add-item-comanda">
+                    <div class="container-cardapio">
+                        <div class="container-entradas">
+                            <h2>Entradas</h2>
+                            <div class="cardapio-entradas">
+                                <!-- Entradas serão adicionadas aqui dinamicamente -->
+                            </div>
+
+                        </div>
+                        <div class="container-prato-principal">
+                            <h2>Prato Principal</h2>
+                            <div class="cardapio-principal">
+                                <div class="item">
+                                    asassas
+                                </div>
+                                <!-- Pratos principais serão adicionados aqui dinamicamente -->
+                            </div>
+
+                        </div>
+                        <div class="container-bebidas">
+                            <h2>Bebidas</h2>
+                            <div class="cardapio-bebidas">
+                                <!-- Bebidas serão adicionadas aqui dinamicamente -->
+                            </div>
+
+                        </div>
                     </div>
                 </form>
             </div>
