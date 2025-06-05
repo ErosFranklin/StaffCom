@@ -90,7 +90,7 @@ body{
     margin-bottom: 10px;
 }
 .container-principal #tabela-funcionarios{
-    width: 60%;
+    width: 80%;
     min-height: 80vh;
     overflow-y: auto;
     border-radius: 10px;
@@ -140,7 +140,7 @@ body{
     margin-right:10px;
 }
 
-.overlay{
+.overlay, .overlay-excluir, .overlay-edit-funcionario{
     position: fixed;
     top: 0;
     left: 0;
@@ -152,8 +152,9 @@ body{
     align-items: center;
     z-index: 1000;
 }
-.modal{
+.modal, .modal-excluir, .modal-edit-funcionario{
     display: none;
+    flex-direction: column;
     background-color: var(--geral);
     padding: 20px;
     border-radius: 10px;
@@ -161,18 +162,42 @@ body{
     width: 60%;
     position: relative;
 }
-.modal .modal-header{
+.modal-excluir .componente-botton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.modal-excluir .componente-botton button{
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    margin-top:10px;
+}
+.modal-excluir .componente-botton button:hover{
+    background-color: var(--botoes-hover);
+    box-shadow: inset 0px -2px 4px var(--card-background);
+}
+.modal .modal-header, .modal-excluir .modal-header, .modal-edit-funcionario .modal-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.modal .modal-header h2{
+.modal .modal-header h2, .modal-excluir .modal-header h2, .modal-edit-funcionario .modal-header h2{
     color: var(--texto-destaque);
     text-shadow: 1px 1px 2px var(--titulo-sombra);
     font-size: 1.5rem;
     font-weight: bold;
 }
-.modal .modal-header .close-modal{
+.modal .modal-header .close-modal, .modal-excluir .modal-header .close-modal-excluir, .modal-edit-funcionario .modal-header .close-modal-edit{
     background-color: var(--titulo-sombra);
     border-radius:100%;
     width: 40px;
@@ -184,12 +209,12 @@ body{
     transition: .2s ease-in-out;
 }
 
-.modal .modal-header .close-modal:hover{
+.modal .modal-header .close-modal:hover, .modal-excluir .modal-header .close-modal-excluir:hover, .modal-edit-funcionario .modal-header .close-modal-edit:hover{
     background-color: var(--titulo);
     box-shadow: inset 0px -2px 4px var(--card-background);
 }
 
-#form-add-funcionario{
+#form-add-funcionario, #form-edit-funcionario{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -197,19 +222,20 @@ body{
     gap: 15px;
     margin-top:10px;
 }
-#form-add-funcionario .grid-componentes{
+#form-add-funcionario .grid-componentes, #form-edit-funcionario .grid-componentes{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     width: 100%;
 }
-#form-add-funcionario .grid-componentes .componente-modal{
+#form-add-funcionario .grid-componentes .componente-modal, #form-edit-funcionario .grid-componentes .componente-modal{
     display: flex;
     flex-direction: column;
     position: relative;
     width: 100%;
 }
-#form-add-funcionario .grid-componentes .componente-modal label{
+#form-add-funcionario .grid-componentes .componente-modal label,
+#form-edit-funcionario .grid-componentes .componente-modal label{
     color: var(--titulo);
     text-shadow: 1px 1px 2px var(--titulo-sombra);
     font-weight: lighter;
@@ -217,7 +243,9 @@ body{
     margin-bottom: 5px;
 }
 #form-add-funcionario .grid-componentes .componente-modal input,
-#form-add-funcionario .grid-componentes .componente-modal select{
+#form-add-funcionario .grid-componentes .componente-modal select,
+#form-edit-funcionario .grid-componentes .componente-modal input,
+#form-edit-funcionario .grid-componentes .componente-modal select{
     border:1px solid var(--titulo-sombra);
     background-color: #f7f7f7;
     padding:5px;
@@ -225,13 +253,16 @@ body{
     color:var(--titulo);
 }
 #form-add-funcionario .grid-componentes .componente-modal input:focus,
-#form-add-funcionario .grid-componentes .componente-modal select:focus{
+#form-add-funcionario .grid-componentes .componente-modal select:focus,
+#form-edit-funcionario .grid-componentes .componente-modal input:focus,
+#form-edit-funcionario .grid-componentes .componente-modal select:focus{
     outline: none;
     border:1px solid var(--texto-destaque);
     color: var(--texto-destaque);
 }
 
-#form-add-funcionario .componente-botton{
+#form-add-funcionario .componente-botton,
+#form-edit-funcionario .componente-botton{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -239,7 +270,8 @@ body{
     width: 100%;
     margin-top: 20px;
 }
-#form-add-funcionario .componente-botton button{
+#form-add-funcionario .componente-botton button,
+#form-edit-funcionario .componente-botton button{
     background-color: var(--botoes);
     color: var(--texto-botoes);
     padding: 10px;
@@ -250,7 +282,8 @@ body{
     transition: .2s ease-in-out;
     margin-top:10px;
 }
-#form-add-funcionario .componente-botton button:hover{
+#form-add-funcionario .componente-botton button:hover,
+#form-edit-funcionario .componente-botton button:hover{
     background-color: var(--botoes-hover);
     box-shadow: inset 0px -2px 4px var(--card-background);
 }

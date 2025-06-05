@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const modalEditEntrada = document.querySelector('.modal-entrada');
     const modalEditprincipal = document.querySelector('.modal-principal');
     const modalEditContent = document.querySelector('.modal-content-cardapio');
+
     
 
     const spinner = document.querySelector('.container-spinner');
@@ -14,19 +15,20 @@ document.addEventListener('DOMContentLoaded', function(){
     //const campoTipoBebidaAlcoolica = document.querySelector("#campo-tipo-bebida-alcoolica");
 
     //modal de entrada
+
     const btnUploadEntrada = document.querySelector("#add-entrada .btn-img");
     const inputUploadEntrada = document.querySelector("#upload-img-entrada");
     const imgPreviewEntrada = document.querySelector("#add-entrada .img-comida img");
     const formAddEntrada = document.querySelector("#add-entrada");
     const closeModalEditEntrada = document.querySelector('.btn-fechar-entrada');
 
-    //Modal de principal
+
     const btnUploadPrincipal = document.querySelector("#add-principal .btn-img");
     const inputUploadPrincipal = document.querySelector("#upload-img-principal");
     const imgPreviewPrincipal = document.querySelector("#add-principal .img-comida img");
     const formAddPrincipal = document.querySelector("#add-principal");
-    const closeModalEditPrincipal = document.querySelector('.btn-fechar-principal');
 
+    const closeModalEditPrincipal = document.querySelector('.btn-fechar-principal');
 
 
     const btnUploadSobremesa = document.querySelector("#add-sobremesa .btn-img");
@@ -59,7 +61,11 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
     setupImageUpload(btnUploadEntrada, inputUploadEntrada, imgPreviewEntrada);
+
     setupImageUpload(btnUploadPrincipal, inputUploadPrincipal, imgPreviewPrincipal);
+
+
+    //setupImageUpload(btnUploadPrincipal, inputUploadPrincipal, imgPreviewPrincipal);
 
    //setupImageUpload(btnUploadSobremesa, inputUploadSobremesa, imgPreviewSobremesa);
     //setupImageUpload(btnUploadBebida, inputUploadBebida, imgPreviewBebida);
@@ -96,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const btnEdit = event.target.closest('.btn-editar');
         const btnDelete = event.target.closest('.btn-deletar');
 
+
         const isInsideEntradaSection = (btnEdit && btnEdit.closest('.container-entradas-grid')) || (btnDelete && btnDelete.closest('.container-entradas-grid'));
 
         if (!isInsideEntradaSection) {
@@ -103,14 +110,17 @@ document.addEventListener('DOMContentLoaded', function(){
             return
         }
         
+
         if (btnEdit) {
             id = btnEdit.dataset.itemId;
             menuId = btnEdit.dataset.menuId;
             console.log('id do menu:', menuId)
             console.log('id do item:', id)
             modalEditEntrada.style.display = "flex";
+
             const currentModalContent = modalEditEntrada.querySelector('.modal-content-cardapio');
             currentModalContent.style.display = "flex";
+
             spinner.style.display = "block";
             try {
                 const response = await fetch(`http://localhost:8000/api/menu/item/${id}`, {
@@ -211,7 +221,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     throw new Error("Erro ao buscar item para edição.");
                 }
                 const data = await response.json();
+
                 console.log("Dados do item:", data);
+
                 spinner.style.display = "none";
                 modalEditContent.querySelectorAll('input, select').forEach(el => {
                     if (el.tagName === 'SELECT') {
@@ -220,6 +232,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         el.value = '';
                     }
                 });
+
                 if(data.itemType === 'receita'){
                     currentModalContent.querySelector("#image-produto-principal").src = data.item.foodImg || '../image/logo.png';
                     currentModalContent.querySelector("#nome-principal").value = data.item.foodName || '';
@@ -237,6 +250,29 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }else if(btnDeletePrincipal){
             menuId = btnDeletePrincipal.dataset.menuId;
+            console.log('id do menu:', menuId)
+            console.log(token)
+            const confirmDelete = confirm("Você tem certeza que deseja excluir este item?");
+            if (confirmDelete) {
+                try {
+                    const response = await fetch(`http://localhost:8000/api/menu/${menuId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) {
+                        throw new Error("Erro ao excluir item do cardápio.");
+                    }
+                    alert("Item excluído com sucesso!");
+                    location.reload();
+                } catch (error) {
+                    console.error('Erro ao excluir item:', error);
+                    alert("Erro ao excluir item: " + error.message);
+                }
+            }
+        }else if(btnDelete){
+            menuId = btnDelete.dataset.menuId;
             console.log('id do menu:', menuId)
             console.log(token)
             const confirmDelete = confirm("Você tem certeza que deseja excluir este item?");

@@ -20,12 +20,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             spinner.style.display = "none";
             return;
         }
+        /*
         if(!validandoSenha(senha)){
             messagemErro.textContent = "A senha deve conter entre 6 e 20 caracteres, pelo menos um número e uma letra.";
             messagemErro.style.display = "block";
             spinner.style.display = "none";
             return;
-        }  
+        }  */
         if(!validandoEmail(email)){
             messagemErro.textContent = "Email inválido!";
             messagemErro.style.display = "block";
@@ -51,57 +52,29 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             const data = await response.json();
             console.log(data);
-            localStorage.setItem('token', data.token);
-            console.log("Token armazenado no localStorage:", data.token);
             const decode = jwt_decode(data.token);
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userId', decode.ownerId || decode.managerId || decode.kitchenChefId || decode.cookId || decode.waiterId);
+            console.log("Token armazenado no localStorage:", data.token);
+            
             console.log(decode);
-
-            window.location.href = '../public/views/cadastro-cardapio.html';
-            /*
-            try{
-                const response = await fetch('http://localhost:8000/api/menu/my-menu', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}` 
-            }
-            });
-                if (!response.ok) {
-                    throw new Error("Erro ao buscar bebidas do cardápio.");
-                }
-                const data = await response.json();
-                if(data.length === 0)   {
-                    window.location.href = '../public/views/cadastro-cardapio.html';
-                }else{
-                
-                    switch(cargo){
+            switch(cargo){
                         case "proprietario":
-                            localStorage.setItem('userId', decode.ownerId);
-                            localStorage.setItem('cargo', decode.userType);
-                            window.location.href = '../public/views/homeDono.html';
+                            window.location.href = '../public/views/cadastro-cardapio.html';
                             break;
                         case "gerente":
-                            localStorage.setItem('userId', decode.managerId);
-                            localStorage.setItem('cargo', decode.userType);
-                            window.location.href = '../public/views/homeGerente.html';
+                            window.location.href = '../public/views/home-gerente.html';
                             break;
                         case "chefe_cozinheiro":
-                            window.location.href = '../public/views/homeChefeCozinheiro.html';
+                            window.location.href = '../public/views/home-chefe.html';
                             break;
                         case "cozinheiro":
-                            window.location.href = '../public/views/home.html';
+                            window.location.href = '#';
                             break;
                         case "garcom":
-                            window.location.href = '../public/views/home.html';
+                            window.location.href = '#';
                             break;
                     }
-                
-                }
-            }
-            catch(error){
-                console.error("Algo deu errado:", error);
-            }
-                */
         }catch(error){
             console.error("Erro ao capturar os dados do formulário:", error);
             messagemErro.style.display = "block";
@@ -110,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }finally{
             spinner.style.display = "none";
         }
-    });
+})
     function validandoSenha(password) {
         var passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,20}$/;
         return passwordRegex.test(password);
