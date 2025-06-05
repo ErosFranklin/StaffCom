@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.log("Token armazenado no localStorage:", data.token);
             
             console.log(decode);
+            console.log(cargo);
             switch(cargo){
                         case "proprietario":
                             window.location.href = '../public/views/cadastro-cardapio.html';
@@ -100,7 +101,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             case "gerente":
                 return "managers";
             case "chefe_cozinheiro":
-                return "kitchenChefs";
+                return "cooks";
             case "cozinheiro":
                 return "cooks";
             case "garcom":
