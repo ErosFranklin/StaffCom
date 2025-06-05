@@ -14,6 +14,11 @@ const managerRepository = {
         return results.length ? new Manager(results[0]) : null;
     },
 
+    async findAll() {
+        const [results] = await db.execute(`SELECT * FROM managers`);
+        return results.map(row => new Manager(row));
+    },
+
     async updateOthersFields(managerId, newData) {
         const sql = `
             UPDATE managers 

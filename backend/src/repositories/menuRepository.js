@@ -82,7 +82,6 @@ const menuRepository = {
     },
 
     async findFullMenuByOwner(ownerId) {
-        console.log('Buscando menu para ownerId:', ownerId);
         const [rows] = await db.execute(
             `SELECT 
                 m.id AS menuId,

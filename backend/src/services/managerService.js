@@ -25,11 +25,22 @@ const managerService = {
         return { message: "Login realizado com sucesso!", token };
     },
 
-    async getProfile(managerId) {
+    async getById(managerId) {
         const manager = await managerRepository.findById(managerId);
         if (!manager) throw new Error("Gerente não encontrado!");
         delete manager.password;
         return manager;
+    },
+
+    async getAll(){
+        const managers = await managerRepository.findAll();
+
+        const protectedManagers = managers.map(manager => {
+            const { password, ...rest } = manager;
+            return rest;
+        });
+
+        return protectedManagers;
     },
 
     async updateOthersFields(managerId, managerData) {

@@ -6,6 +6,8 @@ const router = express.Router();
 
 // Manager routes
 router.post("/signIn", managerController.signIn);
+router.get("/", managerController.getAll)
+router.get("/:managerId", managerController.getById);
 router.get("/profile", authenticateJWT, managerController.getProfile);
 router.put("/profile", authenticateJWT, managerController.updateOthersFields);
 router.put("/redefinePassword", authenticateJWT, managerController.updatePassword);
