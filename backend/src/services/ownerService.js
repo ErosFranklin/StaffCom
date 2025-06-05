@@ -50,11 +50,22 @@ const ownerService = {
         return { message: "Login realizado com sucesso!", token };
     },
 
-    async getProfile(ownerId) {
+    async getById(ownerId) {
         const owner = await ownerRepository.findById(ownerId);
         if (!owner) throw new Error("Dono não encontrado!");
         delete owner.password;
         return owner;
+    },
+
+    async getAll() {
+        const owners = await ownerRepository.findAll();
+        
+        const protectedOwners = owners.map(owner => {
+            const { password, ...rest } = owner;
+            return rest;
+        });
+
+        return protectedOwners;
     },
 
     async updateOthersFields(ownerId, ownerData) {
