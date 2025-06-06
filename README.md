@@ -16,7 +16,7 @@
 <ul>
   <li><strong>Frontend:</strong> HTML, CSS e JavaScript</li>
   <li><strong>Backend:</strong> Node.js</li>
-  <li><strong>Banco de Dados:</strong> SQL ( Relacional ) e FireBase ( Talvez )</li>
+  <li><strong>Banco de Dados:</strong> SQL ( Relacional )</li>
   <li><strong>Deploy:</strong> Vercel (frontend) e Render (backend) - Se conseguir </li>
 </ul>
 
@@ -70,7 +70,7 @@ npm install
 cp .env.example .env
 
 # Execute o servidor
-npm run start
+npm start
 </code>
 </pre>
 
