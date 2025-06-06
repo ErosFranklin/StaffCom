@@ -16,7 +16,7 @@
 <ul>
   <li><strong>Frontend:</strong> HTML, CSS e JavaScript</li>
   <li><strong>Backend:</strong> Node.js</li>
-  <li><strong>Banco de Dados:</strong> MySQL ( Relacional ) e Cloudinary ( Talvez )</li>
+  <li><strong>Banco de Dados:</strong> MySQL (relacional) e Cloudinary (imagens)</li>
   <li><strong>Deploy:</strong> Vercel (frontend) e Render (backend) - se conseguir </li>
 </ul>
 
