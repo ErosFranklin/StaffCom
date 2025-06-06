@@ -114,7 +114,7 @@ header button:hover{
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 1000; 
+    z-index: 999; 
 }
 
 .modal-comanda{
@@ -126,7 +126,12 @@ header button:hover{
     box-shadow: 0px 0px 10px var(--titulo-sombra);
     width: 80%;
     min-height: auto;
+    overflow-y:auto;
+    max-height: 80vh;
     position: relative;
+}
+.modal-comanda .btn-modal{
+    position:relative;
 }
 
 .modal-comanda .modal-header-comanda{
@@ -210,6 +215,8 @@ header button:hover{
 }
 
 #add-item-comanda{
+    display: flex;
+    flex-direction: column;
     width: 100%;
     position: relative;
     margin-top:20px;
@@ -243,13 +250,90 @@ header button:hover{
 #add-item-comanda .container-cardapio .container-entradas .cardapio-entradas,
 #add-item-comanda .container-cardapio .container-prato-principal .cardapio-principal,
 #add-item-comanda .container-cardapio .container-bebidas .cardapio-bebidas{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+#add-item-comanda .container-cardapio .container-entradas .cardapio-entradas .item-entrada,
+#add-item-comanda .container-cardapio .container-prato-principal .cardapio-principal .item-principal,
+#add-item-comanda .container-cardapio .container-bebidas .cardapio-bebidas{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
+    border:1px solid var(--card-background);
+    padding:10px;
+    margin-bottom:10px;
 }
-
+#add-item-comanda .container-cardapio .container-entradas .cardapio-entradas .item-entrada img,
+#add-item-comanda .container-cardapio .container-prato-principal .cardapio-principal .item-principal img{
+    width: 100px;
+    height: 100px;
+}
+#add-item-comanda .container-cardapio .container-entradas .cardapio-entradas .item-entrada p,
+#add-item-comanda .container-cardapio .container-prato-principal .cardapio-principal .item-principal p{
+    color: var(--titulo);
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+#add-item-comanda .container-cardapio .container-entradas .cardapio-entradas .item-entrada button,
+#add-item-comanda .container-cardapio .container-prato-principal .cardapio-principal .item-principal button{
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    width: 100%;
+}
+#add-item-comanda .container-cardapio .container-entradas .cardapio-entradas .item-entrada .quantidade,
+#add-item-comanda .container-cardapio .container-prato-principal .cardapio-principal .item-principal .quantidade{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0px;
+}
+#add-item-comanda .container-cardapio .container-entradas .cardapio-entradas .item-entrada .quantidade button,
+#add-item-comanda .container-cardapio .container-prato-principal .cardapio-principal .item-principal .quantidade button{
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+#add-item-comanda .container-cardapio .container-entradas .cardapio-entradas .item-entrada .quantidade label,
+#add-item-comanda .container-cardapio .container-prato-principal .cardapio-principal .item-principal .quantidade label{
+    color: var(--texto);
+    font-weight: bold;
+    margin: 0px 10px;
+}
+#add-item-comanda .btn-modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+#add-item-comanda .btn-modal button{
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    width: 100%;
+}
+#add-item-comanda .btn-modal button:hover{
+    background-color: var(--botoes-hover);
+}
 .container-principal{
     display: flex;
     flex-direction: column;
@@ -298,7 +382,7 @@ header button:hover{
     margin-right:10px;
     font-weight: bold;
 }
-.container-principal .container-grid-comandas .comanda .comanda-header .info-tabela #status-comanda{
+.container-principal .container-grid-comandas .comanda .comanda-header .info-status #status-comanda{
     background-color: var(--botoes);
     color: var(--texto-botoes);
     padding: 5px 10px;
