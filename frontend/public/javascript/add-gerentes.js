@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded',async function() {
     const token = localStorage.getItem('token');
+    console.log(token)
+    
     const userId = localStorage.getItem('userId');
     const btnAddGerente = document.querySelector('.btn-add-funcionario');
     const overlay = document.querySelector('.overlay');

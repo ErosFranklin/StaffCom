@@ -397,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 spinner.style.display = "none";
                 imgPreviewPrincipal.src = "../image/logo.png"; 
                 location.reload(); 
-                console.log('Entrada salva com sucesso:', result);
+                console.log('Prato Principal salva com sucesso:', result);
                 
             } catch (error) {
                 spinner.style.display = "none";
@@ -528,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function(){
     })
 
     closeModalEditPrincipal.addEventListener('click', function() {
-        modalEditEntrada.style.display = "none";
+        modalEditprincipal.style.display = "none";
         modalEditContent.style.display = "none";
         imgPreviewPrincipal.src = "../image/logo.png"; 
         formAddPrincipal.reset();
