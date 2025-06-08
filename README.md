@@ -77,7 +77,7 @@ npm run dev
 
 <h3>Frontend</h3>
 <pre>
-<code>
+
 # Inicie o frontend
 </code>
 </pre>
