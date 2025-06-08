@@ -20,6 +20,7 @@ const menuService = {
         if (!item) throw new Error("Item não adicionado ao cardápio!");
         return item;
     },
+
     async getDetailsItemById(menuId) {
         const row = await menuRepository.findDetailsItemById(menuId);
         if (!row) throw new Error("Item não encontrado no cardápio!");
@@ -85,7 +86,6 @@ const menuService = {
             item
         };
     },
-
 
     async getAll() {
         const allItens = await menuRepository.findAll();

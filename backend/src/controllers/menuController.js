@@ -24,6 +24,7 @@ const menuController = {
             return res.status(404).json({ message: error.message });
         }
     },
+
     async getDetailsItemById(req, res) {
         try {
             const item = await menuService.getDetailsItemById(Number(req.params.itemId));
@@ -32,6 +33,7 @@ const menuController = {
             return res.status(404).json({ message: error.message });
         }
     },
+
     async getAll(req, res) {
         try {
             const allItems = await menuService.getAll();

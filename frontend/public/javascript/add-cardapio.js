@@ -309,7 +309,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     
                     const errorText = await response.text(); 
                     let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
+
                     spinner.style.display = "none";
+
                     try {
                         const errorData = JSON.parse(errorText); 
                         errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;

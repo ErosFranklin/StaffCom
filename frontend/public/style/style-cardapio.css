@@ -514,7 +514,6 @@ body{
 .container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info,
 .container-principal-grid .container-sub-comidas .principal-item .principal-info,
 .container-entradas-grid .container-sub-comidas .entrada-item .entrada-info {
-
     display:flex;
     flex-direction: column;
     align-items: left;

@@ -74,7 +74,6 @@ const menuRepository = {
         const [results] = await db.execute(`SELECT * FROM menu WHERE id = ?`, [id]);
         return results.length ? new Menu(results[0]) : null;
     },
-    
 
     async findAll() {
         const [results] = await db.execute(`SELECT * FROM menu`);

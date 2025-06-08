@@ -70,6 +70,7 @@ npm install
 cp .env.example .env
 
 # Execute o servidor
+<code>
 npm run dev
 </code>
 </pre>
