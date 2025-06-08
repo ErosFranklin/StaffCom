@@ -16,20 +16,20 @@
 <ul>
   <li><strong>Frontend:</strong> HTML, CSS e JavaScript</li>
   <li><strong>Backend:</strong> Node.js</li>
-  <li><strong>Banco de Dados:</strong> SQL ( Relacional )</li>
-  <li><strong>Deploy:</strong> Vercel (frontend) e Render (backend) - Se conseguir </li>
+  <li><strong>Banco de Dados:</strong> MySQL (relacional) e Cloudinary (imagens)</li>
+  <li><strong>Deploy:</strong> Vercel (frontend) e Render (backend) - se conseguir </li>
 </ul>
 
 <h2>🔧 Funcionalidades</h2>
 <ul>
-  <li>Autenticaçao de Gerente/Restuarante</li>
-  <li>Cadastramento, Vizualização, Edição e Exclução de Cardápio</li>
-  <li>Vizualização, edição dos Dados do Gerente</li>
-  <li>Cadastramento, Vizualização, Edição e Exclusão do Funcionário Garçom</li>
-  <li>Cadastramento, Vizualização, Edição e Exclusão do Funcionário Cozinheiro</li>
-  <li>Criação, Vizualização, Exclusão e Finalização de Comandas</li>
+  <li>Autenticaçao de Gerente/Restaurante</li>
+  <li>Cadastramento, visualização, edição e exclução de Cardápio</li>
+  <li>Cadastramento, visualização, edição e exclusão dos dados do Gerente</li>
+  <li>Cadastramento, visualização, edição e exclusão do Funcionário Garçom</li>
+  <li>Cadastramento, vizualização, edição e exclusão do Funcionário Cozinheiro</li>
+  <li>Criação, visualização, edição e exclusão de Comandas</li>
   <li>Contador de ganhos com comandas</li>
-  <li>Vizualização dos ganhos com comandas</li>
+  <li>Visualização dos ganhos com comandas</li>
 </ul>
 
 <h2>📂 Estrutura do Projeto</h2>
@@ -51,7 +51,7 @@ staffcom/
 │
 |            
 |
-|── backend/          # Backend 
+|── backend/src/          # Backend 
 │   ├── routes/
 │   │   └── ...
 │   ├── package.json
@@ -70,7 +70,8 @@ npm install
 cp .env.example .env
 
 # Execute o servidor
-npm start
+<code>
+npm run dev
 </code>
 </pre>
 
@@ -105,10 +106,10 @@ npm start
   <li>Email: <strong>[jorgelo0ngo2@gmail.com]</strong></li>
   <li>Email: <strong>[jorge.neto@aluno.uepb.edu.br]</strong></li>
   <li>Nome: <strong>[José Guilherme Morato Bizerra de Lima]</strong></li>
-  <li>Email: <strong>[]</strong></li>
+  <li>Email: <strong>[jose.morato@aluno.uepb.edu.br]</strong></li>
   <li>Nome: <strong>[Kaio Vinícius Cordeiro Batista]</strong></li>
-  <li>Email: <strong>[]</strong></li>
+  <li>Email: <strong>[kaiovbatista19@gmail.com]</strong></li>
    <h3>Banco de Dados</h3>
   <li>Nome: <strong>[Gabriel Ferreira Oliveira]</strong></li>
-  <li>Email: <strong>[]</strong></li>
+  <li>Email: <strong>[gabriel.ferreira.oliveira@aluno.uepb.edu.br]</strong></li>
 </ul>

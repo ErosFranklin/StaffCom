@@ -25,6 +25,15 @@ const menuController = {
         }
     },
 
+    async getDetailsItemById(req, res) {
+        try {
+            const item = await menuService.getDetailsItemById(Number(req.params.itemId));
+            return res.status(200).json(item);
+        } catch (error) {
+            return res.status(404).json({ message: error.message });
+        }
+    },
+
     async getAll(req, res) {
         try {
             const allItems = await menuService.getAll();
@@ -36,12 +45,18 @@ const menuController = {
 
     async getFullMenu(req, res) {
         try {
-            console.log("Entrou no getFullMenu");
-            console.log("OwnerId no controller:", req.ownerId);
             const menu = await menuService.getFullMenu(req.ownerId);
             return res.status(200).json(menu);
         } catch (error) {
-            console.error("Erro getFullMenu:", error);
+            return res.status(400).json({ message: error.message });
+        }
+    },
+
+    async getFullMenuByOwnerId(req, res) {
+        try {
+            const menu = await menuService.getFullMenu(req.params.ownerId);
+            return res.status(200).json(menu);
+        } catch (error) {
             return res.status(400).json({ message: error.message });
         }
     },

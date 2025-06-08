@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem('token');
+    const spinner = document.querySelector(".container-spinner");
     if (!token) {
         console.error("Token não encontrado. Redirecionando para a página de login.");
         window.location.href = "../public/views/login.html"; 
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnUploadEntrada = document.querySelector("#add-entrada .btn-img");
     const inputUploadEntrada = document.querySelector("#upload-img-entrada");
     const imgPreviewEntrada = document.querySelector("#add-entrada .img-comida img");
+    const formAddEntrada = document.querySelector("#add-entrada");
 
     const btnUploadPrincipal = document.querySelector("#add-principal .btn-img");
     const inputUploadPrincipal = document.querySelector("#upload-img-principal");
@@ -42,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputUploadBebida = document.querySelector("#upload-img-bebida");
     const imgPreviewBebida = document.querySelector("#add-bebida .img-comida img");
 
-    getDadosBebidasCardapio();
+    getDadosCardapio();
 
     function setupImageUpload(btnUpload, inputUpload, imgPreview) {
         btnUpload.addEventListener("click", function () {
@@ -68,19 +70,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btnEntradas.addEventListener("click", function () {
         modalEntradas.style.display = "flex";
-        const nomeEntrada = document.querySelector("#nome-entrada").value;
-        const descricaoEntrada = document.querySelector("#descricao-entrada").value;
-        const tamanhoEntrada = document.querySelector("#tamanho-entrada").value;
-        const valorEntrada = document.querySelector("#valor-entrada").value;
-        const btnAdicionarEntrada = document.querySelector("#btn-adicionar-entrada").value;
     });
 
     btnPrincipal.addEventListener("click", function () {
         modalPrincipal.style.display = "flex";
-        const nomePrincipal = document.querySelector("#nome-principal").value;
-        const descricaoPincipal = document.querySelector("#descricao-principal").value;
-        const valorPrincipal = document.querySelector("#valor-principal").value;
-        const btnAdicionarPrincipal = document.querySelector("#btn-adicionar-principal").value;
     });
 
     btnSobremesa.addEventListener("click", function () { 
@@ -149,16 +142,17 @@ document.addEventListener("DOMContentLoaded", function () {
     formAddPrincipal.addEventListener("submit", async function(event) {
         console.log("Enviando formulário de prato principal...");
         event.preventDefault();
-        const imageFile = inputUploadBebida.files[0];
+        spinner.style.display = "block"; 
+        const imageFile = inputUploadPrincipal.files[0];
         if (!imageFile) {
-            alert("Por favor, selecione uma imagem para a bebida.");
+            alert("Por favor, selecione uma imagem para o prato principal.");
             return;
         }
         const formData = new FormData();
         formData.append('image', imageFile);
-        formData.append('dishName', document.querySelector("#nome-principal").value);
-        formData.append('description', document.querySelector("#descricao-principal").value);
-        formData.append('unitValue', parseFloat(document.querySelector("#valor-principal").value));
+        formData.append('foodName', document.querySelector("#nome-principal").value);
+        formData.append('foodDescription', document.querySelector("#descricao-principal").value);
+        formData.append('value', parseFloat(document.querySelector("#valor-principal").value));
 
         try{
             const response = await fetch('http://localhost:8000/api/recipes/', {
@@ -173,6 +167,62 @@ document.addEventListener("DOMContentLoaded", function () {
                     
                     const errorText = await response.text(); 
                     let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
+                    spinner.style.display = "none";
+                    try {
+                        const errorData = JSON.parse(errorText); 
+                        errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
+                    } catch (jsonError) {
+                        errorMessage = `Erro HTTP! Status: ${response.status}, Resposta: ${errorText}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                const result = await response.json();
+                alert("Prato Principal adicionada com sucesso!");
+                formAddPrincipal.reset();
+                modalPrincipal.style.display = "none";
+                
+                imgPreviewPrincipal.src = "../image/logo.png"; 
+
+                console.log('Prato salvo com sucesso:', result);
+                adicionarMenu(result,'receita', result.recipe.id);
+            } catch (error) {
+                spinner.style.display = "none";
+                console.error('Erro ao salvar receita:', error);
+                alert("Erro ao adicionar receita: " + error.message);
+            }
+    })
+
+    formAddEntrada.addEventListener("submit", async function(event) {
+        event.preventDefault();
+        spinner.style.display = "block";
+        const imageFile = inputUploadEntrada.files[0];
+
+        if(!imageFile){
+            alert("Por favor, selecione uma imagem para a entrada.");
+            return;
+        }
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        formData.append('foodName', document.querySelector("#nome-entrada").value);
+        formData.append('foodDescription', document.querySelector("#descricao-entrada").value);
+        formData.append('size', document.querySelector("#tamanho-entrada").value);
+        formData.append('value', parseFloat(document.querySelector("#valor-entrada").value));
+
+        try{
+            const response = await fetch('http://localhost:8000/api/appetizers', {
+                method: 'POST',
+                headers: {  
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+
+            })
+            if (!response.ok) {
+                    
+                    const errorText = await response.text(); 
+                    let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
+                    spinner.style.display = "none";
                     try {
                         const errorData = JSON.parse(errorText); 
                         errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
@@ -184,24 +234,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 const result = await response.json();
-                alert("Bebida adicionada com sucesso!");
-                formAddPrincipal.reset();
-                modalPrincipal.style.display = "none";
+                alert("Entrada adicionada com sucesso!");
+                formAddEntrada.reset();
+                modalEntradas.style.display = "none";
                 
-                imgPreviewPrincipal.src = "../image/logo.png"; 
+                imgPreviewEntrada.src = "../image/logo.png"; 
 
-                console.log('Prato salvo com sucesso:', result);
-                adicionarMenu(result,'receita');
+                console.log('Entrada salva com sucesso:', result);
+                adicionarMenu(result,'entrada', result.appetizer.id);
             } catch (error) {
+                spinner.style.display = "none";
                 console.error('Erro ao salvar receita:', error);
                 alert("Erro ao adicionar receita: " + error.message);
             }
+
     })
+
 
     
     formAddBebida.addEventListener("submit", async function(event) {
         event.preventDefault();
-
+        spinner.style.display = "block";
         const imageFile = inputUploadBebida.files[0];
         if (!imageFile) {
             alert("Por favor, selecione uma imagem para a bebida.");
@@ -256,6 +309,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     
                     const errorText = await response.text(); 
                     let errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${response.statusText}`;
+
+                    spinner.style.display = "none";
+
                     try {
                         const errorData = JSON.parse(errorText); 
                         errorMessage = `Erro HTTP! Status: ${response.status}, Mensagem: ${errorData.error || errorData.message || response.statusText}`;
@@ -279,15 +335,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 imgPreviewBebida.src = "../image/logo.png"; 
 
                 console.log('Bebida salva com sucesso:', result);
-                adicionarMenu(result,tipoBebida);
+                adicionarMenu(result,tipoBebida, result.drink.id);
             } catch (error) {
+                spinner.style.display = "none";
                 console.error('Erro ao salvar bebida:', error);
                 alert("Erro ao adicionar bebida: " + error.message);
             }
         }
     });
 
-    async function getDadosBebidasCardapio() {
+    async function getDadosCardapio() {
+        spinner.style.display = "block";
         try {
             const response = await fetch('http://localhost:8000/api/menu/my-menu', {
                 method: 'GET',
@@ -301,20 +359,58 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             const data = await response.json();
             console.log("RETORNANDO: ",data);
-
+            spinner.style.display = "none";
             data.forEach(item => {
                 if(item.itemType === 'entrada'){
+                     const containerEntrada = document.querySelector(".container-entradas-grid");
 
+                    const containerSubEntrada = document.createElement("div");
+                    containerSubEntrada.classList.add("container-sub-comidas");
+
+                    const entradaDiv = document.createElement("div");
+                    entradaDiv.classList.add("entrada-item");
+
+                    entradaDiv.innerHTML = `
+                        <img src="${item.item.foodImg}" alt="${item.item.foodName}">
+                        <div class="entrada-info">
+                            <h3>${item.item.foodName}</h3>
+                            <p>${item.item.description}</p>
+                            <p>Valor: R$ ${item.item.value}</p>
+                        </div>
+                    `;
+
+                    containerSubEntrada.appendChild(entradaDiv);
+                    containerEntrada.appendChild(containerSubEntrada);
                 }
                 else if(item.itemType === 'receita'){
+                    const containerPrincipal = document.querySelector(".container-principal-grid");
 
+                    const containerSubPrincipal = document.createElement("div");
+                    containerSubPrincipal.classList.add("container-sub-comidas");
+
+                    const principalDiv = document.createElement("div");
+                    principalDiv.classList.add("principal-item");
+
+                    principalDiv.innerHTML = `
+                        <img src="${item.item.foodImg}" alt="${item.item.foodName}">
+                        <div class="principal-info">
+                            <h3>${item.item.foodName}</h3>
+                            <p>${item.item.description}</p>
+                            <p>Valor: R$ ${item.item.value}</p>
+                        </div>
+                    `;
+
+                    containerSubPrincipal.appendChild(principalDiv);
+                    containerPrincipal.appendChild(containerSubPrincipal);           
                 }
                 else if(item.itemType === 'sobremesa'){
 
                 }
                 else if (item.itemType === 'bebida_alcoolica') {
-                    const containerBebidas = document.querySelector(".container-bebidas-grid");  
-                    const containerSubBebidas = document.querySelector(".container-sub-comidas");
+                    const containerBebidas = document.querySelector(".container-bebidas-grid");
+
+                    const containerSubBebidas = document.createElement("div");
+                    containerSubBebidas.classList.add("container-sub-comidas");
 
                     const bebidaDiv = document.createElement("div");
                     bebidaDiv.classList.add("bebida-item");
@@ -328,7 +424,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p>Valor: R$ ${item.item.unitValue}</p>
                             <p>Quantidade: ${item.item.quantity}</p>
                         </div>
-                        
                     `;
 
                     containerSubBebidas.appendChild(bebidaDiv);
@@ -344,18 +439,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
             })
         } catch (error) {
+            spinner.style.display = "none";
             console.error("Erro ao obter dados do cardápio:", error);
         }
     }
-
-    async function adicionarMenu(dados, tipo) {
+    async function adicionarMenu(dados, tipo, id) {
         console.log("Adicionando item ao cardápio:", dados);
+        spinner.style.display = "block";
         const dadosMenu = {
             ownerId: localStorage.getItem('userId'),
             itemType: tipo,
         }
         try {
-            const response = await fetch(`http://localhost:8000/api/menu/new-item/${dados.drink.id}`, {
+            const response = await fetch(`http://localhost:8000/api/menu/new-item/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -366,9 +462,11 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!response.ok) {
                 throw new Error("Erro ao adicionar item ao cardápio.");
             }
+            spinner.style.display = "none";
             const data = await response.json();
             console.log("Item adicionado ao cardápio:", data);
         } catch (error) {
+            spinner.style.display = "none";
             console.error("Erro ao adicionar item ao cardápio:", error);
         }
     }

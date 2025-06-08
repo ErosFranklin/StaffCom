@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,800;0,900;1,500&display=swap');
+@font-face {
+    font-family: 'Bukhari Script';
+    src: url('../fonts/BukhariScript.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --geral:#ffffff;
+    --fundo:rgba(81, 81, 81, 0.061);
+    --titulo: #606060;
+    --titulo-sombra: #60606080;
+    --texto: #202020;
+    --card-background: #828282;
+    --botoes: #ffde00;
+    --botoes-hover:#ffdd00c6;
+    --texto-destaque:#ffde00;
+    --texto-botoes:#202020;
+    --transition-speed: 0.3s;
+}
+body{
+    background-color:var(--fundo);
+    min-height: 100vh;
+    width: 100vw;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.container-header{
+    display: flex;
+    flex-direction:row;
+    justify-content: right;
+    width: 100%;
+    height: 20vh;
+    align-items: center;
+}
+
+.container-header .container-header-data{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+.container-header .container-header-data h1{
+    color:var(--texto-destaque);
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px var(--titulo-sombra);
+}
+.container-header .container-header-data .btn-add-funcionario{
+    background-color: var(--botoes);
+    padding:10px;
+    border:1px solid var(--titulo);
+    border-radius:10px;
+    font-weight: bolder;
+    margin-right: 5%;
+    cursor:pointer;
+    transition: .2s ease-in-out;
+}
+
+.container-header .container-header-data .btn-add-funcionario:hover{
+    background-color: var(--botoes-hover);
+    box-shadow: inset 0px -2px 4px var(--card-background);
+}
+
+.container-principal{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+.container-principal h1{
+    font-size: 2rem;
+    font-weight: bolder;
+    color:var(--titulo);
+    margin-bottom: 20px;
+    text-shadow: 0px 2px var(--titulo-sombra);
+}
+.container-principal p{
+    color:var(--texto);
+    text-shadow: 1px 2px 1px var(--titulo-sombra);
+    font-style: italic;
+    margin-bottom: 10px;
+}
+.container-principal #tabela-funcionarios{
+    width: 80%;
+    min-height: 80vh;
+    overflow-y: auto;
+    border-radius: 10px;
+    border: 1px solid var(--titulo-sombra);
+    box-shadow: 0px 0px 10px var(--titulo-sombra);
+    margin-bottom:10px;
+    background-color: var(--titulo-sombra);
+}
+.container-principal #tabela-funcionarios thead{
+    background-color: var(--titulo-sombra);
+    color: var(--texto-destaque);
+    font-weight: bold;
+    text-align: center;
+
+}
+.container-principal #tabela-funcionarios thead tr{
+    height: 50px;
+}
+.container-principal #tabela-funcionarios thead tr th{
+    border-radius: 10px;
+}
+.container-principal #tabela-funcionarios #tbody-funcionarios{
+    border:1px solid var(--titulo-sombra);
+}
+.container-principal #tabela-funcionarios #tbody-funcionarios tr{
+    border:1px solid var(--titulo-sombra);
+}
+.container-principal #tabela-funcionarios #tbody-funcionarios tr td{
+    padding: 10px;
+    text-align: center;
+    color: var(--geral);
+    text-shadow: 1px 1px 2px var(--titulo-sombra);
+    font-weight: bold;
+    border:1px solid var(--titulo-sombra);
+    border-radius:5px;
+}
+.container-principal #tabela-funcionarios #tbody-funcionarios tr .btn-edit-funcionario,
+.container-principal #tabela-funcionarios #tbody-funcionarios tr .btn-delete-funcionario{
+    background-color: var(--botoes);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size:1rem;
+    color: var(--titulo);
+    box-shadow: 0px 0px 5px var(--titulo-sombra);
+    cursor: pointer;
+    margin-right:10px;
+}
+
+.overlay, .overlay-excluir, .overlay-edit-funcionario{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal, .modal-excluir, .modal-edit-funcionario{
+    display: none;
+    flex-direction: column;
+    background-color: var(--geral);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px var(--titulo-sombra);
+    width: 60%;
+    position: relative;
+}
+.modal-excluir .componente-botton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.modal-excluir .componente-botton button{
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    margin-top:10px;
+}
+.modal-excluir .componente-botton button:hover{
+    background-color: var(--botoes-hover);
+    box-shadow: inset 0px -2px 4px var(--card-background);
+}
+.modal .modal-header, .modal-excluir .modal-header, .modal-edit-funcionario .modal-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal .modal-header h2, .modal-excluir .modal-header h2, .modal-edit-funcionario .modal-header h2{
+    color: var(--texto-destaque);
+    text-shadow: 1px 1px 2px var(--titulo-sombra);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.modal .modal-header .close-modal, .modal-excluir .modal-header .close-modal-excluir, .modal-edit-funcionario .modal-header .close-modal-edit{
+    background-color: var(--titulo-sombra);
+    border-radius:100%;
+    width: 40px;
+    height: 40px;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--geral);
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.modal .modal-header .close-modal:hover, .modal-excluir .modal-header .close-modal-excluir:hover, .modal-edit-funcionario .modal-header .close-modal-edit:hover{
+    background-color: var(--titulo);
+    box-shadow: inset 0px -2px 4px var(--card-background);
+}
+
+#form-add-funcionario, #form-edit-funcionario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    margin-top:10px;
+}
+#form-add-funcionario .grid-componentes, #form-edit-funcionario .grid-componentes{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+#form-add-funcionario .grid-componentes .componente-modal, #form-edit-funcionario .grid-componentes .componente-modal{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+#form-add-funcionario .grid-componentes .componente-modal label,
+#form-edit-funcionario .grid-componentes .componente-modal label{
+    color: var(--titulo);
+    text-shadow: 1px 1px 2px var(--titulo-sombra);
+    font-weight: lighter;
+    font-size:0.9rem;
+    margin-bottom: 5px;
+}
+#form-add-funcionario .grid-componentes .componente-modal input,
+#form-add-funcionario .grid-componentes .componente-modal select,
+#form-edit-funcionario .grid-componentes .componente-modal input,
+#form-edit-funcionario .grid-componentes .componente-modal select{
+    border:1px solid var(--titulo-sombra);
+    background-color: #f7f7f7;
+    padding:5px;
+    border-radius:5px;
+    color:var(--titulo);
+}
+#form-add-funcionario .grid-componentes .componente-modal input:focus,
+#form-add-funcionario .grid-componentes .componente-modal select:focus,
+#form-edit-funcionario .grid-componentes .componente-modal input:focus,
+#form-edit-funcionario .grid-componentes .componente-modal select:focus{
+    outline: none;
+    border:1px solid var(--texto-destaque);
+    color: var(--texto-destaque);
+}
+
+#form-add-funcionario .componente-botton,
+#form-edit-funcionario .componente-botton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+}
+#form-add-funcionario .componente-botton button,
+#form-edit-funcionario .componente-botton button{
+    background-color: var(--botoes);
+    color: var(--texto-botoes);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    margin-top:10px;
+}
+#form-add-funcionario .componente-botton button:hover,
+#form-edit-funcionario .componente-botton button:hover{
+    background-color: var(--botoes-hover);
+    box-shadow: inset 0px -2px 4px var(--card-background);
+}

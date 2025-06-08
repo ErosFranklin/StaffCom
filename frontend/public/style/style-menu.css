@@ -1,0 +1,114 @@
+
+:root{
+    --geral:#ffffff;
+    --fundo:rgba(81, 81, 81, 0.061);
+    --titulo: #606060;
+    --titulo-sombra: #60606080;
+    --texto: #202020;
+    --card-background: #828282;
+    --botoes: #ffde00;
+    --botoes-hover:#ffdd00c6;
+    --texto-destaque:#ffde00;
+    --texto-botoes:#202020;
+    --transition-speed: 0.3s;
+}
+
+.side-menu{
+    width: 80px;
+    height: 100%;
+    padding:30px 0 30px 1%;
+    background-color: var(--card-background);
+    box-shadow: 5px 0 0 var(--titulo-sombra);
+    border-radius: 0px 10px 10px 0px;
+    position:fixed;
+    top:0;
+    left:0;
+    transition: .5s;
+    z-index: 1;
+}
+
+.side-menu:hover {
+    width: 300px;
+}
+.side-menu ul{
+    height: 100%;
+}
+.side-menu .menu-item{
+    list-style:none;
+    
+}
+.side-menu .image-menu{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    transition: .2s ease-in-out;
+    
+}
+.side-menu .image-menu img{
+   
+    width: 200px;
+    height: 100px;
+    margin:15px 0px;
+    padding-right:15px;
+    transition: .2s ease-in-out;
+}
+.menu-item a{
+    display:flex;
+    left:0;
+    color:#ffffff;
+    font-size: 16px;
+    padding:10px 4%;
+    text-decoration: none;
+    overflow: hidden;
+    transition: .1s ease-in-out;
+}
+
+.menu-item a:hover{
+    border-radius: 5px;
+    margin-right: 5px;
+    background:var(--geral);
+    color:var(--texto-destaque);
+}
+.menu-item button{
+    display:flex;
+    width:100% ;
+    left:0;
+    color:#ffffff;
+    font-size: 16px;
+    padding:10px 4%;
+    text-decoration: none;
+    overflow: hidden;
+    border: none;
+    background-color: transparent;
+    transition: .1s ease-in-out;
+}
+.menu-item button:hover{
+    cursor:pointer;
+    border-radius: 5px;
+    background:var(--geral);
+    color:var(--texto-destaque);
+}
+.menu-item .icon{
+    font-size: 1.3rem;
+    margin:15px 0px;
+    padding-left:15px;
+    width: 50px;
+    transition: .2s ease-in-out
+}
+.icon{
+    font-size: 17px;
+}
+.menu-item .txt-link{
+    font-size: 1rem;
+    transition: .18s;
+    opacity: 0;
+    transform: translateY(18px);
+    font-weight: bolder;
+}
+.side-menu:hover .txt-link{
+    text-align: center;
+    margin-left:50px;
+    opacity: 1;
+}

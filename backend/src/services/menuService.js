@@ -21,6 +21,72 @@ const menuService = {
         return item;
     },
 
+    async getDetailsItemById(menuId) {
+        const row = await menuRepository.findDetailsItemById(menuId);
+        if (!row) throw new Error("Item não encontrado no cardápio!");
+
+        let item = null;
+
+        switch (row.itemType) {
+            case 'receita':
+                item = {
+                    id: row.recipeId,
+                    foodName: row.recipeName,
+                    description: row.recipeDescription,
+                    value: row.recipeValue,
+                    foodImg: row.recipeImg,
+                    imagePublicId: row.recipeImgPublicId
+                };
+                break;
+
+            case 'entrada':
+                item = {
+                    id: row.appetizerId,
+                    foodName: row.appetizerName,
+                    description: row.appetizerDescription,
+                    value: row.appetizerValue,
+                    foodImg: row.appetizerImg,
+                    imagePublicId: row.appetizerImgPublicId,
+                    size: row.appetizerSize
+                };
+                break;
+
+            case 'bebida_alcoolica':
+                item = {
+                    id: row.alcoholicId,
+                    drinkName: row.alcoholicName,
+                    size: row.alcoholicSize,
+                    unitValue: row.alcoholicValue,
+                    drinkImg: row.alcoholicImg,
+                    imagePublicId: row.alcoholicImgPublicId,
+                    quantity: row.alcoholicQuantity,
+                    drinkType: row.alcoholicDrinkType
+                };
+                break;
+
+            case 'bebida_nao_alcoolica':
+                item = {
+                    id: row.nonAlcoholicId,
+                    drinkName: row.nonAlcoholicName,
+                    size: row.nonAlcoholicSize,
+                    unitValue: row.nonAlcoholicValue,
+                    drinkImg: row.nonAlcoholicImg,
+                    imagePublicId: row.nonAlcoholicImgPublicId,
+                    quantity: row.nonAlcoholicQuantity,
+                    packagingType: row.nonAlcoholicPackagingType
+                };
+                break;
+        }
+
+        return {
+            id: row.menuId,
+            itemType: row.itemType,
+            itemId: row.itemId,
+            ownerId: row.ownerId,
+            item
+        };
+    },
+
     async getAll() {
         const allItens = await menuRepository.findAll();
         return allItens;

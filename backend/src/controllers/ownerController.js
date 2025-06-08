@@ -21,10 +21,33 @@ const ownerController = {
 
     async getProfile(req, res) {
         try {
-            const owner = await ownerService.getProfile(req.ownerId); // only need to pass the token
+            const owner = await ownerService.getById(req.ownerId); // only need to pass the token
             return res.status(200).json(owner);
         } catch (error) {
             return res.status(404).json({ message: error.message });
+        }
+    },
+
+    async getById(req, res) {
+        try {
+            const owner = await ownerService.getById(req.params.ownerId);
+            delete owner.cnpj;
+            return res.status(200).json(owner);
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
+        }
+    },
+
+    async getAll(req, res) {
+        try {
+            const owners = await ownerService.getAll();
+            const ownersWithoutCnpj = owners.map(owner => {
+                const { cnpj, ...rest } = owner;
+                return rest;
+            });
+            return res.status(200).json(ownersWithoutCnpj);
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
         }
     },
 

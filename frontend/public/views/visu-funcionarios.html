@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/style-menu.css">
+    <link rel="stylesheet" href="../style/spinner.css">
+    <link rel="stylesheet" href="../style/style-funcionarios.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Funcionarios</title>
+</head>
+<body>
+    <header>
+        <nav class="side-menu">
+      <div class="image-menu">
+        <img src="../image/logo.png" alt="logo">
+      </div>
+      <ul>
+        <li class="menu-item">
+          <a href="../views/conta.html">
+            <span class="icon"><i class="fa-solid fa-user"></i></span>
+            <span class="txt-link">Dados</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="../views/visu-funcionarios.html">
+            <span class="icon"><i class="fa-solid fa-users"></i></span>
+            <span class="txt-link">Funcionarios</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="../views/cardapio.html">
+            <span class="icon"><i class="fa-solid fa-utensils"></i></span>
+            <span class="txt-link">Cardapio</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="../views/contato.html">
+            <span class="icon"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+            <span class="txt-link">Financeiro</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <button id="logout">
+            <span class="icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span class="txt-link">Sair</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+    </header>
+    <main>
+        <div class="container-spinner">
+            <div class="overlay-spinner" >
+                <div class="spinner"></div>
+            </div>
+        </div>
+        <div class="overlay-excluir">
+          <div class="modal-excluir">
+            <div class="modal-header">
+                <h2>Excluir Gerente</h2>
+                <button class="close-modal-excluir"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p>Tem certeza que deseja excluir este gerente?</p>
+            <div class="componente-botton">
+                <p class="mensagem-erro-excluir"></p>
+                <button type="button" class="btn-excluir">Excluir</button>
+            </div>
+          </div>
+        </div>
+        <div class="overlay">
+          <div class="modal">
+            <div class="modal-header">
+                <h2>Adicionar Gerente</h2>
+                <button type="button" class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-add-funcionario">
+              <div class="grid-componentes">
+                <div class="componente-modal">
+                  <label for="nome">Nome:</label>
+                  <input type="text" id="nome-funcionario" name="nome-funcionario" required placeholder="Nome do Funcionário">
+                </div>
+                <div class="componente-modal">
+                  <label for="nome">Data de Nascimento:</label>
+                  <input type="date" id="nascimento-funcionario" name="nascimento-funcionario" required>
+                </div>
+                <div class="componente-modal">
+                  <label for="cargo">CPF:</label>
+                  <input type="text" name="cpf-funcionario" id="cpf-funcionario" required placeholder="ex: 123.456.789-00">
+                </div>
+                <!--
+                  <div class="componente-modal">
+                  <label for="cargo">Cargo:</label>
+                  <select name="cargo-funcionario" id="cargo-funcionario">
+                    <option value="" disabled selected>Selecione o cargo</option>
+                    <option value="gerente">Gerente</option>
+                    <option value="chef-cozinheiro">Chefe Cozinheiro</option>
+                    <option value="cozinheiro">Cozinheiro</option>
+                    <option value="garcom">Garçom</option>
+
+                  </select>
+                </div>
+                -->
+                <!--
+                  <div class="componente-modal">
+                  <label for="salario">Salário:</label>
+                  <input type="number" id="salario-funcionario" name="salario-funcionario" required placeholder="ex: 3000.00">
+                </div>
+                -->
+                
+                <div class="componente-modal">
+                  <label for="email">Email:</label>
+                  <input type="email" id="email-funcionario" name="email-funcionario" required placeholder="ex: exemplo@gmail.com">
+                </div>
+                <div class="componente-modal">
+                  <label for="numero">Número de Telefone:</label>
+                  <input type="text" id="numero-funcionario" name="numero-funcionario" required placeholder="ex: (83) 9 87654321">
+                </div>
+                <div class="componente-modal">
+                  <label for="departamento">Departamento:</label>
+                  <input type="text" id="departamento-funcionario" name="departamento" required placeholder="ex: Financeiro, Cozinha, Atendimento...">
+                </div>
+              </div>
+              
+              <div class="componente-botton">
+                <p class="mensaggem-erro"></p>
+                <button type="submit">Adicionar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="container-header">
+            <div class="container-header-data">
+                <h1>Gerenciamento</h1>
+                <button type="button" class="btn-add-funcionario">Adicionar Funcionario</button>
+            </div>
+        </div>
+        <div class="container-principal">
+            <h1>Gerentes</h1>
+            <p>Lista de gerentes cadastrados no sistema.</p>
+            <p class="mensagem-erro"></p>
+            <table id="tabela-funcionarios">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Nascimento</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>Departamento</th>
+                        <th>Email</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-funcionarios">
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="../javascript/add-gerentes.js"></script>
+    
+</body>
+</html>

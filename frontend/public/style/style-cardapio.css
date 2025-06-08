@@ -31,7 +31,33 @@ body{
     overflow-y: auto;
     overflow-x: hidden;
 }
+.header-cardapio{
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding:10px;
+}
+.header-cardapio h1{
+     font-family: 'Bukhari Script', cursive;
+    font-style: italic;
+    font-size:2rem;
+    color:var(--titulo);
+    text-align: center;
+    margin-left:10px;
+}
+.header-cardapio a{
+    text-decoration: none;
+}
+.header-cardapio i{
+    font-size:2rem;
+    padding:10px;
+    color:var(--card-background);
+}
+.header-cardapio a i:hover{
+    color:var(--texto-destaque);
 
+}
 .container-header{
     display: flex;
     flex-direction:row;
@@ -424,7 +450,7 @@ body{
     color:red;
     margin-bottom: 10px;
 }
-.container-btn-comida #btn-adicionar-bebida, #btn-adicionar-entrada, #btn-adicionar-principal, #btn-adicionar-sobremesa {
+.container-btn-comida #btn-adicionar-bebida, #btn-adicionar-entrada, #btn-adicionar-principal, #btn-adicionar-sobremesa, #btn-editar-entrada, #btn-editar-principal {
     background-color: var(--botoes);
     color: var(--texto-botoes);
     border: none;
@@ -435,19 +461,22 @@ body{
     cursor: pointer;
     transition: .2s ease-in-out;
 }
-.container-btn-comida #btn-adicionar-bebida:hover, #btn-adicionar-entrada:hover, #btn-adicionar-principal:hover, #btn-adicionar-sobremesa:hover{
+.container-btn-comida #btn-adicionar-bebida:hover, #btn-adicionar-entrada:hover, #btn-adicionar-principal:hover, #btn-adicionar-sobremesa:hover, #btn-editar-entrada:hover, #btn-editar-principal:hover{
     background-color: var(--botoes-hover);
 }
 
-.container-bebidas-grid {
+.container-bebidas-grid, .container-principal-grid, .container-entradas-grid {
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap:10px;
     margin-bottom: 10px;
 }
-.container-bebidas-grid .container-sub-comidas{
+
+.container-bebidas-grid .container-sub-comidas,
+.container-principal-grid .container-sub-comidas,
+.container-entradas-grid .container-sub-comidas{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -459,7 +488,9 @@ body{
     margin: 5px;
     background-color: var(--geral);
 }
-.container-bebidas-grid .container-sub-comidas .bebida-item{
+.container-bebidas-grid .container-sub-comidas .bebida-item,
+.container-principal-grid .container-sub-comidas .principal-item,
+.container-entradas-grid .container-sub-comidas .entrada-item{
     display:flex;
     flex-direction: column;
     align-items:center;
@@ -467,7 +498,10 @@ body{
     width: 100%;
     
 }
-.container-bebidas-grid .container-sub-comidas .bebida-item img{
+
+.container-bebidas-grid .container-sub-comidas .bebida-item img,
+.container-principal-grid .container-sub-comidas .principal-item img,
+.container-entradas-grid .container-sub-comidas .entrada-item img {
     width: 100%;
     height: 100%;
     max-width: 150px;
@@ -476,7 +510,10 @@ body{
     object-fit: cover;
     margin-top: 10px;
 }
-.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info{
+
+.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info,
+.container-principal-grid .container-sub-comidas .principal-item .principal-info,
+.container-entradas-grid .container-sub-comidas .entrada-item .entrada-info {
     display:flex;
     flex-direction: column;
     align-items: left;
@@ -485,7 +522,9 @@ body{
     padding: 10px;
     margin-top:20px;
 }
-.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info h3{
+.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info h3,
+.container-principal-grid .container-sub-comidas .principal-item .principal-info h3,
+.container-entradas-grid .container-sub-comidas .entrada-item .entrada-info h3 {
     font-size: 1.5rem;
     font-style: italic;
     font-weight: bold;
@@ -494,7 +533,9 @@ body{
     
     margin: 10px 0;
 }
-.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info p{
+.container-bebidas-grid .container-sub-comidas .bebida-item .bebida-info p,
+.container-principal-grid .container-sub-comidas .principal-item .principal-info p,
+.container-entradas-grid .container-sub-comidas .entrada-item .entrada-info p {
     font-size: 0.9rem;
     color: var(--texto);
     margin-bottom: 10px;
@@ -529,5 +570,30 @@ body{
 
 .container-btn .btn-salvar-cardapio:hover, 
 .container-btn .btn-voltar-cardapio:hover {
+    background-color: var(--botoes-hover);
+}
+
+.btns-produto{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:10px;
+}
+.btns-produto button{
+   background-color: var(--botoes);
+    color: var(--texto-botoes);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    margin-right:2%;
+}
+
+.btns-produto button:hover{
     background-color: var(--botoes-hover);
 }
