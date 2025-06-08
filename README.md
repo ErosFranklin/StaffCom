@@ -60,27 +60,23 @@ staffcom/
 
 <h2>🚀 Instalação e Execução</h2>
 
-<h3>Backend</h3>
-<pre>
-<code>
-# Instale as dependências
-npm install
+<h3>Backend (em backend/src/)</h3>
 
-# Configure as variáveis de ambiente
-cp .env.example .env
+<p><strong>Instale as dependências</strong></p>
+<pre><code>npm install</code></pre>
 
-# Execute o servidor
-<code>
-npm run dev
-</code>
-</pre>
+<p><strong>Configure as variáveis de ambiente</strong></p>
+<pre><code>cp .env.example .env</code></pre>
 
-<h3>Frontend</h3>
-<pre>
-<code>
-# Inicie o frontend
-</code>
-</pre>
+<p><strong>Execute o servidor</strong></p>
+<pre><code>npm run dev</code></pre>
+
+<h3>Frontend (em frontend/public)</h3>
+
+<p><strong>Inicie o frontend</strong></p>
+<pre><code>start index.html</code></pre>
+
+</code></pre>
 
 <h2>🌐 Deploy (POSSIVELMENTE)</h2>
 <ul>
